@@ -32,14 +32,14 @@ namespace SIPSorcery.Net
     /// </summary>
     public class SrtcpTransformer : IPacketTransformer
     {
-        private int _isLocked = 0;
-        private RawPacket packet;
+        public int _isLocked = 0;
+        public RawPacket packet;
 
-        private SrtpTransformEngine forwardEngine;
-        private SrtpTransformEngine reverseEngine;
+        public SrtpTransformEngine forwardEngine;
+        public SrtpTransformEngine reverseEngine;
 
         /** All the known SSRC's corresponding SRTCPCryptoContexts */
-        private ConcurrentDictionary<long, SrtcpCryptoContext> contexts;
+        public ConcurrentDictionary<long, SrtcpCryptoContext> contexts;
 
         public SrtcpTransformer(SrtpTransformEngine engine) : this(engine, engine)
         {
@@ -95,7 +95,9 @@ namespace SIPSorcery.Net
             {
                 //Unlock
                 if (!isLocked)
+                {
                     Interlocked.CompareExchange(ref _isLocked, 0, 1);
+                }
             }
         }
 
@@ -138,7 +140,9 @@ namespace SIPSorcery.Net
             {
                 //Unlock
                 if (!isLocked)
+                {
                     Interlocked.CompareExchange(ref _isLocked, 0, 1);
+                }
             }
         }
 

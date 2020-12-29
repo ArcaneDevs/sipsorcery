@@ -33,16 +33,16 @@ namespace SIPSorcery.Net
     /// </summary>
     public class WebRTCWebSocketClient
     {
-        private const int MAX_RECEIVE_BUFFER = 8192;
-        private const int MAX_SEND_BUFFER = 8192;
-        private const int WEB_SOCKET_CONNECTION_TIMEOUT_MS = 10000;
+        public const int MAX_RECEIVE_BUFFER = 8192;
+        public const int MAX_SEND_BUFFER = 8192;
+        public const int WEB_SOCKET_CONNECTION_TIMEOUT_MS = 10000;
 
-        private ILogger logger = SIPSorcery.Sys.Log.Logger;
+        public ILogger logger = SIPSorcery.Sys.Log.Logger;
 
-        private Uri _webSocketServerUri;
-        private Func<Task<RTCPeerConnection>> _createPeerConnection;
+        public Uri _webSocketServerUri;
+        public Func<Task<RTCPeerConnection>> _createPeerConnection;
 
-        private RTCPeerConnection _pc;
+        public RTCPeerConnection _pc;
         public RTCPeerConnection RTCPeerConnection => _pc;
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace SIPSorcery.Net
             }
         }
 
-        private async Task ReceiveFromWebSocket(RTCPeerConnection pc, ClientWebSocket ws, CancellationToken ct)
+        public async Task ReceiveFromWebSocket(RTCPeerConnection pc, ClientWebSocket ws, CancellationToken ct)
         {
             var buffer = new byte[MAX_RECEIVE_BUFFER];
             int posn = 0;
@@ -128,7 +128,7 @@ namespace SIPSorcery.Net
             logger.LogDebug($"websocket-client receive loop exiting.");
         }
 
-        private async Task<string> OnMessage(string jsonStr, RTCPeerConnection pc)
+        public async Task<string> OnMessage(string jsonStr, RTCPeerConnection pc)
         {
             if (RTCIceCandidateInit.TryParse(jsonStr, out var iceCandidateInit))
             {

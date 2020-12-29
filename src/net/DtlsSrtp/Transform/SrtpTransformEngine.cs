@@ -28,13 +28,13 @@ namespace SIPSorcery.Net
 	    * The default SRTPCryptoContext, which will be used to derivate other
 	    * contexts.
 	    */
-        private SrtpCryptoContext defaultContext;
+        public SrtpCryptoContext defaultContext;
 
         /**
          * The default SRTPCryptoContext, which will be used to derive other
          * contexts.
          */
-        private SrtcpCryptoContext defaultContextControl;
+        public SrtcpCryptoContext defaultContextControl;
 
         /**
          * Construct a SRTPTransformEngine based on given master encryption key,

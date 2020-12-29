@@ -107,7 +107,7 @@ namespace SIPSorcery.Net
         /// </summary>
         //public string Name { get; set; }
 
-        private bool _isEmpty;
+        public bool _isEmpty;
 
         /// <summary>
         /// Creates a new SDP media format for a well known media type. Well known type are those that use 
@@ -214,7 +214,7 @@ namespace SIPSorcery.Net
             Rtpmap = SetRtpmap(videoFormat.FormatName, videoFormat.ClockRate);
         }
 
-        private string SetRtpmap(string name, int clockRate, int channels = DEFAULT_AUDIO_CHANNEL_COUNT)
+        public string SetRtpmap(string name, int clockRate, int channels = DEFAULT_AUDIO_CHANNEL_COUNT)
             =>
              Kind == SDPMediaTypesEnum.video ? $"{name}/{clockRate}" :
             (channels == DEFAULT_AUDIO_CHANNEL_COUNT) ? $"{name}/{clockRate}" : $"{name}/{clockRate}/{channels}";

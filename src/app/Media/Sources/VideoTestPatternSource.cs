@@ -31,15 +31,15 @@ namespace SIPSorcery.Media
         public const int TEST_PATTERN_WIDTH = 640;
         public const int TEST_PATTERN_HEIGHT = 480;
 
-        private const int VIDEO_SAMPLING_RATE = 90000;
-        private const int MAXIMUM_FRAMES_PER_SECOND = 60;           // Note the Threading.Timer's maximum callback rate is approx 60/s so allowing higher has no effect.
-        private const int DEFAULT_FRAMES_PER_SECOND = 30;
-        private const int MINIMUM_FRAMES_PER_SECOND = 1;
-        private const int STAMP_BOX_SIZE = 20;
-        private const int STAMP_BOX_PADDING = 10;
-        private const int TIMER_DISPOSE_WAIT_MILLISECONDS = 1000;
-        private const int VP8_SUGGESTED_FORMAT_ID = 96;
-        private const int H264_SUGGESTED_FORMAT_ID = 100;
+        public const int VIDEO_SAMPLING_RATE = 90000;
+        public const int MAXIMUM_FRAMES_PER_SECOND = 60;           // Note the Threading.Timer's maximum callback rate is approx 60/s so allowing higher has no effect.
+        public const int DEFAULT_FRAMES_PER_SECOND = 30;
+        public const int MINIMUM_FRAMES_PER_SECOND = 1;
+        public const int STAMP_BOX_SIZE = 20;
+        public const int STAMP_BOX_PADDING = 10;
+        public const int TIMER_DISPOSE_WAIT_MILLISECONDS = 1000;
+        public const int VP8_SUGGESTED_FORMAT_ID = 96;
+        public const int H264_SUGGESTED_FORMAT_ID = 100;
 
         public static ILogger logger = Sys.Log.Logger;
 
@@ -49,16 +49,16 @@ namespace SIPSorcery.Media
             new VideoFormat(VideoCodecsEnum.H264, H264_SUGGESTED_FORMAT_ID, VIDEO_SAMPLING_RATE, "packetization-mode=1")
         };
 
-        private int _frameSpacing;
-        private byte[] _testI420Buffer;
-        private Timer _sendTestPatternTimer;
-        private bool _isStarted;
-        private bool _isPaused;
-        private bool _isClosed;
-        private bool _isMaxFrameRate;
-        private int _frameCount;
-        private IVideoEncoder _videoEncoder;
-        private MediaFormatManager<VideoFormat> _formatManager;
+        public int _frameSpacing;
+        public byte[] _testI420Buffer;
+        public Timer _sendTestPatternTimer;
+        public bool _isStarted;
+        public bool _isPaused;
+        public bool _isClosed;
+        public bool _isMaxFrameRate;
+        public int _frameCount;
+        public IVideoEncoder _videoEncoder;
+        public MediaFormatManager<VideoFormat> _formatManager;
 
         /// <summary>
         /// Unencoded test pattern samples.
@@ -239,14 +239,14 @@ namespace SIPSorcery.Media
             return Task.CompletedTask;
         }
 
-        //private void LoadI420Buffer(Bitmap bitmap)
+        //public void LoadI420Buffer(Bitmap bitmap)
         //{
         //    _testBufferWidth = bitmap.Width;
         //    _testBufferHeight = bitmap.Height;
         //    _testI420Buffer = BitmapToI420(bitmap);
         //}
 
-        private void GenerateMaxFrames()
+        public void GenerateMaxFrames()
         {
             DateTime lastGenerateTime = DateTime.Now;
 
@@ -258,7 +258,7 @@ namespace SIPSorcery.Media
             }
         }
 
-        private void GenerateTestPattern(object state)
+        public void GenerateTestPattern(object state)
         {
             lock (_sendTestPatternTimer)
             {
@@ -296,7 +296,7 @@ namespace SIPSorcery.Media
             }
         }
 
-        //private void AddTimeStampAndLocation(System.Drawing.Image image, string timeStamp, string locationText)
+        //public void AddTimeStampAndLocation(System.Drawing.Image image, string timeStamp, string locationText)
         //{
         //    int pixelHeight = (int)(image.Height * TEXT_SIZE_PERCENTAGE);
 

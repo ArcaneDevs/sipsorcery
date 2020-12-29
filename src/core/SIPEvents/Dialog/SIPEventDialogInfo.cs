@@ -66,11 +66,11 @@ namespace SIPSorcery.SIP
     /// </remarks>
     public class SIPEventDialogInfo : SIPEvent
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public static readonly string m_dialogXMLNS = SIPEventConsts.DIALOG_XML_NAMESPACE_URN;
-        //private static readonly string m_sipsorceryXMLNS = SIPEventConsts.SIPSORCERY_DIALOG_XML_NAMESPACE_URN;
-        //private static readonly string m_sipsorceryXMLPrefix = SIPEventConsts.SIPSORCERY_DIALOG_XML_NAMESPACE_PREFIX;
+        //public static readonly string m_sipsorceryXMLNS = SIPEventConsts.SIPSORCERY_DIALOG_XML_NAMESPACE_URN;
+        //public static readonly string m_sipsorceryXMLPrefix = SIPEventConsts.SIPSORCERY_DIALOG_XML_NAMESPACE_PREFIX;
 
         public int Version;
         public SIPEventDialogInfoStateEnum State;

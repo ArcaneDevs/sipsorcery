@@ -39,13 +39,13 @@ namespace SIPSorcery.Net
         public int VersionNumber;
         public bool IsKeyFrame;
 
-        private int _length = 0;
+        public int _length = 0;
         public int Length
         {
             get { return _length; }
         }
 
-        private int _payloadDescriptorLength;
+        public int _payloadDescriptorLength;
         public int PayloadDescriptorLength
         {
             get { return _payloadDescriptorLength; }

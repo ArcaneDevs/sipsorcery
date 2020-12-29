@@ -129,8 +129,8 @@ namespace SIPSorcery.Net.Sctp
 
         GapBlock[] _gaps;
         uint[] _duplicateTSNs;
-        private uint _cumuTSNAck;
-        private uint _arWin;
+        public uint _cumuTSNAck;
+        public uint _arWin;
 
         public SackChunk(ChunkType type, byte flags, int length, ByteBuffer pkt)
             : base(type, flags, length, pkt)

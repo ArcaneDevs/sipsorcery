@@ -24,12 +24,12 @@ namespace SIPSorcery.Net.Sctp
 {
     public class OrderedMessage
     {
-        private static ILogger logger = Log.Logger;
-        private ConcurrentDictionary<uint, DataChunk> Chunks = new ConcurrentDictionary<uint, DataChunk>();
-        private DataChunk start;
-        private DataChunk end;
-        private object myLock = new object();
-        private bool isDone;
+        public static ILogger logger = Log.Logger;
+        public ConcurrentDictionary<uint, DataChunk> Chunks = new ConcurrentDictionary<uint, DataChunk>();
+        public DataChunk start;
+        public DataChunk end;
+        public object myLock = new object();
+        public bool isDone;
         public int Number;
         public OrderedMessage(int num)
         {

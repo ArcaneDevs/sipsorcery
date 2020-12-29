@@ -35,7 +35,7 @@ namespace SIPSorcery.SIP
         public event SIPTransactionResponseReceivedDelegate UACInviteTransactionFinalResponseReceived;
         public event SIPTransactionTimedOutDelegate UACInviteTransactionTimedOut;
 
-        private bool _sendOkAckManually = false;
+        public bool _sendOkAckManually = false;
         internal bool _disablePrackSupport = false;
         internal bool m_sentPrack;                  // Records whether the PRACK request was sent.
 
@@ -67,7 +67,7 @@ namespace SIPSorcery.SIP
             sipTransport.AddTransaction(this);
         }
 
-        private void UACInviteTransaction_TransactionRemoved(SIPTransaction transaction)
+        public void UACInviteTransaction_TransactionRemoved(SIPTransaction transaction)
         {
             // Remove event handlers.
             UACInviteTransactionInformationResponseReceived = null;
@@ -81,13 +81,13 @@ namespace SIPSorcery.SIP
             base.SendReliableRequest();
         }
 
-        private Task<SocketError> UACInviteTransaction_TransactionRequestReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPRequest sipRequest)
+        public Task<SocketError> UACInviteTransaction_TransactionRequestReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPRequest sipRequest)
         {
             logger.LogWarning("UACInviteTransaction received unexpected request, " + sipRequest.Method + " from " + remoteEndPoint.ToString() + ", ignoring.");
             return Task.FromResult(SocketError.Fault);
         }
 
-        private void UACInviteTransaction_TransactionTimedOut(SIPTransaction sipTransaction)
+        public void UACInviteTransaction_TransactionTimedOut(SIPTransaction sipTransaction)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private async Task<SocketError> UACInviteTransaction_TransactionInformationResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
+        public async Task<SocketError> UACInviteTransaction_TransactionInformationResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private async Task<SocketError> UACInviteTransaction_TransactionFinalResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
+        public async Task<SocketError> UACInviteTransaction_TransactionFinalResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
         {
             try
             {
@@ -189,7 +189,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="content">The optional content body for the ACK request.</param>
         /// <param name="contentType">The optional content type.</param>
-        private SIPRequest Get2xxAckRequest(string content, string contentType)
+        public SIPRequest Get2xxAckRequest(string content, string contentType)
         {
             try
             {
@@ -204,7 +204,7 @@ namespace SIPSorcery.SIP
                 if (sipResponse.Header.Contact != null && sipResponse.Header.Contact.Count > 0)
                 {
                     ackURI = sipResponse.Header.Contact[0].ContactURI;
-                    // Don't mangle private contacts if there is a Record-Route header. If a proxy is putting private IP's in a Record-Route header that's its problem.
+                    // Don't mangle public contacts if there is a Record-Route header. If a proxy is putting public IP's in a Record-Route header that's its problem.
                     if ((sipResponse.Header.RecordRoutes == null || sipResponse.Header.RecordRoutes.Length == 0)
                         && IPSocket.IsPrivateAddress(ackURI.Host) && !sipResponse.Header.ProxyReceivedFrom.IsNullOrBlank())
                     {
@@ -254,7 +254,7 @@ namespace SIPSorcery.SIP
         /// acceptable, the UAC core MUST generate a valid answer in the ACK and
         /// then send a BYE immediately.
         /// </remarks>
-        private SIPRequest GetNewTransactionAcknowledgeRequest(SIPMethodsEnum method, SIPResponse sipResponse, SIPURI ackURI)
+        public SIPRequest GetNewTransactionAcknowledgeRequest(SIPMethodsEnum method, SIPResponse sipResponse, SIPURI ackURI)
         {
             SIPRequest ackRequest = new SIPRequest(method, ackURI.ToString());
             ackRequest.SetSendFromHints(sipResponse.LocalSIPEndPoint);
@@ -307,7 +307,7 @@ namespace SIPSorcery.SIP
         /// to ensure that the ACK can be routed properly through any downstream
         /// stateless proxies.
         /// </remarks>
-        private SIPRequest GetInTransactionACKRequest(SIPResponse sipResponse, SIPURI ackURI)
+        public SIPRequest GetInTransactionACKRequest(SIPResponse sipResponse, SIPURI ackURI)
         {
             SIPRequest ackRequest = new SIPRequest(SIPMethodsEnum.ACK, ackURI.ToString());
             ackRequest.SetSendFromHints(sipResponse.LocalSIPEndPoint);

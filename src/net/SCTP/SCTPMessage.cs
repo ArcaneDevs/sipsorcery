@@ -27,17 +27,17 @@ using SIPSorcery.Sys;
  */
 namespace SIPSorcery.Net.Sctp
 {
-    internal class SCTPMessage
+    public class SCTPMessage
     {
-        private SCTPStream _stream;
-        private byte[] _data;
-        private int _offset = 0;
-        private int _pPid = 0;
-        private int _mseq; // note do we need these ?
-        private SCTPStreamListener _li;
-        private bool _delivered;
+        public SCTPStream _stream;
+        public byte[] _data;
+        public int _offset = 0;
+        public int _pPid = 0;
+        public int _mseq; // note do we need these ?
+        public SCTPStreamListener _li;
+        public bool _delivered;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         /**
 		 * Outbound message - note that we assume no one will mess with data between

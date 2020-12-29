@@ -15,9 +15,9 @@ namespace SIPSorcery.Media
     /// </summary>
     public class AudioSendOnlyMediaSession : RTPSession, IMediaSession
     {
-        private static ILogger logger = SIPSorcery.Sys.Log.Logger;
+        public static ILogger logger = SIPSorcery.Sys.Log.Logger;
 
-        public AudioExtrasSource AudioExtrasSource { get; private set; }
+        public AudioExtrasSource AudioExtrasSource { get; set; }
 
         public AudioSendOnlyMediaSession(
             IPAddress bindAddress = null,
@@ -34,7 +34,7 @@ namespace SIPSorcery.Media
             base.addTrack(audioTrack);
         }
 
-        private void AudioFormatsNegotiated(List<AudioFormat> audoFormats)
+        public void AudioFormatsNegotiated(List<AudioFormat> audoFormats)
         {
             var audioFormat = audoFormats.First();
             logger.LogDebug($"Setting audio source format to {audioFormat.FormatID}:{audioFormat.Codec}.");

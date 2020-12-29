@@ -36,16 +36,16 @@ namespace SIPSorcery.Net
         public static readonly SrtpParameters SRTP_NULL_HMAC_SHA1_32 = new SrtpParameters(SrtpProtectionProfile.SRTP_NULL_HMAC_SHA1_32, SrtpPolicy.NULL_ENCRYPTION, 0, SrtpPolicy.HMACSHA1_AUTHENTICATION, 20, 4, 10, 0);
 
 
-        private int profile;
-        private int encType;
-        private int encKeyLength;
-        private int authType;
-        private int authKeyLength;
-        private int authTagLength;
-        private int rtcpAuthTagLength;
-        private int saltLength;
+        public int profile;
+        public int encType;
+        public int encKeyLength;
+        public int authType;
+        public int authKeyLength;
+        public int authTagLength;
+        public int rtcpAuthTagLength;
+        public int saltLength;
 
-        private SrtpParameters(int newProfile, int newEncType, int newEncKeyLength, int newAuthType, int newAuthKeyLength, int newAuthTagLength, int newRtcpAuthTagLength, int newSaltLength)
+        public SrtpParameters(int newProfile, int newEncType, int newEncKeyLength, int newAuthType, int newAuthKeyLength, int newAuthTagLength, int newRtcpAuthTagLength, int newSaltLength)
         {
             this.profile = newProfile;
             this.encType = newEncType;

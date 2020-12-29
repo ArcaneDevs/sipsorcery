@@ -32,11 +32,11 @@ namespace SIPSorcery.Net
     /// </summary>
     public class RTCPCompoundPacket
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        public RTCPSenderReport SenderReport { get; private set; }
-        public RTCPReceiverReport ReceiverReport { get; private set; }
-        public RTCPSDesReport SDesReport { get; private set; }
+        public RTCPSenderReport SenderReport { get; set; }
+        public RTCPReceiverReport ReceiverReport { get; set; }
+        public RTCPSDesReport SDesReport { get; set; }
         public RTCPBye Bye { get; set; }
 
         public RTCPCompoundPacket(RTCPSenderReport senderReport, RTCPSDesReport sdesReport)

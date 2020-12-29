@@ -44,12 +44,12 @@ namespace SIPSorcery.SIP
     [DataContract]
     public class SIPParameters
     {
-        private const char TAG_NAME_VALUE_SEPERATOR = '=';
-        private const char QUOTE = '"';
-        private const char BACK_SLASH = '\\';
-        private const char DEFAULT_PARAMETER_DELIMITER = ';';
+        public const char TAG_NAME_VALUE_SEPERATOR = '=';
+        public const char QUOTE = '"';
+        public const char BACK_SLASH = '\\';
+        public const char DEFAULT_PARAMETER_DELIMITER = ';';
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         [DataMember]
         public char TagDelimiter = DEFAULT_PARAMETER_DELIMITER;
@@ -80,7 +80,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private void Initialise(string sipString, char delimiter)
+        public void Initialise(string sipString, char delimiter)
         {
             TagDelimiter = delimiter;
 
@@ -186,7 +186,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private void AddKeyValuePair(string keyValuePair, Dictionary<string, string> dictionary)
+        public void AddKeyValuePair(string keyValuePair, Dictionary<string, string> dictionary)
         {
             if (keyValuePair != null && keyValuePair.Trim().Length > 0)
             {

@@ -29,7 +29,7 @@ namespace SIPSorcery.Net.Sctp
 {
     internal class DCEPStreamBehaviour : SCTPStreamBehaviour
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public Chunk[] respond(SCTPStream a)
         {

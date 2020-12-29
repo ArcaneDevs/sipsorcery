@@ -80,9 +80,9 @@ namespace SIPSorcery.Net.Sctp
     public class CookieEchoChunk : Chunk
     {
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private byte[] _cookieData;
+        public byte[] _cookieData;
 
         public CookieEchoChunk(ChunkType type, byte flags, int length, ByteBuffer pkt) : base(type, flags, length, pkt)
         {

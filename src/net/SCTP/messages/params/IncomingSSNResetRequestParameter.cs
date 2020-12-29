@@ -45,7 +45,7 @@ namespace SIPSorcery.Net.Sctp
 		 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 		 */
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         uint reqSeqNo;
         int[] streams;

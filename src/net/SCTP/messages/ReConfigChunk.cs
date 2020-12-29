@@ -31,10 +31,10 @@ namespace SIPSorcery.Net.Sctp
     public class ReConfigChunk : Chunk
     {
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private long sentAt;
-        private int retries;
+        public long sentAt;
+        public int retries;
 
         public ReConfigChunk(ChunkType type, byte flags, int length, ByteBuffer pkt)
             : base(type, flags, length, pkt)
@@ -61,48 +61,78 @@ namespace SIPSorcery.Net.Sctp
         public bool hasIncomingReset()
         {
             foreach (var v in _varList)
+            {
                 if (typeof(IncomingSSNResetRequestParameter).IsAssignableFrom(v.GetType()))
+                {
                     return true;
+                }
+            }
+
             return false;
         }
 
         public IncomingSSNResetRequestParameter getIncomingReset()
         {
             foreach (var v in _varList)
+            {
                 if (typeof(IncomingSSNResetRequestParameter).IsAssignableFrom(v.GetType()))
+                {
                     return (IncomingSSNResetRequestParameter)v;
+                }
+            }
+
             return null;
         }
 
         public bool hasOutgoingReset()
         {
             foreach (var v in _varList)
+            {
                 if (typeof(OutgoingSSNResetRequestParameter).IsAssignableFrom(v.GetType()))
+                {
                     return true;
+                }
+            }
+
             return false;
         }
 
-        private bool hasOutgoingAdd()
+        public bool hasOutgoingAdd()
         {
             foreach (var v in _varList)
+            {
                 if (typeof(AddOutgoingStreamsRequestParameter).IsAssignableFrom(v.GetType()))
+                {
                     return true;
+                }
+            }
+
             return false;
         }
 
-        private bool hasResponse()
+        public bool hasResponse()
         {
             foreach (var v in _varList)
+            {
                 if (typeof(ReconfigurationResponseParameter).IsAssignableFrom(v.GetType()))
+                {
                     return true;
+                }
+            }
+
             return false;
         }
 
         public OutgoingSSNResetRequestParameter getOutgoingReset()
         {
             foreach (var v in _varList)
+            {
                 if (typeof(OutgoingSSNResetRequestParameter).IsAssignableFrom(v.GetType()))
+                {
                     return (OutgoingSSNResetRequestParameter)v;
+                }
+            }
+
             return null;
         }
 

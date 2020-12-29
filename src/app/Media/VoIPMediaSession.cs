@@ -44,16 +44,16 @@ namespace SIPSorcery.Media
     /// </summary>
     public class VoIPMediaSession : RTPSession, IMediaSession
     {
-        private const int TEST_PATTERN_FPS = 30;
-        private const int TEST_PATTERN_ONHOLD_FPS = 3;
+        public const int TEST_PATTERN_FPS = 30;
+        public const int TEST_PATTERN_ONHOLD_FPS = 3;
 
-        private static ILogger logger = SIPSorcery.Sys.Log.Logger;
+        public static ILogger logger = SIPSorcery.Sys.Log.Logger;
 
-        private VideoTestPatternSource _videoTestPatternSource;
-        private AudioExtrasSource _audioExtrasSource;
-        private bool _videoCaptureDeviceFailed;
+        public VideoTestPatternSource _videoTestPatternSource;
+        public AudioExtrasSource _audioExtrasSource;
+        public bool _videoCaptureDeviceFailed;
 
-        public MediaEndPoints Media { get; private set; }
+        public MediaEndPoints Media { get; set; }
 
         public AudioExtrasSource AudioExtrasSource
         {
@@ -129,7 +129,7 @@ namespace SIPSorcery.Media
             base.OnVideoFormatsNegotiated += VideoFormatsNegotiated;
         }
 
-        private async void VideoSource_OnVideoSourceError(string errorMessage)
+        public async void VideoSource_OnVideoSourceError(string errorMessage)
         {
             if (!_videoCaptureDeviceFailed)
             {
@@ -142,7 +142,7 @@ namespace SIPSorcery.Media
             }
         }
 
-        private void AudioFormatsNegotiated(List<AudioFormat> audoFormats)
+        public void AudioFormatsNegotiated(List<AudioFormat> audoFormats)
         {
             var audioFormat = audoFormats.First();
             logger.LogDebug($"Setting audio sink and source format to {audioFormat.FormatID}:{audioFormat.Codec} {audioFormat.ClockRate}.");
@@ -151,7 +151,7 @@ namespace SIPSorcery.Media
             _audioExtrasSource.SetAudioSourceFormat(audioFormat);
         }
 
-        private void VideoFormatsNegotiated(List<VideoFormat> videoFormats)
+        public void VideoFormatsNegotiated(List<VideoFormat> videoFormats)
         {
             var videoFormat = videoFormats.First();
             logger.LogDebug($"Setting video sink and source format to {videoFormat.FormatID}:{videoFormat.Codec}.");
@@ -229,7 +229,7 @@ namespace SIPSorcery.Media
             }
         }
 
-        private void VideoSinkSampleReady(byte[] buffer, uint width, uint height, int stride, VideoPixelFormatsEnum pixelFormat)
+        public void VideoSinkSampleReady(byte[] buffer, uint width, uint height, int stride, VideoPixelFormatsEnum pixelFormat)
         {
             OnVideoSinkSample?.Invoke(buffer, width, height, stride, pixelFormat);
         }

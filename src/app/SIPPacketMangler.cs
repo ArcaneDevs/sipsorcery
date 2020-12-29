@@ -28,7 +28,7 @@ namespace SIPSorcery.SIP.App
 {
     public class SIPPacketMangler
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public static string MangleSDP(string sdpBody, string publicIPAddress, out bool wasMangled)
         {
@@ -43,7 +43,7 @@ namespace SIPSorcery.SIP.App
                     IPAddress pubaddr = IPAddress.Parse(publicIPAddress);
                     string sdpAddress = addr.ToString();
 
-                    // Only mangle if there is something to change. For example the server could be on the same private subnet in which case it can't help.
+                    // Only mangle if there is something to change. For example the server could be on the same public subnet in which case it can't help.
                     if (IPSocket.IsPrivateAddress(sdpAddress) && publicIPAddress != sdpAddress
                         && pubaddr.AddressFamily == AddressFamily.InterNetworkV6
                         && addr.AddressFamily == AddressFamily.InterNetworkV6)
@@ -57,7 +57,7 @@ namespace SIPSorcery.SIP.App
                         && pubaddr.AddressFamily == AddressFamily.InterNetwork
                         && addr.AddressFamily == AddressFamily.InterNetwork)
                     {
-                        //logger.LogDebug("MangleSDP replacing private " + sdpAddress + " with " + publicIPAddress + ".");
+                        //logger.LogDebug("MangleSDP replacing public " + sdpAddress + " with " + publicIPAddress + ".");
                         string mangledSDP = Regex.Replace(sdpBody, @"c=IN IP4 (?<ipaddress>(\d+\.){3}\d+)", "c=IN IP4 " + publicIPAddress, RegexOptions.Singleline);
                         wasMangled = true;
 
@@ -79,7 +79,7 @@ namespace SIPSorcery.SIP.App
         }
 
         /// <summary>
-        /// Mangles private IP addresses in a SIP request replacing them with the IP address the packet was received on. 
+        /// Mangles public IP addresses in a SIP request replacing them with the IP address the packet was received on. 
         /// </summary>
         /// <param name="sipRequest">The unmangled SIP request.</param>
         /// <returns>The mangled SIP request</returns>
@@ -93,15 +93,15 @@ namespace SIPSorcery.SIP.App
                 {
                     string contactHost = sipRequest.Header.Contact[0].ContactURI.Host;
 
-                    // Only mangle if the host is a private IP address and there is something to change. 
-                    // For example the server could be on the same private subnet in which case it can't help.
+                    // Only mangle if the host is a public IP address and there is something to change. 
+                    // For example the server could be on the same public subnet in which case it can't help.
                     if (IPSocket.IsPrivateAddress(contactHost) && contactHost != bottomViaIPAddress)
                     {
                         string origContact = sipRequest.Header.Contact[0].ContactURI.Host;
                         sipRequest.Header.Contact[0].ContactURI.Host = sipRequest.Header.Vias.BottomViaHeader.ReceivedFromAddress;
 
-                        //logger.LogDebug("Contact URI identified as containing private address for " + sipRequest.Method + " " + origContact + " adjusting to use bottom via " + bottomViaHost + ".");
-                        //FireProxyLogEvent(new SIPMonitorConsoleEvent(SIPMonitorServerTypesEnum.Registrar, SIPMonitorServerTypesEnum.ContactRegisterInProgress, "Contact on " + sipRequest.Method + " " + origContact + " had private address adjusted to " + bottomViaHost + ".", username));
+                        //logger.LogDebug("Contact URI identified as containing public address for " + sipRequest.Method + " " + origContact + " adjusting to use bottom via " + bottomViaHost + ".");
+                        //FireProxyLogEvent(new SIPMonitorConsoleEvent(SIPMonitorServerTypesEnum.Registrar, SIPMonitorServerTypesEnum.ContactRegisterInProgress, "Contact on " + sipRequest.Method + " " + origContact + " had public address adjusted to " + bottomViaHost + ".", username));
                     }
                 }
 
@@ -126,7 +126,7 @@ namespace SIPSorcery.SIP.App
         }
 
         /// <summary>
-        /// Mangles private IP addresses in a SIP response replacing them with the IP address the packet was received on. 
+        /// Mangles public IP addresses in a SIP response replacing them with the IP address the packet was received on. 
         /// </summary>
         /// <param name="sipResponse">The unmangled SIP response.</param>
         /// <returns>The mangled SIP response</returns>
@@ -138,14 +138,14 @@ namespace SIPSorcery.SIP.App
                 {
                     string contactHost = sipResponse.Header.Contact[0].ContactURI.Host;
 
-                    // Only mangle if the host is a private IP address and there is something to change. 
-                    // For example the server could be on the same private subnet in which case it can't help.
+                    // Only mangle if the host is a public IP address and there is something to change. 
+                    // For example the server could be on the same public subnet in which case it can't help.
                     if (IPSocket.IsPrivateAddress(contactHost) && contactHost != remoteEndPoint.Address.ToString())
                     {
                         SIPURI origContact = sipResponse.Header.Contact[0].ContactURI;
                         sipResponse.Header.Contact[0].ContactURI = new SIPURI(origContact.Scheme, remoteEndPoint);
 
-                        //logger.LogDebug("INVITE response Contact URI identified as containing private address, original " + origContact + " adjusted to " + remoteEndPoint.ToString() + ".");
+                        //logger.LogDebug("INVITE response Contact URI identified as containing public address, original " + origContact + " adjusted to " + remoteEndPoint.ToString() + ".");
                         //FireProxyLogEvent(new SIPMonitorConsoleEvent(SIPMonitorServerTypesEnum.Registrar, SIPMonitorServerTypesEnum.ContactRegisterInProgress, "INVITE Response contact adjusted from " + origContact + " to " + remoteEndPoint.ToString() + ".", username));
                     }
                 }

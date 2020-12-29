@@ -22,14 +22,14 @@ namespace SIPSorcery.Sys
 {
     internal class Log
     {
-        private const string LOG_CATEGORY = "sipsorcery";
+        public const string LOG_CATEGORY = "sipsorcery";
 
         static Log()
         {
             SIPSorcery.LogFactory.Instance.OnFactorySet += Reset;
         }
 
-        private static ILogger _logger;
+        public static ILogger _logger;
         internal static ILogger Logger
         {
             get

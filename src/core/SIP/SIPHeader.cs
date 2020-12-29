@@ -42,12 +42,12 @@ namespace SIPSorcery.SIP
     /// </summary>
     public class SIPViaHeader
     {
-        private static char m_paramDelimChar = ';';
-        private static char m_hostDelimChar = ':';
+        public static char m_paramDelimChar = ';';
+        public static char m_hostDelimChar = ':';
 
-        private static string m_receivedKey = SIPHeaderAncillary.SIP_HEADERANC_RECEIVED;
-        private static string m_rportKey = SIPHeaderAncillary.SIP_HEADERANC_RPORT;
-        private static string m_branchKey = SIPHeaderAncillary.SIP_HEADERANC_BRANCH;
+        public static string m_receivedKey = SIPHeaderAncillary.SIP_HEADERANC_RECEIVED;
+        public static string m_rportKey = SIPHeaderAncillary.SIP_HEADERANC_RPORT;
+        public static string m_branchKey = SIPHeaderAncillary.SIP_HEADERANC_BRANCH;
 
         /// <summary>
         /// Special SIP Via header that is recognised by the SIP transport classes Send methods. At send time this header will be replaced by 
@@ -427,14 +427,14 @@ namespace SIPSorcery.SIP
             set { m_userField.Parameters = value; }
         }
 
-        private SIPUserField m_userField = new SIPUserField();
+        public SIPUserField m_userField = new SIPUserField();
         public SIPUserField FromUserField
         {
             get { return m_userField; }
             set { m_userField = value; }
         }
 
-        private SIPFromHeader()
+        public SIPFromHeader()
         { }
 
         public SIPFromHeader(string fromName, SIPURI fromURI, string fromTag)
@@ -535,14 +535,14 @@ namespace SIPSorcery.SIP
             set { m_userField.Parameters = value; }
         }
 
-        private SIPUserField m_userField;
+        public SIPUserField m_userField;
         public SIPUserField ToUserField
         {
             get { return m_userField; }
             set { m_userField = value; }
         }
 
-        private SIPToHeader()
+        public SIPToHeader()
         { }
 
         public SIPToHeader(string toName, SIPURI toURI, string toTag)
@@ -602,7 +602,7 @@ namespace SIPSorcery.SIP
         public const string EXPIRES_PARAMETER_KEY = "expires";
         public const string QVALUE_PARAMETER_KEY = "q";
 
-        //private static char[] m_nonStandardURIDelimChars = new char[] { '\n', '\r', ' ' };	// Characters that can delimit a SIP URI, supposed to be > but it is sometimes missing.
+        //public static char[] m_nonStandardURIDelimChars = new char[] { '\n', '\r', ' ' };	// Characters that can delimit a SIP URI, supposed to be > but it is sometimes missing.
 
         /// <summary>
         /// Special SIP contact header that is recognised by the SIP transport classes Send methods. At send time this header will be replaced by 
@@ -656,9 +656,9 @@ namespace SIPSorcery.SIP
             set { ContactParameters.Set(QVALUE_PARAMETER_KEY, value); }
         }
 
-        private SIPUserField m_userField;
+        public SIPUserField m_userField;
 
-        private SIPContactHeader()
+        public SIPContactHeader()
         { }
 
         public SIPContactHeader(string contactName, SIPURI contactURI)
@@ -825,7 +825,7 @@ namespace SIPSorcery.SIP
         //public string URI;
         //public string Response;
 
-        private SIPAuthenticationHeader()
+        public SIPAuthenticationHeader()
         {
             SIPDigest = new SIPAuthorisationDigest();
         }
@@ -916,11 +916,11 @@ namespace SIPSorcery.SIP
     /// </remarks>
     public class SIPRoute
     {
-        private static string m_looseRouterParameter = SIPConstants.SIP_LOOSEROUTER_PARAMETER;
+        public static string m_looseRouterParameter = SIPConstants.SIP_LOOSEROUTER_PARAMETER;
 
-        private static char[] m_angles = new char[] { '<', '>' };
+        public static char[] m_angles = new char[] { '<', '>' };
 
-        private SIPUserField m_userField;
+        public SIPUserField m_userField;
 
         public string Host
         {
@@ -949,7 +949,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private SIPRoute()
+        public SIPRoute()
         { }
 
         public SIPRoute(string host)
@@ -1026,7 +1026,7 @@ namespace SIPSorcery.SIP
 
     public class SIPRouteSet
     {
-        private List<SIPRoute> m_sipRoutes = new List<SIPRoute>();
+        public List<SIPRoute> m_sipRoutes = new List<SIPRoute>();
 
         public int Length
         {
@@ -1148,7 +1148,7 @@ namespace SIPSorcery.SIP
         }
 
         /// <summary>
-        /// If a route set is travelling from the public side of a proxy to the private side it can be required that the Record-Route set is modified.
+        /// If a route set is travelling from the public side of a proxy to the public side it can be required that the Record-Route set is modified.
         /// </summary>
         /// <param name="origSocket">The socket string in the original route set that needs to be replace.</param>
         /// <param name="replacementSocket">The socket string the original route is being replaced with.</param>
@@ -1181,9 +1181,9 @@ namespace SIPSorcery.SIP
 
     public class SIPViaSet
     {
-        private static string m_CRLF = SIPConstants.CRLF;
+        public static string m_CRLF = SIPConstants.CRLF;
 
-        private List<SIPViaHeader> m_viaHeaders = new List<SIPViaHeader>();
+        public List<SIPViaHeader> m_viaHeaders = new List<SIPViaHeader>();
 
         public int Length
         {
@@ -1301,8 +1301,8 @@ namespace SIPSorcery.SIP
     {
         public const int DEFAULT_CSEQ = 100;
 
-        private static ILogger logger = Log.Logger;
-        private static string m_CRLF = SIPConstants.CRLF;
+        public static ILogger logger = Log.Logger;
+        public static string m_CRLF = SIPConstants.CRLF;
 
         // RFC SIP headers.
         public string Accept;
@@ -1416,7 +1416,7 @@ namespace SIPSorcery.SIP
             Initialise(contactList, from, to, cseq, callId);
         }
 
-        private void Initialise(List<SIPContactHeader> contact, SIPFromHeader from, SIPToHeader to, int cseq, string callId)
+        public void Initialise(List<SIPContactHeader> contact, SIPFromHeader from, SIPToHeader to, int cseq, string callId)
         {
             if (from == null)
             {
@@ -2165,7 +2165,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private void Validate()
+        public void Validate()
         {
             if (Vias == null || Vias.Length == 0)
             {

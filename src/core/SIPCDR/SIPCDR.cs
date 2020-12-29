@@ -36,8 +36,8 @@ namespace SIPSorcery.SIP
     [DataContract]
     public class SIPCDR
     {
-        private static ILogger logger = Log.Logger;
-        private static string m_newLine = Environment.NewLine;
+        public static ILogger logger = Log.Logger;
+        public static string m_newLine = Environment.NewLine;
 
         public static event CDRReadyDelegate CDRCreated = c => { };
         public static event CDRReadyDelegate CDRUpdated = c => { };
@@ -71,7 +71,7 @@ namespace SIPSorcery.SIP
         [DataMember]
         public string ProgressReasonPhrase { get; set; }
 
-        private DateTimeOffset? m_progressTime;
+        public DateTimeOffset? m_progressTime;
         [DataMember]
         public DateTimeOffset? ProgressTime
         {
@@ -95,7 +95,7 @@ namespace SIPSorcery.SIP
         [DataMember]
         public string AnswerReasonPhrase { get; set; }
 
-        private DateTimeOffset? m_answerTime;
+        public DateTimeOffset? m_answerTime;
         [DataMember]
         public DateTimeOffset? AnswerTime
         {
@@ -113,7 +113,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private DateTimeOffset? m_hangupTime;
+        public DateTimeOffset? m_hangupTime;
         [DataMember]
         public DateTimeOffset? HangupTime
         {

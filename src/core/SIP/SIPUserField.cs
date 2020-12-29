@@ -42,9 +42,9 @@ namespace SIPSorcery.SIP
     [DataContract]
     public class SIPUserField
     {
-        private const char PARAM_TAG_DELIMITER = ';';
+        public const char PARAM_TAG_DELIMITER = ';';
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         [DataMember]
         public string Name;

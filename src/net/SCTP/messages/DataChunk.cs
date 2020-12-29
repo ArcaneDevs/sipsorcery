@@ -82,7 +82,7 @@ namespace SIPSorcery.Net.Sctp
     /// </remarks>
     public class DataChunk : Chunk, IComparer<DataChunk>, IComparable<DataChunk>
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public const int WEBRTCCONTROL = 50;
         public const int WEBRTCstring = 51;
@@ -96,20 +96,20 @@ namespace SIPSorcery.Net.Sctp
         public const int SINGLEFLAG = 3;
         public const int UNORDERED = 4;
 
-        private uint _tsn;
-        private int _streamId;
-        private int _sSeqNo;
-        private int _ppid;
-        private byte[] _data;
-        private int _dataOffset;
-        private int _dataLength;
+        public uint _tsn;
+        public int _streamId;
+        public int _sSeqNo;
+        public int _ppid;
+        public byte[] _data;
+        public int _dataOffset;
+        public int _dataLength;
 
-        private DataChannelOpen _open;
-        private InvalidDataChunkException _invalid;
-        private bool _gapAck;
-        private long _retryTime;
-        private int _retryCount;
-        private long _sentTime;
+        public DataChannelOpen _open;
+        public InvalidDataChunkException _invalid;
+        public bool _gapAck;
+        public long _retryTime;
+        public int _retryCount;
+        public long _sentTime;
 
         public DataChunk(byte flags, int length, ByteBuffer pkt) : base(ChunkType.DATA, flags, length, pkt)
         {
@@ -269,7 +269,7 @@ namespace SIPSorcery.Net.Sctp
             ret.Put(_data, _dataOffset, _dataLength);
         }
 
-        private int pad(int len)
+        public int pad(int len)
         {
             int mod = len % 4;
             int res = 0;

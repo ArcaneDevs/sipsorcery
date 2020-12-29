@@ -26,12 +26,12 @@ namespace SIPSorcery.Net
 {
     public class MediaStreamTrack
     {
-        private static ILogger logger = SIPSorcery.Sys.Log.Logger;
+        public static ILogger logger = SIPSorcery.Sys.Log.Logger;
 
         /// <summary>
         /// The type of media stream represented by this track. Must be audio or video.
         /// </summary>
-        public SDPMediaTypesEnum Kind { get; private set; }
+        public SDPMediaTypesEnum Kind { get; set; }
 
         /// <summary>
         /// The value used in the RTP Synchronisation Source header field for media packets
@@ -79,7 +79,7 @@ namespace SIPSorcery.Net
         /// added as receive only video source then when after on and off hold it needs to
         /// be known that the track reverts receive only rather than sendrecv.
         /// </summary>
-        public MediaStreamStatusEnum DefaultStreamStatus { get; private set; }
+        public MediaStreamStatusEnum DefaultStreamStatus { get; set; }
 
         /// <summary>
         /// Holds the stream state of the track.
@@ -94,7 +94,7 @@ namespace SIPSorcery.Net
         /// </summary>
         public Dictionary<uint, SDPSsrcAttribute> SdpSsrc { get; set; } = new Dictionary<uint, SDPSsrcAttribute>();
 
-        private uint _maxBandwith = 0;
+        public uint _maxBandwith = 0;
 
         /// <summary>
         /// If set to a non-zero value for local tracks then a Transport Independent Bandwidth (TIAS) attribute

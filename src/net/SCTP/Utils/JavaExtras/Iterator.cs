@@ -31,7 +31,9 @@ namespace SCTP4CS.Utils
         public void remove()
         {
             if (dict.ContainsKey(lastKey))
+            {
                 dict.Remove(lastKey);
+            }
         }
     }
 

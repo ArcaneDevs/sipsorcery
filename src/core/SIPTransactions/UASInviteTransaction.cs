@@ -27,7 +27,7 @@ namespace SIPSorcery.SIP
     /// </summary>
     public class UASInviteTransaction : SIPTransaction
     {
-        private static string m_sipServerAgent = SIPConstants.SIP_USERAGENT_STRING;
+        public static string m_sipServerAgent = SIPConstants.SIP_USERAGENT_STRING;
 
         /// <summary>
         /// The local tag is set on the To SIP header and forms part of the information used to identify a SIP dialog.
@@ -89,12 +89,12 @@ namespace SIPSorcery.SIP
             sipTransport.AddTransaction(this);
         }
 
-        private Task<SocketError> UASInviteTransaction_OnAckRequestReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPRequest sipRequest)
+        public Task<SocketError> UASInviteTransaction_OnAckRequestReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPRequest sipRequest)
         {
             return OnAckReceived?.Invoke(localSIPEndPoint, remoteEndPoint, this, sipRequest);
         }
 
-        private void UASInviteTransaction_TransactionRemoved(SIPTransaction transaction)
+        public void UASInviteTransaction_TransactionRemoved(SIPTransaction transaction)
         {
             // Remove event handlers.
             UASInviteTransactionCancelled = null;
@@ -103,19 +103,19 @@ namespace SIPSorcery.SIP
             CDR = null;
         }
 
-        private void UASInviteTransaction_TransactionTimedOut(SIPTransaction sipTransaction)
+        public void UASInviteTransaction_TransactionTimedOut(SIPTransaction sipTransaction)
         {
             UASInviteTransactionTimedOut?.Invoke(this);
             CDR?.TimedOut();
         }
 
-        private Task<SocketError> UASInviteTransaction_TransactionResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
+        public Task<SocketError> UASInviteTransaction_TransactionResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
         {
             logger.LogWarning("UASInviteTransaction received unexpected response, " + sipResponse.ReasonPhrase + " from " + remoteEndPoint.ToString() + ", ignoring.");
             return Task.FromResult(SocketError.Fault);
         }
 
-        private Task<SocketError> UASInviteTransaction_TransactionRequestReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPRequest sipRequest)
+        public Task<SocketError> UASInviteTransaction_TransactionRequestReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPRequest sipRequest)
         {
             try
             {

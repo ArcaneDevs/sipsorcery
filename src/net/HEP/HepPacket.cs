@@ -70,8 +70,8 @@ namespace SIPSorcery.Net
 
     public class HepChunk
     {
-        private const ushort GENERIC_VENDOR_ID = 0x0000;  // Vendor ID for the default chunk types.
-        private const ushort MINIMUM_CHUNK_LENGTH = 6;
+        public const ushort GENERIC_VENDOR_ID = 0x0000;  // Vendor ID for the default chunk types.
+        public const ushort MINIMUM_CHUNK_LENGTH = 6;
 
         /// <summary>
         /// Creates the initial buffer for the HEP packet and sets the vendor, chunk type ID and length fields.
@@ -80,7 +80,7 @@ namespace SIPSorcery.Net
         /// <param name="chunkType">The chunk type to set in the serialised chunk.</param>
         /// <param name="length">The value to set in the length field of the serialised chunk.</param>
         /// <returns>A buffer that contains the serialised chunk EXCEPT for the payload.</returns>
-        private static byte[] InitBuffer(ChunkTypeEnum chunkType, ushort length)
+        public static byte[] InitBuffer(ChunkTypeEnum chunkType, ushort length)
         {
             byte[] buf = new byte[length];
             if (BitConverter.IsLittleEndian)
@@ -195,12 +195,12 @@ namespace SIPSorcery.Net
     /// </summary>
     public class HepPacket
     {
-        private const int MAX_HEP_PACKET_LENGTH = 1460;
+        public const int MAX_HEP_PACKET_LENGTH = 1460;
 
         /// <summary>
         /// All the SIP protocols except UDP use TCP as the underlying transport protocol.
         /// </summary>
-        private static byte GetProtocolNumber(SIPProtocolsEnum sipProtocol)
+        public static byte GetProtocolNumber(SIPProtocolsEnum sipProtocol)
         {
             switch (sipProtocol)
             {

@@ -44,7 +44,7 @@ namespace SIPSorcery.Net.Sctp
 		 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 		 */
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         static int MTU = 1500;
         ushort _srcPort;
@@ -52,7 +52,7 @@ namespace SIPSorcery.Net.Sctp
         int _verTag;
         uint _chksum;
         List<Chunk> _chunks;
-        private static int SUMOFFSET = 8;
+        public static int SUMOFFSET = 8;
 
         /**
 		 * Constructor used to parse an incoming packet
@@ -143,7 +143,7 @@ namespace SIPSorcery.Net.Sctp
             return buf.Skip(off).Take(len).ToArray().HexStr(separator);
         }
 
-        private List<Chunk> mkChunks(ByteBuffer pkt)
+        public List<Chunk> mkChunks(ByteBuffer pkt)
         {
             List<Chunk> ret = new List<Chunk>();
             Chunk next = null;
@@ -287,7 +287,7 @@ namespace SIPSorcery.Net.Sctp
 
 		 */
 
-        private void reflectedVerify(int cno, Association ass)
+        public void reflectedVerify(int cno, Association ass)
         {
             Chunk chunk = _chunks[cno];
             bool t = ((Chunk.TBIT & chunk._flags) > 0);
@@ -352,7 +352,7 @@ namespace SIPSorcery.Net.Sctp
             }
         }
 
-        private int findChunk(ChunkType bty)
+        public int findChunk(ChunkType bty)
         {
             int ret = 0;
             foreach (Chunk c in _chunks)

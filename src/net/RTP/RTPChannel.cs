@@ -45,15 +45,15 @@ namespace SIPSorcery.Net
         /// MTU is 1452 bytes so this should be heaps.
         /// TODO: What about fragmented UDP packets that are put back together by the OS?
         /// </summary>
-        private const int RECEIVE_BUFFER_SIZE = 2048;
+        public const int RECEIVE_BUFFER_SIZE = 2048;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private readonly Socket m_udpSocket;
-        private byte[] m_recvBuffer;
-        private bool m_isClosed;
-        private IPEndPoint m_localEndPoint;
-        private AddressFamily m_addressFamily;
+        public readonly Socket m_udpSocket;
+        public byte[] m_recvBuffer;
+        public bool m_isClosed;
+        public IPEndPoint m_localEndPoint;
+        public AddressFamily m_addressFamily;
 
         /// <summary>
         /// Fires when a new packet has been received on the UDP socket.
@@ -107,7 +107,7 @@ namespace SIPSorcery.Net
         /// Handler for end of the begin receive call.
         /// </summary>
         /// <param name="ar">Contains the results of the receive.</param>
-        private void EndReceiveFrom(IAsyncResult ar)
+        public void EndReceiveFrom(IAsyncResult ar)
         {
             try
             {
@@ -222,14 +222,14 @@ namespace SIPSorcery.Net
     /// </summary>
     public class RTPChannel : IDisposable
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
         protected UdpReceiver m_rtpReceiver;
-        private Socket m_controlSocket;
+        public Socket m_controlSocket;
         protected UdpReceiver m_controlReceiver;
-        private bool m_started = false;
-        private bool m_isClosed;
+        public bool m_started = false;
+        public bool m_isClosed;
 
-        public Socket RtpSocket { get; private set; }
+        public Socket RtpSocket { get; set; }
 
         /// <summary>
         /// The last remote end point an RTP packet was sent to or received from. Used for 
@@ -241,27 +241,27 @@ namespace SIPSorcery.Net
         /// The last remote end point an RTCP packet was sent to or received from. Used for
         /// reporting purposes only.
         /// </summary>
-        internal IPEndPoint LastControlDestination { get; private set; }
+        internal IPEndPoint LastControlDestination { get; set; }
 
         /// <summary>
         /// The local port we are listening for RTP (and whatever else is multiplexed) packets on.
         /// </summary>
-        public int RTPPort { get; private set; }
+        public int RTPPort { get; set; }
 
         /// <summary>
         /// The local end point the RTP socket is listening on.
         /// </summary>
-        public IPEndPoint RTPLocalEndPoint { get; private set; }
+        public IPEndPoint RTPLocalEndPoint { get; set; }
 
         /// <summary>
         /// The local port we are listening for RTCP packets on.
         /// </summary>
-        public int ControlPort { get; private set; }
+        public int ControlPort { get; set; }
 
         /// <summary>
         /// The local end point the control socket is listening on.
         /// </summary>
-        public IPEndPoint ControlLocalEndPoint { get; private set; }
+        public IPEndPoint ControlLocalEndPoint { get; set; }
 
         /// <summary>
         /// Returns true if the RTP socket supports dual mode IPv4 and IPv6. If the control
@@ -431,7 +431,9 @@ namespace SIPSorcery.Net
 
                     //Prevent Send to IPV4 while socket is IPV6 (Mono Error)
                     if (dstEndPoint.AddressFamily == AddressFamily.InterNetwork && sendSocket.AddressFamily != dstEndPoint.AddressFamily)
+                    {
                         dstEndPoint = new IPEndPoint(dstEndPoint.Address.MapToIPv6(), dstEndPoint.Port);
+                    }
 
 
                     sendSocket.BeginSendTo(buffer, 0, buffer.Length, SocketFlags.None, dstEndPoint, EndSendTo, sendSocket);
@@ -457,7 +459,7 @@ namespace SIPSorcery.Net
         /// Ends an async send on one of the channel's sockets.
         /// </summary>
         /// <param name="ar">The async result to complete the send with.</param>
-        private void EndSendTo(IAsyncResult ar)
+        public void EndSendTo(IAsyncResult ar)
         {
             try
             {
@@ -504,7 +506,7 @@ namespace SIPSorcery.Net
         /// <param name="localPort">The local port it was received on.</param>
         /// <param name="remoteEndPoint">The remote end point of the sender.</param>
         /// <param name="packet">The raw packet received which should always be an RTCP packet.</param>
-        private void OnControlPacketReceived(UdpReceiver receiver, int localPort, IPEndPoint remoteEndPoint, byte[] packet)
+        public void OnControlPacketReceived(UdpReceiver receiver, int localPort, IPEndPoint remoteEndPoint, byte[] packet)
         {
             LastControlDestination = remoteEndPoint;
             OnControlDataReceived?.Invoke(localPort, remoteEndPoint, packet);

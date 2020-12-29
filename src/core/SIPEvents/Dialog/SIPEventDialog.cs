@@ -24,8 +24,8 @@ namespace SIPSorcery.SIP
 {
     public class SIPEventDialog
     {
-        private static readonly string m_dialogXMLNS = SIPEventConsts.DIALOG_XML_NAMESPACE_URN;
-        private static readonly string m_sipsorceryXMLNS = SIPEventConsts.SIPSORCERY_DIALOG_XML_NAMESPACE_URN;
+        public static readonly string m_dialogXMLNS = SIPEventConsts.DIALOG_XML_NAMESPACE_URN;
+        public static readonly string m_sipsorceryXMLNS = SIPEventConsts.SIPSORCERY_DIALOG_XML_NAMESPACE_URN;
 
         public string ID;                               // The ID is a only mandatory attribute for a dialog element.
         public string CallID;
@@ -41,7 +41,7 @@ namespace SIPSorcery.SIP
         public string BridgeID;                             // SIPSorcery custom field that is used to show when two dialogues are bridged together by the B2BUA.
         public bool HasBeenSent;                            // Can be used by a subscription manager to indicate the event has been included in a notify request.
 
-        private SIPEventDialog()
+        public SIPEventDialog()
         { }
 
         public SIPEventDialog(string id, string state, SIPDialogue sipDialogue)

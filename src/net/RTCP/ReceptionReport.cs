@@ -173,14 +173,14 @@ namespace SIPSorcery.Net
     /// </summary>
     public class ReceptionReport
     {
-        //private const int MAX_DROPOUT = 3000;
-        //private const int MAX_MISORDER = 100;
-        //private const int MIN_SEQUENTIAL = 2;
-        private const int RTP_SEQ_MOD = 1 << 16;
-        //private const int MAX_POSITIVE_LOSS = 0x7fffff;
-        //private const int MAX_NEGATIVE_LOSS = 0x800000;
-        private const int SEQ_NUM_WRAP_LOW = 256;
-        private const int SEQ_NUM_WRAP_HIGH = 65280;
+        //public const int MAX_DROPOUT = 3000;
+        //public const int MAX_MISORDER = 100;
+        //public const int MIN_SEQUENTIAL = 2;
+        public const int RTP_SEQ_MOD = 1 << 16;
+        //public const int MAX_POSITIVE_LOSS = 0x7fffff;
+        //public const int MAX_NEGATIVE_LOSS = 0x800000;
+        public const int SEQ_NUM_WRAP_LOW = 256;
+        public const int SEQ_NUM_WRAP_HIGH = 65280;
 
         /// <summary>
         /// Data source being reported.
@@ -190,62 +190,62 @@ namespace SIPSorcery.Net
         /// <summary>
         /// highest seq. number seen
         /// </summary>
-        private ushort m_max_seq;
+        public ushort m_max_seq;
 
         /// <summary>
         /// Increments by UInt16.MaxValue each time the sequence number wraps around.
         /// </summary>
-        private ulong m_cycles;
+        public ulong m_cycles;
 
         /// <summary>
         /// The first sequence number received.
         /// </summary>
-        private uint m_base_seq;
+        public uint m_base_seq;
 
         /// <summary>
         /// last 'bad' seq number + 1.
         /// </summary>
-        private uint m_bad_seq;
+        public uint m_bad_seq;
 
         /// <summary>
         /// sequ. packets till source is valid.
         /// </summary>
-        //private uint m_probation;
+        //public uint m_probation;
 
         /// <summary>
         /// packets received.
         /// </summary>
-        private uint m_received;
+        public uint m_received;
 
         /// <summary>
         /// packet expected at last interval.
         /// </summary>
-        private ulong m_expected_prior;
+        public ulong m_expected_prior;
 
         /// <summary>
         /// packet received at last interval.
         /// </summary>
-        private uint m_received_prior;
+        public uint m_received_prior;
 
         /// <summary>
         /// relative trans time for prev pkt.
         /// </summary>
-        private uint m_transit;
+        public uint m_transit;
 
         /// <summary>
         /// Estimated jitter.
         /// </summary>
-        private uint m_jitter;
+        public uint m_jitter;
 
         /// <summary>
         /// Last SR packet from this source.
         /// </summary>
-        private uint m_lastSenderReportTimestamp;
+        public uint m_lastSenderReportTimestamp;
 
         /// <summary>
         /// Datetime the last sender report was received at.
         /// </summary>
-        private DateTime m_lastSenderReportReceivedAt = DateTime.MinValue;
+        public DateTime m_lastSenderReportReceivedAt = DateTime.MinValue;
 
         /// <summary>
         /// Creates a new Reception Report object.

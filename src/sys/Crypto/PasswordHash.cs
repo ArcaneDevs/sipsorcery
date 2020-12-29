@@ -23,10 +23,10 @@ namespace SIPSorcery.Sys
 {
     public class PasswordHash
     {
-        private const int RFC289_MINIMUM_ITERATIONS = 5000;     // The minimum number of iterations to use when deriving the password hash. This slows the algorithm down to help mitigate against brute force and rainbow attacks. 
-        private const int SALT_SIZE = 16;
+        public const int RFC289_MINIMUM_ITERATIONS = 5000;     // The minimum number of iterations to use when deriving the password hash. This slows the algorithm down to help mitigate against brute force and rainbow attacks. 
+        public const int SALT_SIZE = 16;
 
-        private static RNGCryptoServiceProvider _randomProvider = new RNGCryptoServiceProvider();
+        public static RNGCryptoServiceProvider _randomProvider = new RNGCryptoServiceProvider();
 
         /// <summary>
         /// Generates a salt that can be used to generate a password hash. The salt is a combination of a block of bytes to represent the 

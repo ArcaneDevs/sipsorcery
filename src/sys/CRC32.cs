@@ -10,10 +10,10 @@ namespace SIPSorcery.Sys
         public const UInt32 DefaultPolynomial = 0xedb88320;
         public const UInt32 DefaultSeed = 0xffffffff;
 
-        private UInt32 hash;
-        private UInt32 seed;
-        private UInt32[] table;
-        private static UInt32[] defaultTable;
+        public UInt32 hash;
+        public UInt32 seed;
+        public UInt32[] table;
+        public static UInt32[] defaultTable;
 
         public Crc32()
         {
@@ -66,41 +66,55 @@ namespace SIPSorcery.Sys
             return ~CalculateHash(InitializeTable(polynomial), seed, buffer, 0, buffer.Length);
         }
 
-        private static UInt32[] InitializeTable(UInt32 polynomial)
+        public static UInt32[] InitializeTable(UInt32 polynomial)
         {
             if (polynomial == DefaultPolynomial && defaultTable != null)
+            {
                 return defaultTable;
+            }
 
             UInt32[] createTable = new UInt32[256];
             for (int i = 0; i < 256; i++)
             {
                 UInt32 entry = (UInt32)i;
                 for (int j = 0; j < 8; j++)
+                {
                     if ((entry & 1) == 1)
+                    {
                         entry = (entry >> 1) ^ polynomial;
+                    }
                     else
+                    {
                         entry = entry >> 1;
+                    }
+                }
+
                 createTable[i] = entry;
             }
 
             if (polynomial == DefaultPolynomial)
+            {
                 defaultTable = createTable;
+            }
 
             return createTable;
         }
 
-        private static UInt32 CalculateHash(UInt32[] table, UInt32 seed, byte[] buffer, int start, int size)
+        public static UInt32 CalculateHash(UInt32[] table, UInt32 seed, byte[] buffer, int start, int size)
         {
             UInt32 crc = seed;
             for (int i = start; i < size; i++)
+            {
                 unchecked
                 {
                     crc = (crc >> 8) ^ table[buffer[i] ^ crc & 0xff];
                 }
+            }
+
             return crc;
         }
 
-        private byte[] UInt32ToBigEndianBytes(UInt32 x)
+        public byte[] UInt32ToBigEndianBytes(UInt32 x)
         {
             return new byte[] {
             (byte)((x >> 24) & 0xff),

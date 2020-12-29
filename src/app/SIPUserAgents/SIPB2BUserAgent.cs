@@ -30,13 +30,13 @@ namespace SIPSorcery.SIP.App
     /// </summary>
     public class SIPB2BUserAgent : ISIPServerUserAgent, ISIPClientUserAgent
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private static SIPEndPoint _blackholeEndPoint = new SIPEndPoint(SIPProtocolsEnum.udp, SIPTransport.BlackholeAddress, 0);
+        public static SIPEndPoint _blackholeEndPoint = new SIPEndPoint(SIPProtocolsEnum.udp, SIPTransport.BlackholeAddress, 0);
 
-        //private SIPMonitorLogDelegate Log_External;
-        //private QueueNewCallDelegate QueueNewCall_External;
-        private SIPTransport m_sipTransport;
+        //public SIPMonitorLogDelegate Log_External;
+        //public QueueNewCallDelegate QueueNewCall_External;
+        public SIPTransport m_sipTransport;
 
         // Real-time call control properties (not used by this user agent).
         //public string AccountCode { get; set; }
@@ -45,10 +45,10 @@ namespace SIPSorcery.SIP.App
         //public decimal Rate { get; set; }
 
         // UAC fields.
-        private string m_uacOwner;
-        private string m_uacAdminMemberId;
-        private UACInviteTransaction m_uacTransaction;
-        private SIPCallDescriptor m_uacCallDescriptor;
+        public string m_uacOwner;
+        public string m_uacAdminMemberId;
+        public UACInviteTransaction m_uacTransaction;
+        public SIPCallDescriptor m_uacCallDescriptor;
         public string Owner { get { return m_uacOwner; } }
         public string AdminMemberId { get { return m_uacAdminMemberId; } }
         public UACInviteTransaction ServerTransaction { get { return m_uacTransaction; } }
@@ -63,7 +63,7 @@ namespace SIPSorcery.SIP.App
         public event SIPCallResponseDelegate CallAnswered;
 
         // UAS fields.
-        private UASInviteTransaction m_uasTransaction;
+        public UASInviteTransaction m_uasTransaction;
         public bool IsB2B { get { return true; } }
         public bool IsAuthenticated { get { return false; } set { } }
         public bool IsInvite
@@ -112,12 +112,12 @@ namespace SIPSorcery.SIP.App
         public event SIPUASStateChangedDelegate UASStateChanged;
 
         // UAS and UAC field.
-        private SIPDialogue m_sipDialogue;
+        public SIPDialogue m_sipDialogue;
         public SIPDialogue SIPDialogue { get { return m_sipDialogue; } }
 
         public UASInviteTransaction ClientTransaction => throw new NotImplementedException();
 
-        //private SIPAccount m_destinationSIPAccount;
+        //public SIPAccount m_destinationSIPAccount;
 
         public SIPB2BUserAgent(
             //SIPMonitorLogDelegate logDelegate,
@@ -400,7 +400,7 @@ namespace SIPSorcery.SIP.App
 
         #endregion
 
-        private SIPRequest GetInviteRequest(string callURI, SIPCallDescriptor sipCallDescriptor)
+        public SIPRequest GetInviteRequest(string callURI, SIPCallDescriptor sipCallDescriptor)
         {
             SIPFromHeader fromHeader = sipCallDescriptor.GetFromHeader();
 

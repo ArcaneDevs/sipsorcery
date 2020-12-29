@@ -52,15 +52,15 @@ namespace SIPSorcery.Net.Sctp
     public class InitAckChunk : Chunk
     {
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         int _initiateTag;
         uint _adRecWinCredit;
         int _numOutStreams;
         int _numInStreams;
         uint _initialTSN;
-        private byte[] _cookie;
-        private byte[] _supportedExtensions;
+        public byte[] _cookie;
+        public byte[] _supportedExtensions;
 
         public InitAckChunk() : base(ChunkType.INITACK) { }
 

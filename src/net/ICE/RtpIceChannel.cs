@@ -105,13 +105,13 @@ namespace SIPSorcery.Net
     /// </remarks>
     public class RtpIceChannel : RTPChannel
     {
-        private static DnsClient.LookupClient _dnsLookupClient;
+        public static DnsClient.LookupClient _dnsLookupClient;
 
-        private const int ICE_UFRAG_LENGTH = 4;
-        private const int ICE_PASSWORD_LENGTH = 24;
-        private const int MAX_CHECKLIST_ENTRIES = 25;       // Maximum number of entries that can be added to the checklist of candidate pairs.
-        private const string MDNS_TLD = ".local";           // Top Level Domain name for multicast lookups as per RFC6762.
-        private const int CONNECTED_CHECK_PERIOD = 3;       // The period in seconds to send STUN connectivity checks once connected. 
+        public const int ICE_UFRAG_LENGTH = 4;
+        public const int ICE_PASSWORD_LENGTH = 24;
+        public const int MAX_CHECKLIST_ENTRIES = 25;       // Maximum number of entries that can be added to the checklist of candidate pairs.
+        public const string MDNS_TLD = ".local";           // Top Level Domain name for multicast lookups as per RFC6762.
+        public const int CONNECTED_CHECK_PERIOD = 3;       // The period in seconds to send STUN connectivity checks once connected. 
         public const string SDP_MID = "0";
         public const int SDP_MLINE_INDEX = 0;
 
@@ -121,9 +121,9 @@ namespace SIPSorcery.Net
         /// <remarks>
         /// See https://tools.ietf.org/html/rfc8445#section-14.
         /// </remarks>
-        private const int Ta = 50;
+        public const int Ta = 50;
 
-        private static readonly ILogger logger = Log.Logger;
+        public static readonly ILogger logger = Log.Logger;
 
         /// <summary>
         /// The period in seconds after which a connection will be flagged as disconnected.
@@ -135,22 +135,22 @@ namespace SIPSorcery.Net
         /// </summary>
         public static int FAILED_TIMEOUT_PERIOD = 16;
 
-        private IPAddress _bindAddress;
-        private List<RTCIceServer> _iceServers;
-        private RTCIceTransportPolicy _policy;
+        public IPAddress _bindAddress;
+        public List<RTCIceServer> _iceServers;
+        public RTCIceTransportPolicy _policy;
 
-        private DateTime _startedGatheringAt = DateTime.MinValue;
-        private DateTime _connectedAt = DateTime.MinValue;
+        public DateTime _startedGatheringAt = DateTime.MinValue;
+        public DateTime _connectedAt = DateTime.MinValue;
 
         internal ConcurrentDictionary<STUNUri, IceServer> _iceServerConnections;
 
-        private IceServer _activeIceServer;
+        public IceServer _activeIceServer;
 
-        public RTCIceComponent Component { get; private set; }
+        public RTCIceComponent Component { get; set; }
 
-        public RTCIceGatheringState IceGatheringState { get; private set; } = RTCIceGatheringState.@new;
+        public RTCIceGatheringState IceGatheringState { get; set; } = RTCIceGatheringState.@new;
 
-        public RTCIceConnectionState IceConnectionState { get; private set; } = RTCIceConnectionState.@new;
+        public RTCIceConnectionState IceConnectionState { get; set; } = RTCIceConnectionState.@new;
 
         /// <summary>
         /// True if we are the "controlling" ICE agent (we initiated the communications) or
@@ -169,14 +169,14 @@ namespace SIPSorcery.Net
             }
         }
 
-        private ConcurrentBag<RTCIceCandidate> _candidates = new ConcurrentBag<RTCIceCandidate>();
+        public ConcurrentBag<RTCIceCandidate> _candidates = new ConcurrentBag<RTCIceCandidate>();
         internal List<RTCIceCandidate> _remoteCandidates = new List<RTCIceCandidate>();
 
         /// <summary>
         /// A queue of remote ICE candidates that have been added to the session and that
         /// are waiting to be processed to determine if they will create a new checklist entry.
         /// </summary>
-        private ConcurrentQueue<RTCIceCandidate> _pendingRemoteCandidates = new ConcurrentQueue<RTCIceCandidate>();
+        public ConcurrentQueue<RTCIceCandidate> _pendingRemoteCandidates = new ConcurrentQueue<RTCIceCandidate>();
 
         /// <summary>
         /// The state of the checklist as the ICE checks are carried out.
@@ -213,7 +213,7 @@ namespace SIPSorcery.Net
         /// If the connectivity checks are successful this will hold the entry that was 
         /// nominated by the connection check process.
         /// </summary>
-        public ChecklistEntry NominatedEntry { get; private set; }
+        public ChecklistEntry NominatedEntry { get; set; }
 
         /// <summary>
         /// Retransmission timer for STUN transactions, measured in milliseconds.
@@ -238,13 +238,13 @@ namespace SIPSorcery.Net
 
         public readonly string LocalIceUser;
         public readonly string LocalIcePassword;
-        public string RemoteIceUser { get; private set; }
-        public string RemoteIcePassword { get; private set; }
+        public string RemoteIceUser { get; set; }
+        public string RemoteIcePassword { get; set; }
 
-        private bool _closed = false;
-        private Timer _connectivityChecksTimer;
-        private Timer _processIceServersTimer;
-        private DateTime _checlistStartedAt = DateTime.MinValue;
+        public bool _closed = false;
+        public Timer _connectivityChecksTimer;
+        public Timer _processIceServersTimer;
+        public DateTime _checlistStartedAt = DateTime.MinValue;
 
         public event Action<RTCIceCandidate> OnIceCandidate;
         public event Action<RTCIceConnectionState> OnIceConnectionStateChange;
@@ -529,7 +529,7 @@ namespace SIPSorcery.Net
         ///   cause media packets to take the same route as the
         ///   application's HTTP traffic.  If an enterprise TURN server is
         ///   present, the preferred route MUST be through this TURN
-        ///   server.Once an interface has been chosen, the private IPv4
+        ///   server.Once an interface has been chosen, the public IPv4
         ///   and IPv6 addresses associated with this interface MUST be
         ///   discovered and provided to the application as host
         ///   candidates.This ensures that direct connections can still
@@ -539,7 +539,7 @@ namespace SIPSorcery.Net
         /// </summary>
         /// <remarks>See https://tools.ietf.org/html/rfc8445#section-5.1.1.1</remarks>
         /// <returns>A list of "host" ICE candidates for the local machine.</returns>
-        private List<RTCIceCandidate> GetHostCandidates()
+        public List<RTCIceCandidate> GetHostCandidates()
         {
             List<RTCIceCandidate> hostCandidates = new List<RTCIceCandidate>();
             RTCIceCandidateInit init = new RTCIceCandidateInit { usernameFragment = LocalIceUser };
@@ -615,7 +615,7 @@ namespace SIPSorcery.Net
         /// servers will be added to the list of ICE servers being checked.
         /// </summary>
         /// <remarks>See https://tools.ietf.org/html/rfc8445#section-5.1.1.2</remarks>
-        private void InitialiseIceServers(List<RTCIceServer> iceServers)
+        public void InitialiseIceServers(List<RTCIceServer> iceServers)
         {
             _iceServerConnections = new ConcurrentDictionary<STUNUri, IceServer>();
 
@@ -679,7 +679,7 @@ namespace SIPSorcery.Net
         /// is provided it will take precedence as it can potentially supply both Server Reflexive 
         /// and Relay candidates.
         /// </summary>
-        private void CheckIceServers(Object state)
+        public void CheckIceServers(Object state)
         {
             if (IceGatheringState == RTCIceGatheringState.complete ||
                 !(IceConnectionState == RTCIceConnectionState.@new || IceConnectionState == RTCIceConnectionState.checking))
@@ -812,7 +812,7 @@ namespace SIPSorcery.Net
         /// </summary>
         /// <param name="iceServer">The ICE server that the initial checks have been completed
         /// for.</param>
-        private async Task AddCandidatesForIceServer(IceServer iceServer)
+        public async Task AddCandidatesForIceServer(IceServer iceServer)
         {
             RTCIceCandidateInit init = new RTCIceCandidateInit
             {
@@ -873,7 +873,7 @@ namespace SIPSorcery.Net
         /// <param name="localCandidate">The local candidate for the checklist entry.</param>
         /// <param name="remoteCandidate">The remote candidate to attempt to create a new checklist
         /// entry for.</param>
-        private async Task UpdateChecklist(RTCIceCandidate localCandidate, RTCIceCandidate remoteCandidate)
+        public async Task UpdateChecklist(RTCIceCandidate localCandidate, RTCIceCandidate remoteCandidate)
         {
             if (localCandidate == null)
             {
@@ -992,7 +992,7 @@ namespace SIPSorcery.Net
         /// the entry may not be added or may replace an existing entry.
         /// </summary>
         /// <param name="entry">The new entry to attempt to add to the checklist.</param>
-        private void AddChecklistEntry(ChecklistEntry entry)
+        public void AddChecklistEntry(ChecklistEntry entry)
         {
             // Check if there is already an entry that matches the remote candidate.
             // Note: The implementation in this class relies binding the socket used for all
@@ -1039,7 +1039,7 @@ namespace SIPSorcery.Net
         /// <summary>
         /// The periodic logic to run to establish or monitor an ICE connection.
         /// </summary>
-        private void DoConnectivityCheck(Object stateInfo)
+        public void DoConnectivityCheck(Object stateInfo)
         {
             switch (IceConnectionState)
             {
@@ -1068,7 +1068,7 @@ namespace SIPSorcery.Net
         /// <remarks>
         /// The scheduling mechanism for ICE is specified in https://tools.ietf.org/html/rfc8445#section-6.1.4.
         /// </remarks>
-        private async void ProcessChecklist()
+        public async void ProcessChecklist()
         {
             if (IceConnectionState == RTCIceConnectionState.@new ||
                 IceConnectionState == RTCIceConnectionState.checking)
@@ -1176,7 +1176,7 @@ namespace SIPSorcery.Net
         /// indicates the connection checks were successful.
         /// </summary>
         /// <param name="entry">The checklist entry that was nominated.</param>
-        private void SetNominatedEntry(ChecklistEntry entry)
+        public void SetNominatedEntry(ChecklistEntry entry)
         {
             if (NominatedEntry == null)
             {
@@ -1219,7 +1219,7 @@ namespace SIPSorcery.Net
         ///   communicate with.
         /// - Packets need to be sent and received as TURN Channel Data messages.
         /// </remarks>
-        private void SendConnectivityCheck(ChecklistEntry candidatePair, bool setUseCandidate)
+        public void SendConnectivityCheck(ChecklistEntry candidatePair, bool setUseCandidate)
         {
             if (candidatePair.FirstCheckSentAt == DateTime.MinValue)
             {
@@ -1271,7 +1271,7 @@ namespace SIPSorcery.Net
         /// <param name="candidatePair">The candidate pair identifying the remote peer to send the STUN Binding Request
         /// to.</param>
         /// <param name="setUseCandidate">Set to true to add a "UseCandidate" attribute to the STUN request.</param>
-        private void SendSTUNBindingRequest(ChecklistEntry candidatePair, bool setUseCandidate)
+        public void SendSTUNBindingRequest(ChecklistEntry candidatePair, bool setUseCandidate)
         {
             STUNMessage stunRequest = new STUNMessage(STUNMessageTypesEnum.BindingRequest);
             stunRequest.Header.TransactionId = Encoding.ASCII.GetBytes(candidatePair.RequestTransactionID);
@@ -1311,7 +1311,7 @@ namespace SIPSorcery.Net
         /// as the current nominated, connected pair.
         /// </summary>
         /// <param name="candidatePair">The pair to send the connectivity check on.</param>
-        private void SendCheckOnConnectedPair(ChecklistEntry candidatePair)
+        public void SendCheckOnConnectedPair(ChecklistEntry candidatePair)
         {
             if (candidatePair == null)
             {
@@ -1456,7 +1456,7 @@ namespace SIPSorcery.Net
         /// <param name="remoteEndPoint">The end point the request was received from.</param>
         /// <param name="wasRelayed">True of the request was relayed via the TURN server in use
         /// by this ICE channel (i.e. the ICE server that this channel is acting as the client with).</param>
-        private void GotStunBindingRequest(STUNMessage bindingRequest, IPEndPoint remoteEndPoint, bool wasRelayed)
+        public void GotStunBindingRequest(STUNMessage bindingRequest, IPEndPoint remoteEndPoint, bool wasRelayed)
         {
             if (_policy == RTCIceTransportPolicy.relay && !wasRelayed)
             {
@@ -1584,7 +1584,7 @@ namespace SIPSorcery.Net
         /// </summary>
         /// <param name="transactionID">The STUN response transaction ID.</param>
         /// <returns>A checklist entry or null if there was no match.</returns>
-        private ChecklistEntry GetChecklistEntryForStunResponse(byte[] transactionID)
+        public ChecklistEntry GetChecklistEntryForStunResponse(byte[] transactionID)
         {
             string txID = Encoding.ASCII.GetString(transactionID);
             ChecklistEntry matchingChecklistEntry = null;
@@ -1603,7 +1603,7 @@ namespace SIPSorcery.Net
         /// </summary>
         /// <param name="transactionID">The transaction ID from the STUN response.</param>
         /// <returns>If found a matching state object or null if not.</returns>
-        private IceServer GetIceServerForTransactionID(byte[] transactionID)
+        public IceServer GetIceServerForTransactionID(byte[] transactionID)
         {
             if (_iceServerConnections == null || _iceServerConnections.Count == 0)
             {
@@ -1634,7 +1634,7 @@ namespace SIPSorcery.Net
         /// <param name="iceServer">The ICE server to send the request to.</param>
         /// <returns>The result of the send attempt. Note this is the return code from the
         /// socket send call and not the result code from the STUN response.</returns>
-        private SocketError SendStunBindingRequest(IceServer iceServer)
+        public SocketError SendStunBindingRequest(IceServer iceServer)
         {
             iceServer.OutstandingRequestsSent += 1;
             iceServer.LastRequestSentAt = DateTime.Now;
@@ -1674,7 +1674,7 @@ namespace SIPSorcery.Net
         /// </summary>
         /// <param name="iceServer">The TURN server to send the request to.</param>
         /// <returns>The result from the socket send (not the response code from the TURN server).</returns>
-        private SocketError SendTurnAllocateRequest(IceServer iceServer)
+        public SocketError SendTurnAllocateRequest(IceServer iceServer)
         {
             iceServer.OutstandingRequestsSent += 1;
             iceServer.LastRequestSentAt = DateTime.Now;
@@ -1718,7 +1718,7 @@ namespace SIPSorcery.Net
         /// <param name="iceServer">The ICE server to send the request to.</param>
         /// <param name="peerEndPoint">The peer end point to request the channel bind for.</param>
         /// <returns>The result from the socket send (not the response code from the TURN server).</returns>
-        private SocketError SendTurnCreatePermissionsRequest(string transactionID, IceServer iceServer, IPEndPoint peerEndPoint)
+        public SocketError SendTurnCreatePermissionsRequest(string transactionID, IceServer iceServer, IPEndPoint peerEndPoint)
         {
             STUNMessage permissionsRequest = new STUNMessage(STUNMessageTypesEnum.CreatePermission);
             permissionsRequest.Header.TransactionId = Encoding.ASCII.GetBytes(transactionID);
@@ -1754,7 +1754,7 @@ namespace SIPSorcery.Net
         /// Adds the authentication fields to a STUN request.
         /// </summary>
         /// <returns>The serialised STUN request.</returns>
-        private byte[] GetAuthenticatedStunRequest(STUNMessage stunRequest, string username, byte[] realm, string password, byte[] nonce)
+        public byte[] GetAuthenticatedStunRequest(STUNMessage stunRequest, string username, byte[] realm, string password, byte[] nonce)
         {
             stunRequest.Attributes.Add(new STUNAttribute(STUNAttributeTypesEnum.Nonce, nonce));
             stunRequest.Attributes.Add(new STUNAttribute(STUNAttributeTypesEnum.Realm, realm));
@@ -1818,7 +1818,7 @@ namespace SIPSorcery.Net
         /// <param name="buffer">The data to send to the peer.</param>
         /// <param name="relayEndPoint">The TURN server end point to send the relayed request to.</param>
         /// <returns></returns>
-        private SocketError SendRelay(RTPChannelSocketsEnum sendOn, IPEndPoint dstEndPoint, byte[] buffer, IPEndPoint relayEndPoint)
+        public SocketError SendRelay(RTPChannelSocketsEnum sendOn, IPEndPoint dstEndPoint, byte[] buffer, IPEndPoint relayEndPoint)
         {
             STUNMessage sendReq = new STUNMessage(STUNMessageTypesEnum.SendIndication);
             sendReq.AddXORPeerAddressAttribute(dstEndPoint.Address, dstEndPoint.Port);

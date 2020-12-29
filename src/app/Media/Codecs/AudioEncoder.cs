@@ -22,14 +22,14 @@ namespace SIPSorcery.Media
 {
     public class AudioEncoder : IAudioEncoder
     {
-        private const int G722_BIT_RATE = 64000;              // G722 sampling rate is 16KHz with bits per sample of 16.
+        public const int G722_BIT_RATE = 64000;              // G722 sampling rate is 16KHz with bits per sample of 16.
 
-        private G722Codec _g722Codec;
-        private G722CodecState _g722CodecState;
-        private G722Codec _g722Decoder;
-        private G722CodecState _g722DecoderState;
+        public G722Codec _g722Codec;
+        public G722CodecState _g722CodecState;
+        public G722Codec _g722Decoder;
+        public G722CodecState _g722DecoderState;
 
-        private List<AudioFormat> _supportedFormats = new List<AudioFormat>
+        public List<AudioFormat> _supportedFormats = new List<AudioFormat>
         {
             new AudioFormat(SDPWellKnownMediaFormatsEnum.PCMU),
             new AudioFormat(SDPWellKnownMediaFormatsEnum.PCMA),

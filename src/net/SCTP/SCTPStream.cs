@@ -37,18 +37,18 @@ namespace SIPSorcery.Net.Sctp
 		 - and I wonder if closures would do it better.
 		 */
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private SCTPStreamBehaviour _behave;
+        public SCTPStreamBehaviour _behave;
         protected Association _ass;
-        private int _sno;
-        private string _label;
-        private SortedArray<DataChunk> _stash;
-        private SCTPStreamListener _sl;
-        private int _nextMessageSeqIn;
-        private int _nextMessageSeqOut;
-        private bool closing;
-        private State state = State.OPEN;
+        public int _sno;
+        public string _label;
+        public SortedArray<DataChunk> _stash;
+        public SCTPStreamListener _sl;
+        public int _nextMessageSeqIn;
+        public int _nextMessageSeqOut;
+        public bool closing;
+        public State state = State.OPEN;
 
         public Action OnOpen;
 
@@ -78,7 +78,7 @@ namespace SIPSorcery.Net.Sctp
 
         abstract public void delivered(DataChunk d);
 
-        enum State
+        public enum State
         {
             CLOSED, INBOUNDONLY, OUTBOUNDONLY, OPEN
         }

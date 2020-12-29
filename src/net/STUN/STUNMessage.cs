@@ -26,22 +26,22 @@ namespace SIPSorcery.Net
 {
     public class STUNMessage
     {
-        private const int FINGERPRINT_XOR = 0x5354554e;
-        private const int MESSAGE_INTEGRITY_ATTRIBUTE_HMAC_LENGTH = 20;
-        private const int FINGERPRINT_ATTRIBUTE_CRC32_LENGTH = 4;
+        public const int FINGERPRINT_XOR = 0x5354554e;
+        public const int MESSAGE_INTEGRITY_ATTRIBUTE_HMAC_LENGTH = 20;
+        public const int FINGERPRINT_ATTRIBUTE_CRC32_LENGTH = 4;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         /// <summary>
         /// For parsed STUN messages this indicates whether a valid fingerprint
         /// as attached to the message.
         /// </summary>
-        public bool isFingerprintValid { get; private set; } = false;
+        public bool isFingerprintValid { get; set; } = false;
 
         /// <summary>
         /// For received STUN messages this is the raw buffer.
         /// </summary>
-        private byte[] _receivedBuffer;
+        public byte[] _receivedBuffer;
 
         public STUNHeader Header = new STUNHeader();
         public List<STUNAttribute> Attributes = new List<STUNAttribute>();

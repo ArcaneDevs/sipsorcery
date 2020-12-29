@@ -25,14 +25,14 @@ namespace SIPSorcery.Net
 {
     public class RtpVideoFramer
     {
-        private const int MAX_FRAME_SIZE = 65536;
+        public const int MAX_FRAME_SIZE = 65536;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private VideoCodecsEnum _codec;
-        private byte[] _currVideoFrame = new byte[MAX_FRAME_SIZE];
-        private int _currVideoFramePosn = 0;
-        private H264Depacketiser _h264Depacketiser;
+        public VideoCodecsEnum _codec;
+        public byte[] _currVideoFrame = new byte[MAX_FRAME_SIZE];
+        public int _currVideoFramePosn = 0;
+        public H264Depacketiser _h264Depacketiser;
 
         public RtpVideoFramer(VideoCodecsEnum codec)
         {

@@ -19,13 +19,13 @@ namespace SIPSorcery.SIP.App
 {
     public class SIPRequestAuthenticator
     {
-        private const int NONCE_REFRESH_SECONDS = 120;
+        public const int NONCE_REFRESH_SECONDS = 120;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private static string m_previousNoncePrefix = null;
-        private static string m_currentNoncePrefix = null;
-        private static DateTime m_lastNoncePrefixUpdate = DateTime.Now;
+        public static string m_previousNoncePrefix = null;
+        public static string m_currentNoncePrefix = null;
+        public static DateTime m_lastNoncePrefixUpdate = DateTime.Now;
 
         /// <summary>
         /// Authenticates a SIP request.
@@ -129,7 +129,7 @@ namespace SIPSorcery.SIP.App
             return m_currentNoncePrefix + Crypto.GetRandomInt().ToString();
         }
 
-        private static bool IsNonceStale(string nonce)
+        public static bool IsNonceStale(string nonce)
         {
             if (nonce.IsNullOrBlank())
             {

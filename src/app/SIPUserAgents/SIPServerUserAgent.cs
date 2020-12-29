@@ -29,22 +29,22 @@ namespace SIPSorcery.SIP.App
     /// </summary>
     public class SIPServerUserAgent : ISIPServerUserAgent
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private SIPAuthenticateRequestDelegate SIPAuthenticateRequest_External;
-        private GetSIPAccountDelegate GetSIPAccount_External;
+        public SIPAuthenticateRequestDelegate SIPAuthenticateRequest_External;
+        public GetSIPAccountDelegate GetSIPAccount_External;
 
-        private SIPTransport m_sipTransport;
-        private UASInviteTransaction m_uasTransaction;
-        private SIPEndPoint m_outboundProxy;                   // If the system needs to use an outbound proxy for every request this will be set and overrides any user supplied values.
-        private bool m_isAuthenticated;
-        private bool m_isCancelled;
-        private bool m_isHungup;
-        private string m_owner;
-        private string m_adminMemberId;
-        private string m_sipUsername;
-        private string m_sipDomain;
-        private SIPDialogueTransferModesEnum m_transferMode;
+        public SIPTransport m_sipTransport;
+        public UASInviteTransaction m_uasTransaction;
+        public SIPEndPoint m_outboundProxy;                   // If the system needs to use an outbound proxy for every request this will be set and overrides any user supplied values.
+        public bool m_isAuthenticated;
+        public bool m_isCancelled;
+        public bool m_isHungup;
+        public string m_owner;
+        public string m_adminMemberId;
+        public string m_sipUsername;
+        public string m_sipDomain;
+        public SIPDialogueTransferModesEnum m_transferMode;
 
         public bool IsB2B { get { return false; } }
         public bool IsInvite
@@ -56,14 +56,14 @@ namespace SIPSorcery.SIP.App
         /// <summary>
         /// Call direction for this user agent.
         /// </summary>
-        public SIPCallDirection CallDirection { get; private set; } = SIPCallDirection.In;
+        public SIPCallDirection CallDirection { get; set; } = SIPCallDirection.In;
 
         /// <summary>
         /// The SIP dialog that's created if we're able to successfully answer the call request.
         /// </summary>
-        public SIPDialogue SIPDialogue { get; private set; }
+        public SIPDialogue SIPDialogue { get; set; }
 
-        private SIPAccount m_sipAccount;
+        public SIPAccount m_sipAccount;
         public SIPAccount SIPAccount
         {
             get { return m_sipAccount; }
@@ -178,7 +178,7 @@ namespace SIPSorcery.SIP.App
             m_uasTransaction.TransactionRemoved += new SIPTransactionRemovedDelegate(UASTransaction_TransactionRemoved);
         }
 
-        private void UASTransaction_TransactionRemoved(SIPTransaction sipTransaction)
+        public void UASTransaction_TransactionRemoved(SIPTransaction sipTransaction)
         {
             TransactionComplete?.Invoke(this);
         }
@@ -448,7 +448,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private Task<SocketError> OnAckAnswerReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPRequest sipRequest)
+        public Task<SocketError> OnAckAnswerReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPRequest sipRequest)
         {
             SIPDialogue = new SIPDialogue(m_uasTransaction);
             SIPDialogue.TransferMode = m_transferMode;
@@ -589,7 +589,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private Task<SocketError> ByeServerFinalResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
+        public Task<SocketError> ByeServerFinalResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
         {
             try
             {
@@ -624,14 +624,14 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private void UASTransactionCancelled(SIPTransaction sipTransaction)
+        public void UASTransactionCancelled(SIPTransaction sipTransaction)
         {
             logger.LogDebug("SIPServerUserAgent got cancellation request.");
             m_isCancelled = true;
             CallCancelled?.Invoke(this);
         }
 
-        private void ClientTimedOut(SIPTransaction sipTransaction)
+        public void ClientTimedOut(SIPTransaction sipTransaction)
         {
             try
             {
@@ -673,7 +673,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        //private SIPRequest GetByeRequest()
+        //public SIPRequest GetByeRequest()
         //{
         //    SIPRequest byeRequest = new SIPRequest(SIPMethodsEnum.BYE, SIPDialogue.RemoteTarget);
         //    SIPFromHeader byeFromHeader = SIPFromHeader.ParseFromHeader(SIPDialogue.LocalUserField.ToString());

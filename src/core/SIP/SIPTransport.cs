@@ -37,13 +37,13 @@ namespace SIPSorcery.SIP
 
     public class SIPTransport : IDisposable
     {
-        private const int MAX_QUEUEWAIT_PERIOD = 200;              // Maximum time to wait to check the message received queue if no events are received.
-        private const int MAX_INMESSAGE_QUEUECOUNT = 5000;          // The maximum number of messages that can be stored in the incoming message queue.
-        private const string RECEIVE_THREAD_NAME = "siptrans-recv";
+        public const int MAX_QUEUEWAIT_PERIOD = 200;              // Maximum time to wait to check the message received queue if no events are received.
+        public const int MAX_INMESSAGE_QUEUECOUNT = 5000;          // The maximum number of messages that can be stored in the incoming message queue.
+        public const string RECEIVE_THREAD_NAME = "siptrans-recv";
 
         public const string m_allowedSIPMethods = SIPConstants.ALLOWED_SIP_METHODS;
 
-        private static string m_looseRouteParameter = SIPConstants.SIP_LOOSEROUTER_PARAMETER;
+        public static string m_looseRouteParameter = SIPConstants.SIP_LOOSEROUTER_PARAMETER;
         public static IPAddress BlackholeAddress = IPAddress.Any;  // (IPAddress.Any is 0.0.0.0) Any SIP messages with this IP address will be dropped.
 
         /// <summary>
@@ -51,20 +51,20 @@ namespace SIPSorcery.SIP
         /// </summary>
         public bool PreferIPv6NameResolution = false;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         /// <summary>
         /// Determines whether the transport later will queue incoming requests for processing on a separate thread of process
         /// immediately on the same thread. Most SIP elements with the exception of Stateless Proxies will typically want to 
         /// queue incoming SIP messages.
         /// </summary>
-        private bool m_queueIncoming = true;
+        public bool m_queueIncoming = true;
 
-        private bool m_transportThreadStarted = false;
-        private ConcurrentQueue<IncomingMessage> m_inMessageQueue = new ConcurrentQueue<IncomingMessage>();
-        private ManualResetEvent m_inMessageArrived = new ManualResetEvent(false);
-        private CancellationTokenSource m_cts = new CancellationTokenSource();
-        private bool m_closed = false;
+        public bool m_transportThreadStarted = false;
+        public ConcurrentQueue<IncomingMessage> m_inMessageQueue = new ConcurrentQueue<IncomingMessage>();
+        public ManualResetEvent m_inMessageArrived = new ManualResetEvent(false);
+        public CancellationTokenSource m_cts = new CancellationTokenSource();
+        public bool m_closed = false;
 
         /// <summary>
         /// If true allows this class to attempt to create a new SIP channel if a required protocol
@@ -78,7 +78,7 @@ namespace SIPSorcery.SIP
         /// List of the SIP channels that have been opened and are under management by this instance.
         /// The dictionary key is channel ID (previously was a serialised SIP end point).
         /// </summary>
-        private Dictionary<string, SIPChannel> m_sipChannels = new Dictionary<string, SIPChannel>();
+        public Dictionary<string, SIPChannel> m_sipChannels = new Dictionary<string, SIPChannel>();
 
         internal SIPTransactionEngine m_transactionEngine;
 
@@ -538,7 +538,7 @@ namespace SIPSorcery.SIP
         /// <param name="sipChannel">The SIP channel to use to send the SIP request.</param>
         /// <param name="dstEndPoint">The destination to send the SIP request to.</param>
         /// <param name="sipRequest">The SIP request to send.</param>
-        private Task<SocketError> SendRequestAsync(SIPChannel sipChannel, SIPEndPoint sendFromSIPEndPoint, SIPEndPoint dstEndPoint, SIPRequest sipRequest)
+        public Task<SocketError> SendRequestAsync(SIPChannel sipChannel, SIPEndPoint sendFromSIPEndPoint, SIPEndPoint dstEndPoint, SIPRequest sipRequest)
         {
             if (sipChannel == null)
             {
@@ -742,7 +742,7 @@ namespace SIPSorcery.SIP
         /// <param name="sendFromEndPoint">The IP end point the request or response is being sent from.</param>
         /// <param name="sipHeader">The SIP header object to apply the adjustments to. The header object will be updated
         /// in place with any header adjustments.</param>
-        private void AdjustHeadersForEndPoint(SIPEndPoint sendFromSIPEndPoint, ref SIPHeader header)
+        public void AdjustHeadersForEndPoint(SIPEndPoint sendFromSIPEndPoint, ref SIPHeader header)
         {
             IPEndPoint sendFromEndPoint = sendFromSIPEndPoint.GetIPEndPoint();
 
@@ -792,7 +792,7 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// Dedicated loop to process queued received messages.
         /// </summary>
-        private void ProcessReceiveQueue()
+        public void ProcessReceiveQueue()
         {
             Thread.CurrentThread.Name = RECEIVE_THREAD_NAME;
 
@@ -833,7 +833,7 @@ namespace SIPSorcery.SIP
         /// <param name="localEndPoint">The local end point that the SIP channel received the message on.</param>
         /// <param name="remoteEndPoint">The remote end point the message came from.</param>
         /// <param name="buffer">The raw message received.</param>
-        private Task<SocketError> SIPMessageReceived(SIPChannel sipChannel, SIPEndPoint localEndPoint, SIPEndPoint remoteEndPoint, byte[] buffer)
+        public Task<SocketError> SIPMessageReceived(SIPChannel sipChannel, SIPEndPoint localEndPoint, SIPEndPoint remoteEndPoint, byte[] buffer)
         {
             string rawSIPMessage = null;
 
@@ -1052,7 +1052,7 @@ namespace SIPSorcery.SIP
         /// <param name="channelIDHint">An optional channel ID that gives a hint as to the preferred 
         /// channel to select.</param>
         /// <returns>If found a SIP channel or null if not.</returns>
-        private SIPChannel GetSIPChannelForDestination(SIPProtocolsEnum protocol, IPEndPoint dst, string channelIDHint)
+        public SIPChannel GetSIPChannelForDestination(SIPProtocolsEnum protocol, IPEndPoint dst, string channelIDHint)
         {
             if (m_sipChannels == null || m_sipChannels.Count == 0)
             {
@@ -1144,7 +1144,7 @@ namespace SIPSorcery.SIP
         /// <param name="protocol">The SIP protocol to find a match for.</param>
         /// <param name="reqdAddress">The listening IP address to find a match for.</param>
         /// <returns>A SIP channel if a match is found or null if not.</returns>
-        private SIPChannel GetSIPChannel(SIPProtocolsEnum protocol, IPAddress listeningAddress)
+        public SIPChannel GetSIPChannel(SIPProtocolsEnum protocol, IPAddress listeningAddress)
         {
             if (m_sipChannels.Any(x => x.Value.IsProtocolSupported(protocol) && listeningAddress.Equals(x.Value.ListeningIPAddress)))
             {
@@ -1189,7 +1189,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="transactionId">The transaction ID to match.</param>
         /// <returns>If found a transaction object or null if not.</returns>
-        private SIPTransaction GetTransaction(string transactionId)
+        public SIPTransaction GetTransaction(string transactionId)
         {
             return m_transactionEngine?.GetTransaction(transactionId);
         }
@@ -1200,7 +1200,7 @@ namespace SIPSorcery.SIP
         /// <param name="protocol">The transport protocol of the SIP channel to create.</param>
         /// <param name="addressFamily">Whether the channel should be created for IPv4 or IPv6.</param>
         /// <returns>A SIP channel if it was possible to create or null if not.</returns>
-        private SIPChannel CreateChannel(SIPProtocolsEnum protocol, AddressFamily addressFamily)
+        public SIPChannel CreateChannel(SIPProtocolsEnum protocol, AddressFamily addressFamily)
         {
             SIPChannel sipChannel = null;
             IPAddress localAddress = (addressFamily == AddressFamily.InterNetworkV6) ? IPAddress.IPv6Any : IPAddress.Any;

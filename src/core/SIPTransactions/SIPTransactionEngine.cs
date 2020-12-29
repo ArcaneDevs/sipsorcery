@@ -29,27 +29,27 @@ namespace SIPSorcery.SIP
 {
     internal class SIPTransactionEngine
     {
-        private const string TXENGINE_THREAD_NAME = "sip-txengine";
-        private const int MAX_TXCHECK_WAIT_MILLISECONDS = 200; // Time to wait between checking for new pending transactions.
-        private const int TXCHECK_WAIT_MILLISECONDS = 50;       // Time to wait between checking for actions on existing transactions.
-        private static readonly int m_t1 = SIPTimings.T1;
-        private static readonly int m_t2 = SIPTimings.T2;
-        private static readonly int m_t6 = SIPTimings.T6;
-        private const int MAX_RELIABLETRANSMISSIONS_COUNT = 5000;  // The maximum number of pending transactions that can be outstanding.
+        public const string TXENGINE_THREAD_NAME = "sip-txengine";
+        public const int MAX_TXCHECK_WAIT_MILLISECONDS = 200; // Time to wait between checking for new pending transactions.
+        public const int TXCHECK_WAIT_MILLISECONDS = 50;       // Time to wait between checking for actions on existing transactions.
+        public static readonly int m_t1 = SIPTimings.T1;
+        public static readonly int m_t2 = SIPTimings.T2;
+        public static readonly int m_t6 = SIPTimings.T6;
+        public const int MAX_RELIABLETRANSMISSIONS_COUNT = 5000;  // The maximum number of pending transactions that can be outstanding.
 
         protected static ILogger logger = Log.Logger;
 
         protected static readonly int m_maxRingTime = SIPTimings.MAX_RING_TIME; // Max time an INVITE will be left ringing for.    
 
-        private bool m_isClosed = false;
-        private SIPTransport m_sipTransport;
+        public bool m_isClosed = false;
+        public SIPTransport m_sipTransport;
 
         /// <summary>
         /// Contains a list of the transactions that are being monitored or responses and retransmitted 
         /// on when none is received to attempt a more reliable delivery rather then just relying on the initial 
         /// request to get through.
         /// </summary>
-        private ConcurrentDictionary<string, SIPTransaction> m_pendingTransactions = new ConcurrentDictionary<string, SIPTransaction>();
+        public ConcurrentDictionary<string, SIPTransaction> m_pendingTransactions = new ConcurrentDictionary<string, SIPTransaction>();
 
         public int TransactionsCount
         {
@@ -254,12 +254,12 @@ namespace SIPSorcery.SIP
         /// Removes a transaction from the pending list.
         /// </summary>
         /// <param name="transactionId"></param>
-        private void RemoveTransaction(string transactionId)
+        public void RemoveTransaction(string transactionId)
         {
             m_pendingTransactions.TryRemove(transactionId, out _);
         }
 
-        private void RemoveTransaction(SIPTransaction transaction)
+        public void RemoveTransaction(SIPTransaction transaction)
         {
             // Remove all event handlers.
             transaction.RemoveEventHandlers();
@@ -272,7 +272,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="callId">The SIP Header Call-ID to check for.</param>
         /// <returns>True if there is only a single pending transaction with the specified  Call-ID, false otherwise.</returns>
-        private bool IsCallIdUniqueForPending(string callId)
+        public bool IsCallIdUniqueForPending(string callId)
         {
             bool match = false;
 
@@ -304,7 +304,7 @@ namespace SIPSorcery.SIP
         /// A long running method that monitors and processes a list of transactions that need to send a reliable
         /// request or response.
         /// </summary>
-        private void ProcessPendingTransactions()
+        public void ProcessPendingTransactions()
         {
             Thread.CurrentThread.Name = TXENGINE_THREAD_NAME;
 
@@ -497,7 +497,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="transaction">The transaction to send the provisional response for.</param>
         /// <returns>The result of the send attempt.</returns>
-        private Task<SocketError> SendTransactionProvisionalResponse(SIPTransaction transaction)
+        public Task<SocketError> SendTransactionProvisionalResponse(SIPTransaction transaction)
         {
             transaction.Retransmits = transaction.Retransmits + 1;
             transaction.LastTransmit = DateTime.Now;
@@ -529,7 +529,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="transaction">The transaction to send the final response for.</param>
         /// <returns>The result of the send attempt.</returns>
-        private Task<SocketError> SendTransactionFinalResponse(SIPTransaction transaction)
+        public Task<SocketError> SendTransactionFinalResponse(SIPTransaction transaction)
         {
             transaction.Retransmits = transaction.Retransmits + 1;
             transaction.LastTransmit = DateTime.Now;
@@ -560,7 +560,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="transaction">The transaction to resend the request for.</param>
         /// <returns>The result of the send attempt.</returns>
-        private Task<SocketError> SendTransactionRequest(SIPTransaction transaction)
+        public Task<SocketError> SendTransactionRequest(SIPTransaction transaction)
         {
             Task<SocketError> result = null;
 
@@ -601,7 +601,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private void RemoveExpiredTransactions()
+        public void RemoveExpiredTransactions()
         {
             try
             {

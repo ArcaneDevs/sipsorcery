@@ -28,17 +28,17 @@ namespace SIPSorcery.Net
 
     public class STUNServer
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private IPEndPoint m_primaryEndPoint;
-        private IPEndPoint m_secondaryEndPoint;
-        private IPEndPoint m_primaryDiffPortEndPoint;
-        private IPEndPoint m_secondaryDiffPortEndPoint;
+        public IPEndPoint m_primaryEndPoint;
+        public IPEndPoint m_secondaryEndPoint;
+        public IPEndPoint m_primaryDiffPortEndPoint;
+        public IPEndPoint m_secondaryDiffPortEndPoint;
 
-        private STUNSendMessageDelegate m_primarySend;
-        private STUNSendMessageDelegate m_secondarySend;
-        private UdpClient m_primaryDiffPortSocket;
-        private UdpClient m_secondaryDiffPortSocket;
+        public STUNSendMessageDelegate m_primarySend;
+        public STUNSendMessageDelegate m_secondarySend;
+        public UdpClient m_primaryDiffPortSocket;
+        public UdpClient m_secondaryDiffPortSocket;
 
         public event STUNServerRequestInTraceDelegate STUNPrimaryRequestInTraceEvent;
         public event STUNServerRequestInTraceDelegate STUNSecondaryRequestInTraceEvent;
@@ -204,7 +204,7 @@ namespace SIPSorcery.Net
             }
         }
 
-        private STUNMessage GetResponse(IPEndPoint receivedEndPoint, STUNMessage stunRequest, bool primary)
+        public STUNMessage GetResponse(IPEndPoint receivedEndPoint, STUNMessage stunRequest, bool primary)
         {
             if (stunRequest.Header.MessageType == STUNMessageTypesEnum.BindingRequest)
             {
@@ -263,7 +263,7 @@ namespace SIPSorcery.Net
             }
         }
 
-        private void FireSTUNPrimaryRequestInTraceEvent(IPEndPoint localEndPoint, IPEndPoint fromEndPoint, STUNMessage stunMessage)
+        public void FireSTUNPrimaryRequestInTraceEvent(IPEndPoint localEndPoint, IPEndPoint fromEndPoint, STUNMessage stunMessage)
         {
             try
             {
@@ -278,7 +278,7 @@ namespace SIPSorcery.Net
             }
         }
 
-        private void FireSTUNSecondaryRequestInTraceEvent(IPEndPoint localEndPoint, IPEndPoint fromEndPoint, STUNMessage stunMessage)
+        public void FireSTUNSecondaryRequestInTraceEvent(IPEndPoint localEndPoint, IPEndPoint fromEndPoint, STUNMessage stunMessage)
         {
             try
             {
@@ -293,7 +293,7 @@ namespace SIPSorcery.Net
             }
         }
 
-        private void FireSTUNPrimaryResponseOutTraceEvent(IPEndPoint localEndPoint, IPEndPoint toEndPoint, STUNMessage stunMessage)
+        public void FireSTUNPrimaryResponseOutTraceEvent(IPEndPoint localEndPoint, IPEndPoint toEndPoint, STUNMessage stunMessage)
         {
             try
             {
@@ -308,7 +308,7 @@ namespace SIPSorcery.Net
             }
         }
 
-        private void FireSTUNSecondaryResponseOutTraceEvent(IPEndPoint localEndPoint, IPEndPoint toEndPoint, STUNMessage stunMessage)
+        public void FireSTUNSecondaryResponseOutTraceEvent(IPEndPoint localEndPoint, IPEndPoint toEndPoint, STUNMessage stunMessage)
         {
             try
             {

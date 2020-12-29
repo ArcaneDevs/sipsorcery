@@ -83,16 +83,16 @@ namespace SIPSorcery.Net.Sctp
         public const byte PARTIAL_RELIABLE_TIMED_UNORDERED = (byte)0x82;
         public const byte RELIABLE_UNORDERED = (byte)0x80;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private byte _messType;
-        private byte _chanType;
-        private int _priority;
-        private long _reliablity;
+        public byte _messType;
+        public byte _chanType;
+        public int _priority;
+        public long _reliablity;
         public int _labLen;
         public int _protLen;
-        private byte[] _label;
-        private byte[] _protocol;
+        public byte[] _label;
+        public byte[] _protocol;
         const int OPEN = 0x03;
         const int ACK = 0x02;
         bool _isAck = false;

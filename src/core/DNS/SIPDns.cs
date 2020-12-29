@@ -58,7 +58,7 @@ namespace SIPSorcery.SIP
         public const int DNS_TIMEOUT_SECONDS = 1;
         public const int DNS_RETRIES_PER_SERVER = 1;
 
-        private static readonly ILogger logger = Log.Logger;
+        public static readonly ILogger logger = Log.Logger;
 
         /// <summary>
         /// Don't use IN_ANY queries by default. These are useful if a DNS server supports them as they can
@@ -69,7 +69,7 @@ namespace SIPSorcery.SIP
 
         //public static List<DnsClient.NameServer> DefaultNameServers { get; set; }
 
-        private static LookupClient _lookupClient;
+        public static LookupClient _lookupClient;
         public static LookupClient LookupClient
         {
             get
@@ -188,7 +188,7 @@ namespace SIPSorcery.SIP
         /// <param name="startQuery"></param>
         /// <param name="preferIPv6"></param>
         /// <returns></returns>
-        private static SIPEndPoint SIPLookupFromCache(
+        public static SIPEndPoint SIPLookupFromCache(
             SIPURI uri,
             QueryType startQuery,
             bool preferIPv6)
@@ -277,7 +277,7 @@ namespace SIPSorcery.SIP
         /// <param name="preferIPv6"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        private static async Task<SIPEndPoint> SIPLookupAsync(
+        public static async Task<SIPEndPoint> SIPLookupAsync(
             SIPURI uri,
             QueryType startQuery,
             bool preferIPv6,
@@ -384,7 +384,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="srvResult">The DNS response from an SRV lookup.</param>
         /// <returns>The hostname and port for the chosen SRV result record.</returns>
-        private static (string, int) GetHostAndPortFromSrvResult(IDnsQueryResponse srvResult)
+        public static (string, int) GetHostAndPortFromSrvResult(IDnsQueryResponse srvResult)
         {
             // TODO: Re-enable when DnsClient adds cache querying.
             //if (srvResult != null)
@@ -405,7 +405,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="serviceHostEntries">The DNS response from an SRV lookup.</param>
         /// <returns>The hostname and port for the chosen SRV result record.</returns>
-        private static (string, int) GetHostAndPortFromSrvResult(ServiceHostEntry[] serviceHostEntries)
+        public static (string, int) GetHostAndPortFromSrvResult(ServiceHostEntry[] serviceHostEntries)
         {
             if (serviceHostEntries != null && serviceHostEntries.Length > 0)
             {
@@ -428,7 +428,7 @@ namespace SIPSorcery.SIP
         /// <param name="addrRecord">The DNS lookup result.</param>
         /// <param name="port">The port for the IP end point.</param>
         /// <returns>An IP end point or null.</returns>
-        private static SIPEndPoint GetFromLookupResult(SIPProtocolsEnum protocol, DnsResourceRecord addrRecord, int port)
+        public static SIPEndPoint GetFromLookupResult(SIPProtocolsEnum protocol, DnsResourceRecord addrRecord, int port)
         {
             if (addrRecord is AaaaRecord)
             {
@@ -452,7 +452,7 @@ namespace SIPSorcery.SIP
         /// <param name="uri">The SIP URI to lookup.</param>
         /// <param name="queryType">Whether the lookup should prefer an IPv6 result.</param>
         /// <returns>A SIP end point for the host or null if the URI cannot be resolved.</returns>
-        private static SIPEndPoint ResolveLocalHostname(SIPURI uri, bool preferIPv6)
+        public static SIPEndPoint ResolveLocalHostname(SIPURI uri, bool preferIPv6)
         {
             AddressFamily family = preferIPv6 ? AddressFamily.InterNetworkV6 :
                        AddressFamily.InterNetwork;

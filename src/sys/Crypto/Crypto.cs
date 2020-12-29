@@ -29,12 +29,12 @@ namespace SIPSorcery.Sys
         public const int DEFAULT_RANDOM_LENGTH = 10;    // Number of digits to return for default random numbers.
         public const int AES_KEY_SIZE = 32;
         public const int AES_IV_SIZE = 16;
-        private const string CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public const string CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private static Random _rng = new Random();
-        private static RNGCryptoServiceProvider m_randomProvider = new RNGCryptoServiceProvider();
+        public static Random _rng = new Random();
+        public static RNGCryptoServiceProvider m_randomProvider = new RNGCryptoServiceProvider();
 
         //public static string RSAEncrypt(string xmlKey, string plainText)
         //{
@@ -156,7 +156,7 @@ namespace SIPSorcery.Sys
             return cryptoStreamReader.ReadToEnd();
         }
 
-        private static byte[] GetFixedLengthByteArray(string value, int length)
+        public static byte[] GetFixedLengthByteArray(string value, int length)
         {
             if (value.Length < length)
             {
@@ -304,7 +304,7 @@ namespace SIPSorcery.Sys
         /// </summary>
         /// <param name="filepath">The path to the input file for the hash operation.</param>
         /// <returns>A read only file stream for the file or throws an exception if there is a problem.</returns>
-        private static FileStream GetFileStream(string filepath)
+        public static FileStream GetFileStream(string filepath)
         {
             // Check that the file exists.
             if (!File.Exists(filepath))

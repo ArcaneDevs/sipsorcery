@@ -34,12 +34,12 @@ namespace SIPSorcery.Net.Sctp
     public class ThreadedAssociation : Association
     {
         static int MAXBLOCKS = 100; // some number....
-        private Queue<DataChunk> _freeBlocks;
-        private Dictionary<long, DataChunk> _inFlight;
-        private long _lastCumuTSNAck;
+        public Queue<DataChunk> _freeBlocks;
+        public Dictionary<long, DataChunk> _inFlight;
+        public long _lastCumuTSNAck;
         static int MAX_INIT_RETRANS = 8;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         /*   
 		 o  Receiver advertised window size (rwnd, in bytes), which is set by
@@ -48,7 +48,7 @@ namespace SIPSorcery.Net.Sctp
 
 		 Note: This variable is kept on the entire association.
 		 */
-        private long _rwnd;
+        public long _rwnd;
         /*
 		 o  Congestion control window (cwnd, in bytes), which is adjusted by
 		 the sender based on observed network conditions.
@@ -56,7 +56,7 @@ namespace SIPSorcery.Net.Sctp
 		 Note: This variable is maintained on a per-destination-address
 		 basis.
 		 */
-        private long _cwnd;
+        public long _cwnd;
         // assume a single destination via ICE
         /*
 			 o  Slow-start threshold (ssthresh, in bytes), which is used by the
@@ -65,7 +65,7 @@ namespace SIPSorcery.Net.Sctp
 			 Note: This variable is maintained on a per-destination-address
 			 basis.
 			 */
-        private long _ssthresh;
+        public long _ssthresh;
         /*
 
 
@@ -79,9 +79,9 @@ namespace SIPSorcery.Net.Sctp
 		 partial_bytes_acked, which is used during congestion avoidance phase
 		 to facilitate cwnd adjustment.
 		 */
-        private long _partial_bytes_acked;
+        public long _partial_bytes_acked;
         // AC: This variable was never being set. Removed for now.
-        //private bool _fastRecovery;
+        //public bool _fastRecovery;
         /*
 		 10.2.  Probing Method Using SCTP
 
@@ -110,13 +110,13 @@ namespace SIPSorcery.Net.Sctp
 
 		 To do .....
 		 */
-        private int _transpMTU = 768;
-        private Chunk[] _stashCookieEcho;
-        private object _congestion = new Object();
-        private bool _firstRTT = true;
-        private double _srtt;
-        private double _rttvar;
-        private double _rto = 3.0;
+        public int _transpMTU = 768;
+        public Chunk[] _stashCookieEcho;
+        public object _congestion = new Object();
+        public bool _firstRTT = true;
+        public double _srtt;
+        public double _rttvar;
+        public double _rto = 3.0;
 
         /*
 		 RTO.Initial - 3 seconds
@@ -126,10 +126,10 @@ namespace SIPSorcery.Net.Sctp
 		 RTO.Alpha - 1/8
 		 RTO.Beta - 1/4
 		 */
-        private static double _rtoBeta = 0.2500;
-        private static double _rtoAlpha = 0.1250;
-        private static double _rtoMin = 1.0;
-        private static double _rtoMax = 60.0;
+        public static double _rtoBeta = 0.2500;
+        public static double _rtoAlpha = 0.1250;
+        public static double _rtoMin = 1.0;
+        public static double _rtoMax = 60.0;
 
         public ThreadedAssociation(DatagramTransport transport, AssociationListener al, bool isClient, int srcPort, int destPort)
             : base(transport, al, isClient, srcPort, destPort)
@@ -179,7 +179,7 @@ namespace SIPSorcery.Net.Sctp
         class AssocRun
         {
             ThreadedAssociation ta;
-            private AssocRun() { }
+            public AssocRun() { }
             public AssocRun(ThreadedAssociation ta)
             {
                 this.ta = ta;
@@ -372,7 +372,7 @@ namespace SIPSorcery.Net.Sctp
 		 *
 		 * @return
 		 */
-        private Chunk[] addSackIfNeeded(DataChunk d)
+        public Chunk[] addSackIfNeeded(DataChunk d)
         {
             /*
 			 Before an endpoint transmits a DATA chunk, if any received DATA
@@ -440,7 +440,7 @@ namespace SIPSorcery.Net.Sctp
 		 that peer.
 		 */
 
-        private void reduceRwnd(int dataSize)
+        public void reduceRwnd(int dataSize)
         {
             _rwnd -= dataSize;
             if (_rwnd < 0)
@@ -458,7 +458,7 @@ namespace SIPSorcery.Net.Sctp
 		 for retransmission.
 		 */
 
-        private void incrRwnd(int dataSize)
+        public void incrRwnd(int dataSize)
         {
             _rwnd += dataSize;
         }
@@ -882,7 +882,7 @@ namespace SIPSorcery.Net.Sctp
             }
         }
 
-        private long getT1()
+        public long getT1()
         {
             return (long)(_rto * 1000) * 10;
         }
@@ -898,12 +898,12 @@ namespace SIPSorcery.Net.Sctp
 		 parameter 'RTO.Initial'.
 		 */
         // a guess at the round-trip time
-        private void setRTOnonRFC(long r)
+        public void setRTOnonRFC(long r)
         {
             _rto = 0.2;
         }
 
-        private void setRTO(long r)
+        public void setRTO(long r)
         {
             double nrto = 1.0;
             double cr = r / 1000.0;

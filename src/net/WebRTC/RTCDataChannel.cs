@@ -23,7 +23,7 @@ namespace SIPSorcery.Net
 {
     public class RTCDataChannel : SCTPStreamListener, IRTCDataChannel
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public string label { get; set; }
 
@@ -39,7 +39,7 @@ namespace SIPSorcery.Net
 
         public ushort? id { get; set; }
 
-        public RTCDataChannelState readyState { get; private set; } = RTCDataChannelState.connecting;
+        public RTCDataChannelState readyState { get; set; } = RTCDataChannelState.connecting;
 
         public ulong bufferedAmount { get; set; }
 
@@ -48,11 +48,11 @@ namespace SIPSorcery.Net
 
         //public long MaxMessageSize { get; set; }
 
-        private SCTPStream _sctpStream;
+        public SCTPStream _sctpStream;
 
-        public string Error { get; private set; }
+        public string Error { get; set; }
 
-        public bool IsOpened { get; private set; } = false;
+        public bool IsOpened { get; set; } = false;
 
         public event Action onopen;
         //public event Action onbufferedamountlow;

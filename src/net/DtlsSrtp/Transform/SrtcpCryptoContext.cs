@@ -68,63 +68,63 @@ namespace SIPSorcery.Net
     public class SrtcpCryptoContext
     {
         /** The replay check windows size */
-        private const long REPLAY_WINDOW_SIZE = 64;
+        public const long REPLAY_WINDOW_SIZE = 64;
 
         /** RTCP SSRC of this cryptographic context */
-        private long ssrcCtx;
+        public long ssrcCtx;
 
         /** Master key identifier */
-        private byte[] mki;
+        public byte[] mki;
 
         /** Index received so far */
-        private int receivedIndex = 0;
+        public int receivedIndex = 0;
 
         /** Index sent so far */
-        private int sentIndex = 0;
+        public int sentIndex = 0;
 
         /** Bit mask for replay check */
-        private long replayWindow;
+        public long replayWindow;
 
         /** Master encryption key */
-        private byte[] masterKey;
+        public byte[] masterKey;
 
         /** Master salting key */
-        private byte[] masterSalt;
+        public byte[] masterSalt;
 
         /** Derived session encryption key */
-        private byte[] encKey;
+        public byte[] encKey;
 
         /** Derived session authentication key */
-        private byte[] authKey;
+        public byte[] authKey;
 
         /** Derived session salting key */
-        private byte[] saltKey;
+        public byte[] saltKey;
 
         /** Encryption / Authentication policy for this session */
-        private SrtpPolicy policy;
+        public SrtpPolicy policy;
 
         /**
          * The HMAC object we used to do packet authentication
          */
-        private IMac mac;             // used for various HMAC computations
+        public IMac mac;             // used for various HMAC computations
 
         // The symmetric cipher engines we need here
-        private IBlockCipher cipher = null;
-        private IBlockCipher cipherF8 = null; // used inside F8 mode only
+        public IBlockCipher cipher = null;
+        public IBlockCipher cipherF8 = null; // used inside F8 mode only
 
         // implements the counter cipher mode for RTP according to RFC 3711
-        private SrtpCipherCTR cipherCtr = new SrtpCipherCTR();
+        public SrtpCipherCTR cipherCtr = new SrtpCipherCTR();
 
         // Here some fields that a allocated here or in constructor. The methods
         // use these fields to avoid too many new operations
 
-        private byte[] tagStore;
-        private byte[] ivStore = new byte[16];
-        private byte[] rbStore = new byte[4];
+        public byte[] tagStore;
+        public byte[] ivStore = new byte[16];
+        public byte[] rbStore = new byte[4];
 
         // this is some working store, used by some methods to avoid new operations
         // the methods must use this only to store some results for immediate processing
-        private byte[] tempStore = new byte[100];
+        public byte[] tempStore = new byte[100];
 
         /**
          * Construct an empty SRTPCryptoContext using ssrc.
@@ -506,7 +506,7 @@ namespace SIPSorcery.Net
          *
          * @param pkt the RTP packet to be authenticated
          */
-        private void AuthenticatePacket(RawPacket pkt, int index)
+        public void AuthenticatePacket(RawPacket pkt, int index)
         {
             MemoryStream buf = pkt.GetBuffer();
             buf.Position = 0;
@@ -575,7 +575,7 @@ namespace SIPSorcery.Net
          * 
          * @param label label specified for each type of iv 
          */
-        private void ComputeIv(byte label)
+        public void ComputeIv(byte label)
         {
             for (int i = 0; i < 14; i++)
             {
@@ -644,7 +644,7 @@ namespace SIPSorcery.Net
          * 
          * @param index index number of the accepted packet
          */
-        private void Update(int index)
+        public void Update(int index)
         {
             int delta = receivedIndex - index;
 

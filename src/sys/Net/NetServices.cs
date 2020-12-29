@@ -32,14 +32,14 @@ namespace SIPSorcery.Sys
     /// </summary>
     public class NetServices
     {
-        private const int RTP_RECEIVE_BUFFER_SIZE = 1000000;
-        private const int RTP_SEND_BUFFER_SIZE = 1000000;
-        private const int MAXIMUM_UDP_PORT_BIND_ATTEMPTS = 25;          // The maximum number of re-attempts that will be made when trying to bind a UDP socket.
-        private const string INTERNET_IPADDRESS = "8.8.8.8";              // IP address to use when getting default IP address from OS. No connection is established.
-        private const int NETWORK_TEST_PORT = 5060;                       // Port to use when doing a Udp.Connect to determine local IP address (port 0 does not work on MacOS).
-        private const int LOCAL_ADDRESS_CACHE_LIFETIME_SECONDS = 300;   // The amount of time to leave the result of a local IP address determination in the cache.
+        public const int RTP_RECEIVE_BUFFER_SIZE = 1000000;
+        public const int RTP_SEND_BUFFER_SIZE = 1000000;
+        public const int MAXIMUM_UDP_PORT_BIND_ATTEMPTS = 25;          // The maximum number of re-attempts that will be made when trying to bind a UDP socket.
+        public const string INTERNET_IPADDRESS = "8.8.8.8";              // IP address to use when getting default IP address from OS. No connection is established.
+        public const int NETWORK_TEST_PORT = 5060;                       // Port to use when doing a Udp.Connect to determine local IP address (port 0 does not work on MacOS).
+        public const int LOCAL_ADDRESS_CACHE_LIFETIME_SECONDS = 300;   // The amount of time to leave the result of a local IP address determination in the cache.
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         /// <summary>
         /// Doing the same check as here https://github.com/dotnet/corefx/blob/e99ec129cfd594d53f4390bf97d1d736cff6f860/src/System.Net.Sockets/src/System/Net/Sockets/SocketPal.Unix.cs#L19.
@@ -47,7 +47,7 @@ namespace SIPSorcery.Sys
         /// be able to get the remote destination end point.
         /// To date the only case this has cropped up for is Mac OS as per https://github.com/sipsorcery/sipsorcery/issues/207.
         /// </summary>
-        private static bool? _supportsDualModeIPv4PacketInfo = null;
+        public static bool? _supportsDualModeIPv4PacketInfo = null;
         public static bool SupportsDualModeIPv4PacketInfo
         {
             get
@@ -75,7 +75,7 @@ namespace SIPSorcery.Sys
         /// 
         /// TODO:  Clear this cache if the state of the local network interfaces change.
         /// </summary>
-        private static ConcurrentDictionary<IPAddress, Tuple<IPAddress, DateTime>> m_localAddressTable = new ConcurrentDictionary<IPAddress, Tuple<IPAddress, DateTime>>();
+        public static ConcurrentDictionary<IPAddress, Tuple<IPAddress, DateTime>> m_localAddressTable = new ConcurrentDictionary<IPAddress, Tuple<IPAddress, DateTime>>();
 
         /// <summary>
         /// The list of IP addresses that this machine can use.
@@ -98,7 +98,7 @@ namespace SIPSorcery.Sys
                 //return Dns.GetHostAddresses(string.Empty).ToList();
             }
         }
-        private static List<IPAddress> _localIPAddresses = null;
+        public static List<IPAddress> _localIPAddresses = null;
 
         /// <summary>
         /// The local IP address this machine uses to communicate with the Internet.
@@ -116,13 +116,13 @@ namespace SIPSorcery.Sys
                 return _internetDefaultAddress;
             }
         }
-        private static IPAddress _internetDefaultAddress = null;
+        public static IPAddress _internetDefaultAddress = null;
 
         /// <summary>
         /// Checks whether an IP address can be used on the underlying System.
         /// </summary>
         /// <param name="bindAddress">The bind address to use.</param>
-        private static void CheckBindAddressAndThrow(IPAddress bindAddress)
+        public static void CheckBindAddressAndThrow(IPAddress bindAddress)
         {
             if (bindAddress != null && bindAddress.AddressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
             {
@@ -262,7 +262,7 @@ namespace SIPSorcery.Sys
             }
         }
 
-        private static void BindUdpSocket(Socket socket, IPAddress bindAddress, int port)
+        public static void BindUdpSocket(Socket socket, IPAddress bindAddress, int port)
         {
             // Nasty code warning. On Windows Subsystem for Linux (WSL) on Windows 10
             // the OS lets a socket bind on an IPv6 dual mode port even if there
@@ -299,7 +299,7 @@ namespace SIPSorcery.Sys
         /// <param name="addressFamily">The address family for the new socket, IPv4 or IPv6.</param>
         /// <param name="useDualMode">If true then IPv6 sockets will be created as dual mode IPv4/IPv6 on supporting systems.</param>
         /// <returns>A new socket instance.</returns>
-        private static Socket CreateUdpSocket(AddressFamily addressFamily, bool useDualMode = true)
+        public static Socket CreateUdpSocket(AddressFamily addressFamily, bool useDualMode = true)
         {
             var sock = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
             sock.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ExclusiveAddressUse, true);
@@ -430,7 +430,7 @@ namespace SIPSorcery.Sys
         /// </summary>
         /// <returns>True if the underlying OS supports dual mode IPv6 sockets WITH the socket ReceiveFrom methods
         /// which are required to get the remote end point. False if not</returns>
-        private static bool DoCheckSupportsDualModeIPv4PacketInfo()
+        public static bool DoCheckSupportsDualModeIPv4PacketInfo()
         {
             bool hasDualModeReceiveSupport = true;
 
@@ -573,7 +573,7 @@ namespace SIPSorcery.Sys
         /// Gets all the IP addresses for all active interfaces on the machine.
         /// </summary>
         /// <returns>A list of all local IP addresses.</returns>
-        private static List<IPAddress> GetAllLocalIPAddresses()
+        public static List<IPAddress> GetAllLocalIPAddresses()
         {
             List<IPAddress> localAddresses = new List<IPAddress>();
 

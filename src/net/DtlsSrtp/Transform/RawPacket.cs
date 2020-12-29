@@ -61,7 +61,7 @@ namespace SIPSorcery.Net
         /**
          * Byte array storing the content of this Packet
          */
-        private MemoryStream buffer;
+        public MemoryStream buffer;
 
         /**
          * Initializes a new empty <tt>RawPacket</tt> instance.

@@ -171,10 +171,10 @@ namespace SIPSorcery.Sys
         }
 
         /// <summary>
-        /// Checks the Contact SIP URI host and if it is recognised as a private address it is replaced with the socket
+        /// Checks the Contact SIP URI host and if it is recognised as a public address it is replaced with the socket
         /// the SIP message was received on.
         /// 
-        /// Private address space blocks RFC 1597.
+        /// public address space blocks RFC 1597.
         ///		10.0.0.0        -   10.255.255.255
         ///		172.16.0.0      -   172.31.255.255
         ///		192.168.0.0     -   192.168.255.255
@@ -371,7 +371,7 @@ namespace SIPSorcery.Sys
             return new IPEndPoint(ipaddr, port);
         }
 
-        private static int getPort(string p)
+        public static int getPort(string p)
         {
             int port;
 
@@ -385,7 +385,7 @@ namespace SIPSorcery.Sys
             return port;
         }
 
-        private static IPAddress getIPfromHost(string p)
+        public static IPAddress getIPfromHost(string p)
         {
             try
             {

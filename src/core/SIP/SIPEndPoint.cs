@@ -33,25 +33,25 @@ namespace SIPSorcery.SIP
     /// </summary>
     public class SIPEndPoint
     {
-        private const string CHANNELID_ATTRIBUTE_NAME = "cid";
-        private const string CONNECTIONID_ATTRIBUTE_NAME = "xid";
+        public const string CHANNELID_ATTRIBUTE_NAME = "cid";
+        public const string CONNECTIONID_ATTRIBUTE_NAME = "xid";
 
         public static SIPEndPoint Empty { get; } = new SIPEndPoint(SIPProtocolsEnum.udp, null, 0);
 
         /// <summary>
         /// The transport/application layer protocol the SIP end point is using.
         /// </summary>
-        public SIPProtocolsEnum Protocol { get; private set; } = SIPProtocolsEnum.udp;
+        public SIPProtocolsEnum Protocol { get; set; } = SIPProtocolsEnum.udp;
 
         /// <summary>
         /// The network address for the SIP end point. IPv4 and IPv6 are supported.
         /// </summary>
-        public IPAddress Address { get; private set; }
+        public IPAddress Address { get; set; }
 
         /// <summary>
         /// The network port for the SIP end point.
         /// </summary>
-        public int Port { get; private set; }
+        public int Port { get; set; }
 
         /// <summary>
         /// For connection oriented transport protocols such as TCP, TLS and WebSockets this
@@ -65,7 +65,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         public string ChannelID { get; set; }
 
-        private SIPEndPoint() { }
+        public SIPEndPoint() { }
 
         /// <summary>
         /// Instantiates a new SIP end point from a network end point. Non specified properties
@@ -191,7 +191,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="serialisedSIPEndPoint">The serialised SIP end point MUST be in the form protocol:socket[;connid=abcd].
         /// Valid examples are udp:10.0.0.1:5060 and ws:10.0.0.1:5060;connid=abcd. An invalid example is 10.0.0.1:5060.</param>
-        private static SIPEndPoint ParseSerialisedSIPEndPoint(string serialisedSIPEndPoint)
+        public static SIPEndPoint ParseSerialisedSIPEndPoint(string serialisedSIPEndPoint)
         {
             string channelID = null;
             string connectionID = null;

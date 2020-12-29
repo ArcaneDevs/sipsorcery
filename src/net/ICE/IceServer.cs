@@ -32,7 +32,7 @@ namespace SIPSorcery.Net
     /// </summary>
     public class IceServer
     {
-        private static readonly ILogger logger = Log.Logger;
+        public static readonly ILogger logger = Log.Logger;
 
         /// <summary>
         /// A magic cookie to use as the prefix for STUN requests generated for ICE servers.
@@ -104,7 +104,7 @@ namespace SIPSorcery.Net
         /// The transaction ID to use in STUN requests. It is used to match responses
         /// with connection checks for this ICE serve entry.
         /// </summary>
-        internal string TransactionID { get; private set; }
+        internal string TransactionID { get; set; }
 
         /// <summary>
         /// The timestamp that the DNS lookup for this ICE server was sent at.

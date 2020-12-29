@@ -26,15 +26,15 @@ namespace SIPSorcery.SIP
     /// </summary>
     public class SIPMessageBuffer
     {
-        private const string SIP_RESPONSE_PREFIX = "SIP";
-        private const string SIP_MESSAGE_IDENTIFIER = "SIP";    // String that must be in a message buffer to be recognised as a SIP message and processed.
+        public const string SIP_RESPONSE_PREFIX = "SIP";
+        public const string SIP_MESSAGE_IDENTIFIER = "SIP";    // String that must be in a message buffer to be recognised as a SIP message and processed.
 
-        private static int m_sipFullVersionStrLen = SIPConstants.SIP_FULLVERSION_STRING.Length;
-        private static int m_minFirstLineLength = 7;
-        private static string m_CRLF = SIPConstants.CRLF;
-        private static string m_sipMessageDelimiter = SIPConstants.CRLF + SIPConstants.CRLF;    // The delimiting character sequence for messages in a stream.
+        public static int m_sipFullVersionStrLen = SIPConstants.SIP_FULLVERSION_STRING.Length;
+        public static int m_minFirstLineLength = 7;
+        public static string m_CRLF = SIPConstants.CRLF;
+        public static string m_sipMessageDelimiter = SIPConstants.CRLF + SIPConstants.CRLF;    // The delimiting character sequence for messages in a stream.
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public string RawMessage
         {

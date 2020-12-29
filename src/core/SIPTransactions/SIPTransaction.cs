@@ -92,7 +92,7 @@ namespace SIPSorcery.SIP
 
         public bool HasTimedOut { get; set; }
 
-        private string m_transactionId;
+        public string m_transactionId;
         public string TransactionId
         {
             get { return m_transactionId; }
@@ -102,7 +102,7 @@ namespace SIPSorcery.SIP
         ///  The contact address from the top Via header that created the transaction. 
         ///  This is used for matching requests to server transactions.
         /// </summary>
-        private string m_sentBy;
+        public string m_sentBy;
 
         public SIPTransactionTypesEnum TransactionType = SIPTransactionTypesEnum.NonInvite;
         public DateTime Created = DateTime.Now;
@@ -148,7 +148,7 @@ namespace SIPSorcery.SIP
         public SIPEndPoint OutboundProxy;
         public SIPCDR CDR;
 
-        private SIPTransactionStatesEnum m_transactionState = SIPTransactionStatesEnum.Calling;
+        public SIPTransactionStatesEnum m_transactionState = SIPTransactionStatesEnum.Calling;
         public SIPTransactionStatesEnum TransactionState
         {
             get { return m_transactionState; }
@@ -163,15 +163,15 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// The most recent non reliable provisional response that was requested to be sent.
         /// </summary>
-        public SIPResponse UnreliableProvisionalResponse { get; private set; }
+        public SIPResponse UnreliableProvisionalResponse { get; set; }
 
         /// <summary>
         /// The most recent provisional response that was requested to be sent. If reliable provisional responses
         /// are being used then this response needs to be sent reliably in the same manner as the final response.
         /// </summary>
-        public SIPResponse ReliableProvisionalResponse { get; private set; }
+        public SIPResponse ReliableProvisionalResponse { get; set; }
 
-        public int RSeq { get; private set; } = 0;
+        public int RSeq { get; set; } = 0;
 
         protected SIPResponse m_transactionFinalResponse;
 
@@ -494,7 +494,7 @@ namespace SIPSorcery.SIP
             _ = m_sipTransport.SendResponseAsync(prackResponse);
         }
 
-        private Task<SocketError> ResendAckRequest()
+        public Task<SocketError> ResendAckRequest()
         {
             try
             {
@@ -517,7 +517,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private Task<SocketError> ResendPrackRequest()
+        public Task<SocketError> ResendPrackRequest()
         {
             try
             {
@@ -645,7 +645,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private void FireTransactionStateChangedEvent()
+        public void FireTransactionStateChangedEvent()
         {
             FireTransactionTraceMessage($"Transaction state changed to {this.TransactionState}.");
 
@@ -659,7 +659,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private void FireTransactionTraceMessage(string message)
+        public void FireTransactionTraceMessage(string message)
         {
             try
             {

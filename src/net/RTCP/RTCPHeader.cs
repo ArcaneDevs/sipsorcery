@@ -74,23 +74,23 @@ namespace SIPSorcery.Net
         public const int MAX_RECEPTIONREPORT_COUNT = 32;
         public const int RTCP_VERSION = 2;
 
-        public int Version { get; private set; } = RTCP_VERSION;         // 2 bits.
-        public int PaddingFlag { get; private set; } = 0;                 // 1 bit.
-        public int ReceptionReportCount { get; private set; } = 0;        // 5 bits.
-        public RTCPReportTypesEnum PacketType { get; private set; }       // 8 bits.
-        public UInt16 Length { get; private set; }                        // 16 bits.
+        public int Version { get; set; } = RTCP_VERSION;         // 2 bits.
+        public int PaddingFlag { get; set; } = 0;                 // 1 bit.
+        public int ReceptionReportCount { get; set; } = 0;        // 5 bits.
+        public RTCPReportTypesEnum PacketType { get; set; }       // 8 bits.
+        public UInt16 Length { get; set; }                        // 16 bits.
 
         /// <summary>
         /// The Feedback Message Type is used for RFC4585 transport layer feedback reports.
         /// When used this field gets set in place of the Reception Report Counter field.
         /// </summary>
-        public RTCPFeedbackTypesEnum FeedbackMessageType { get; private set; } = RTCPFeedbackTypesEnum.unassigned;
+        public RTCPFeedbackTypesEnum FeedbackMessageType { get; set; } = RTCPFeedbackTypesEnum.unassigned;
 
         /// <summary>
         /// The Payload Feedback Message Type is used for RFC4585 payload layer feedback reports.
         /// When used this field gets set in place of the Reception Report Counter field.
         /// </summary>
-        public PSFBFeedbackTypesEnum PayloadFeedbackMessageType { get; private set; } = PSFBFeedbackTypesEnum.unassigned;
+        public PSFBFeedbackTypesEnum PayloadFeedbackMessageType { get; set; } = PSFBFeedbackTypesEnum.unassigned;
 
         public RTCPHeader(RTCPFeedbackTypesEnum feedbackType)
         {

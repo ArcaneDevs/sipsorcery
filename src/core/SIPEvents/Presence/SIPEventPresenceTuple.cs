@@ -20,7 +20,7 @@ namespace SIPSorcery.SIP
 {
     public class SIPEventPresenceTuple
     {
-        private static readonly string m_pidfXMLNS = SIPEventConsts.PIDF_XML_NAMESPACE_URN;
+        public static readonly string m_pidfXMLNS = SIPEventConsts.PIDF_XML_NAMESPACE_URN;
 
         public string ID;
         public SIPEventPresenceStateEnum Status;
@@ -28,7 +28,7 @@ namespace SIPSorcery.SIP
         public decimal ContactPriority = Decimal.Zero;
         public string AvatarURL;
 
-        private SIPEventPresenceTuple()
+        public SIPEventPresenceTuple()
         { }
 
         public SIPEventPresenceTuple(string id, SIPEventPresenceStateEnum status)

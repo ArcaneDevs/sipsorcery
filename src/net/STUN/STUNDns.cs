@@ -53,9 +53,9 @@ namespace SIPSorcery.Net
         public const int DNS_TIMEOUT_SECONDS = 1;
         public const int DNS_RETRIES_PER_SERVER = 1;
 
-        private static readonly ILogger logger = Log.Logger;
+        public static readonly ILogger logger = Log.Logger;
 
-        private static LookupClient _lookupClient;
+        public static LookupClient _lookupClient;
 
         static STUNDns()
         {
@@ -90,7 +90,7 @@ namespace SIPSorcery.Net
         /// <param name="uri">The STUN uri to lookup.</param>
         /// <param name="queryType">Whether the address lookup should be A or AAAA.</param>
         /// <returns>An IPEndPoint or null.</returns>
-        private static async Task<IPEndPoint> Resolve(STUNUri uri, QueryType queryType)
+        public static async Task<IPEndPoint> Resolve(STUNUri uri, QueryType queryType)
         {
             if (uri == null || String.IsNullOrWhiteSpace(uri.Host))
             {
@@ -204,7 +204,7 @@ namespace SIPSorcery.Net
         /// <param name="port">The service port to use in the end pint result (not used for the lookup).</param>
         /// <param name="queryType">The lookup query type, either A or AAAA.</param>
         /// <returns>If successful an IPEndPoint or null if not.</returns>
-        private static IPEndPoint HostQuery(string host, int port, QueryType queryType)
+        public static IPEndPoint HostQuery(string host, int port, QueryType queryType)
         {
             try
             {
@@ -235,7 +235,7 @@ namespace SIPSorcery.Net
         /// <param name="addrRecord">The DNS lookup result.</param>
         /// <param name="port">The port for the IP end point.</param>
         /// <returns>An IP end point or null.</returns>
-        private static IPEndPoint GetFromLookupResult(DnsResourceRecord addrRecord, int port)
+        public static IPEndPoint GetFromLookupResult(DnsResourceRecord addrRecord, int port)
         {
             if (addrRecord is AaaaRecord)
             {

@@ -34,12 +34,12 @@ namespace SIPSorcery.SIP
     {
         public const string AUTH_ALGORITHM = "MD5";
         public const string QOP_AUTHENTICATION_VALUE = "auth";
-        private const int NONCE_DEFAULT_COUNT = 1;
+        public const int NONCE_DEFAULT_COUNT = 1;
 
-        private static char[] m_headerFieldRemoveChars = new char[] { ' ', '"', '\'' };
+        public static char[] m_headerFieldRemoveChars = new char[] { ' ', '"', '\'' };
 
-        public SIPAuthorisationHeadersEnum AuthorisationType { get; private set; }              // This is the type of authorisation request received.
-        public SIPAuthorisationHeadersEnum AuthorisationResponseType { get; private set; }      // If this is set it's the type of authorisation response to use otherwise use the same as the request (God knows why you need a different response header?!?)
+        public SIPAuthorisationHeadersEnum AuthorisationType { get; set; }              // This is the type of authorisation request received.
+        public SIPAuthorisationHeadersEnum AuthorisationResponseType { get; set; }      // If this is set it's the type of authorisation response to use otherwise use the same as the request (God knows why you need a different response header?!?)
 
         public string Realm;
         public string Username;
@@ -53,7 +53,7 @@ namespace SIPSorcery.SIP
 
         public string Cnonce;        // Client nonce (used with WWW-Authenticate and qop=auth).
         public string Qop;           // Quality of Protection. Values permitted are auth (authentication) and auth-int (authentication with integrity protection).
-        private int NonceCount = 0;  // Client nonce count.
+        public int NonceCount = 0;  // Client nonce count.
         public string Opaque;
 
         public string Digest
@@ -223,7 +223,7 @@ namespace SIPSorcery.SIP
             NonceCount++;
         }
 
-        private string GetPaddedNonceCount(int count)
+        public string GetPaddedNonceCount(int count)
         {
             return "00000000".Substring(0, 8 - NonceCount.ToString().Length) + count;
         }

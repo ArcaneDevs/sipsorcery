@@ -71,18 +71,18 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// The current start position of unprocessed data in the receive buffer.
         /// </summary>
-        public int RecvStartPosn { get; private set; }
+        public int RecvStartPosn { get; set; }
 
         /// <summary>
         /// The current end position of unprocessed data in the receive buffer.
         /// </summary>
-        public int RecvEndPosn { get; private set; }
+        public int RecvEndPosn { get; set; }
 
         /// <summary>
         /// A unique ID for this connection. It will be recorded on any received messages to allow responses to quickly
         /// identify the same connection.
         /// </summary>
-        public string ConnectionID { get; private set; }
+        public string ConnectionID { get; set; }
 
         /// <summary>
         /// Event for new SIP requests or responses becoming available.

@@ -24,7 +24,7 @@ using SCTP4CS.Utils;
  */
 namespace SIPSorcery.Net.Sctp
 {
-    internal interface SCTPStreamBehaviour
+    public interface SCTPStreamBehaviour
     {
 
         // Something has happend to the stream, this is our chance to respond.

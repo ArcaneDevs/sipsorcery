@@ -28,23 +28,23 @@ namespace SIPSorcery.SIP.App
 {
     public class SIPClientUserAgent : ISIPClientUserAgent
     {
-        private const char OUTBOUNDPROXY_AS_ROUTESET_CHAR = '<';    // If this character exists in the call descriptor OutboundProxy setting it gets treated as a Route set.
+        public const char OUTBOUNDPROXY_AS_ROUTESET_CHAR = '<';    // If this character exists in the call descriptor OutboundProxy setting it gets treated as a Route set.
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private static string m_userAgent = SIPConstants.SIP_USERAGENT_STRING;
+        public static string m_userAgent = SIPConstants.SIP_USERAGENT_STRING;
 
-        private SIPTransport m_sipTransport;
+        public SIPTransport m_sipTransport;
 
-        private SIPCallDescriptor m_sipCallDescriptor;              // Describes the server leg of the call from the sipswitch.
-        //private SIPEndPoint m_serverEndPoint;
-        private UACInviteTransaction m_serverTransaction;
-        private bool m_callCancelled;                               // It's possible for the call to be cancelled before the INVITE has been sent. This could occur if a DNS lookup on the server takes a while.
-        private bool m_hungupOnCancel;                              // Set to true if a call has been cancelled AND and then an OK response was received AND a BYE has been sent to hang it up. This variable is used to stop another BYE transaction being generated.
-        private int m_serverAuthAttempts;                           // Used to determine if credentials for a server leg call fail.
+        public SIPCallDescriptor m_sipCallDescriptor;              // Describes the server leg of the call from the sipswitch.
+        //public SIPEndPoint m_serverEndPoint;
+        public UACInviteTransaction m_serverTransaction;
+        public bool m_callCancelled;                               // It's possible for the call to be cancelled before the INVITE has been sent. This could occur if a DNS lookup on the server takes a while.
+        public bool m_hungupOnCancel;                              // Set to true if a call has been cancelled AND and then an OK response was received AND a BYE has been sent to hang it up. This variable is used to stop another BYE transaction being generated.
+        public int m_serverAuthAttempts;                           // Used to determine if credentials for a server leg call fail.
         internal SIPNonInviteTransaction m_cancelTransaction;        // If the server call is cancelled this transaction contains the CANCEL in case it needs to be resent.
-        private SIPEndPoint m_outboundProxy;                        // If the system needs to use an outbound proxy for every request this will be set and overrides any user supplied values.
-        private SIPDialogue m_sipDialogue;
+        public SIPEndPoint m_outboundProxy;                        // If the system needs to use an outbound proxy for every request this will be set and overrides any user supplied values.
+        public SIPDialogue m_sipDialogue;
 
         public event SIPCallResponseDelegate CallTrying;
         public event SIPCallResponseDelegate CallRinging;
@@ -346,7 +346,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private Task<SocketError> ServerFinalResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
+        public Task<SocketError> ServerFinalResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
         {
             try
             {
@@ -466,7 +466,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private Task<SocketError> ServerInformationResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
+        public Task<SocketError> ServerInformationResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
         {
             logger.LogDebug("Information response " + sipResponse.StatusCode + " " + sipResponse.ReasonPhrase + " for " + m_serverTransaction.TransactionRequest.URI.ToString() + ".");
 
@@ -490,7 +490,7 @@ namespace SIPSorcery.SIP.App
             return Task.FromResult(SocketError.Success);
         }
 
-        private void ServerTimedOut(SIPTransaction sipTransaction)
+        public void ServerTimedOut(SIPTransaction sipTransaction)
         {
             if (!m_callCancelled)
             {
@@ -498,7 +498,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private Task<SocketError> ByeServerFinalResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
+        public Task<SocketError> ByeServerFinalResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
         {
             try
             {
@@ -533,7 +533,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private SIPRequest GetInviteRequest(SIPCallDescriptor sipCallDescriptor, string branchId, string callId, SIPRouteSet routeSet, string content, string contentType)
+        public SIPRequest GetInviteRequest(SIPCallDescriptor sipCallDescriptor, string branchId, string callId, SIPRouteSet routeSet, string content, string contentType)
         {
             SIPRequest inviteRequest = new SIPRequest(SIPMethodsEnum.INVITE, sipCallDescriptor.Uri);
 
@@ -613,7 +613,7 @@ namespace SIPSorcery.SIP.App
             return inviteRequest;
         }
 
-        private SIPRequest GetCancelRequest(SIPRequest inviteRequest)
+        public SIPRequest GetCancelRequest(SIPRequest inviteRequest)
         {
             SIPRequest cancelRequest = new SIPRequest(SIPMethodsEnum.CANCEL, inviteRequest.URI);
             cancelRequest.SetSendFromHints(inviteRequest.LocalSIPEndPoint);
@@ -629,7 +629,7 @@ namespace SIPSorcery.SIP.App
             return cancelRequest;
         }
 
-        private SIPRequest GetByeRequest(SIPResponse inviteResponse, SIPURI byeURI)
+        public SIPRequest GetByeRequest(SIPResponse inviteResponse, SIPURI byeURI)
         {
             SIPRequest byeRequest = new SIPRequest(SIPMethodsEnum.BYE, byeURI);
             byeRequest.SetSendFromHints(inviteResponse.LocalSIPEndPoint);
@@ -648,7 +648,7 @@ namespace SIPSorcery.SIP.App
             return byeRequest;
         }
 
-        private SIPRequest GetUpdateRequest(SIPRequest inviteRequest, CRMHeaders crmHeaders)
+        public SIPRequest GetUpdateRequest(SIPRequest inviteRequest, CRMHeaders crmHeaders)
         {
             SIPRequest updateRequest = new SIPRequest(SIPMethodsEnum.UPDATE, inviteRequest.URI);
             updateRequest.SetSendFromHints(inviteRequest.LocalSIPEndPoint);
@@ -675,7 +675,7 @@ namespace SIPSorcery.SIP.App
             return updateRequest;
         }
 
-        private SIPEndPoint GetRemoteTargetEndpoint()
+        public SIPEndPoint GetRemoteTargetEndpoint()
         {
             SIPURI dstURI = (m_sipDialogue.RouteSet == null) ? m_sipDialogue.RemoteTarget : m_sipDialogue.RouteSet.TopRoute.URI;
             return dstURI.ToSIPEndPoint();

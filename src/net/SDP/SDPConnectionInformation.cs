@@ -40,7 +40,7 @@ namespace SIPSorcery.Net
         /// </summary>
         public string ConnectionAddress;
 
-        private SDPConnectionInformation()
+        public SDPConnectionInformation()
         { }
 
         public SDPConnectionInformation(IPAddress connectionAddress)

@@ -32,8 +32,14 @@ namespace SCTP4CS.Utils
         {
             for (int i = 0; i < list.Count;)
             {
-                if (f(list[i])) list.RemoveAt(i);
-                else i++;
+                if (f(list[i]))
+                {
+                    list.RemoveAt(i);
+                }
+                else
+                {
+                    i++;
+                }
             }
         }
 
@@ -69,8 +75,8 @@ namespace SCTP4CS.Utils
 
         public struct SortedArrayEnumerator
         {
-            private List<T> list;
-            private int index;
+            public List<T> list;
+            public int index;
 
             public SortedArrayEnumerator(List<T> list)
             {

@@ -28,9 +28,9 @@ namespace SIPSorcery.Net
     public class STUNClient
     {
         public const int DEFAULT_STUN_PORT = 3478;
-        private const int STUN_SERVER_RESPONSE_TIMEOUT = 3;
+        public const int STUN_SERVER_RESPONSE_TIMEOUT = 3;
 
-        private static readonly ILogger logger = Log.Logger;
+        public static readonly ILogger logger = Log.Logger;
 
         /// <summary>
         /// Used to get the public IP address of the client as seen by the STUN server.

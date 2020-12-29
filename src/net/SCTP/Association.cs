@@ -37,7 +37,7 @@ namespace SIPSorcery.Net.Sctp
 {
     public abstract class Association
     {
-        private bool _even;
+        public bool _even;
 
         public abstract void associate();
 
@@ -87,7 +87,7 @@ namespace SIPSorcery.Net.Sctp
             SHUTDOWNACKSENT, CLOSED
         };
 
-        private byte[] _supportedExtensions = { (byte)ChunkType.RE_CONFIG };
+        public byte[] _supportedExtensions = { (byte)ChunkType.RE_CONFIG };
         /*
 		 For what it is worth, here's the logic as to why we don't have any supported extensions.
 		 { 
@@ -99,10 +99,10 @@ namespace SIPSorcery.Net.Sctp
 		 AUTH // Assume DTLS will cover this for us if we never send ASCONF packets.
 		 */
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public static int COOKIESIZE = 32;
-        private static long VALIDCOOKIELIFE = 60000;
+        public static long VALIDCOOKIELIFE = 60000;
         /*
 		 RTO.Initial - 3 seconds
 		 RTO.Min - 1 second
@@ -118,27 +118,27 @@ namespace SIPSorcery.Net.Sctp
 		 HB.Max.Burst - 1
 		 */
         protected DatagramTransport _transp;
-        private Thread _rcv;
-        private int _peerVerTag;
+        public Thread _rcv;
+        public int _peerVerTag;
         protected int _myVerTag;
-        private SecureRandom _random;
-        private long _winCredit;
-        private uint _farTSN;
-        private int MAXSTREAMS = 1000;
-        private int _maxOutStreams;
-        private int _maxInStreams;
+        public SecureRandom _random;
+        public long _winCredit;
+        public uint _farTSN;
+        public int MAXSTREAMS = 1000;
+        public int _maxOutStreams;
+        public int _maxInStreams;
         public static uint MAXBUFF = 20 * 1024;
         public uint _nearTSN;
-        private int _srcPort;
-        private int _destPort;
-        private Dictionary<int, SCTPStream> _streams;
-        private AssociationListener _al;
-        private Dictionary<long, DataChunk> _outbound;
+        public int _srcPort;
+        public int _destPort;
+        public Dictionary<int, SCTPStream> _streams;
+        public AssociationListener _al;
+        public Dictionary<long, DataChunk> _outbound;
         protected State _state;
-        private Dictionary<uint, DataChunk> _holdingPen;
-        private static int TICK = 1000; // loop time in rcv
+        public Dictionary<uint, DataChunk> _holdingPen;
+        public static int TICK = 1000; // loop time in rcv
         static int __assocNo = 1;
-        private ReconfigState reconfigState;
+        public ReconfigState reconfigState;
 
         /// <summary>
         /// The next ID to use when creating a new stream. 
@@ -146,14 +146,14 @@ namespace SIPSorcery.Net.Sctp
         /// ID's that were greater than maximum number of streams set on the SCTP association. Hence
         /// changed it to be sequential.
         /// </summary>
-        private int _nextStreamID = 0;
+        public int _nextStreamID = 0;
 
-        class CookieHolder
+        public class CookieHolder
         {
             public byte[] cookieData;
             public long cookieTime;
         };
-        private List<CookieHolder> _cookies = new List<CookieHolder>();
+        public List<CookieHolder> _cookies = new List<CookieHolder>();
 
         // default is server
         public Association(DatagramTransport transport, AssociationListener al, int srcPort, int dstPort) : this(transport, al, false, srcPort, dstPort) { }
@@ -377,7 +377,7 @@ namespace SIPSorcery.Net.Sctp
 		 *
 		 * @return
 		 */
-        private bool acceptableStateForInboundInit()
+        public bool acceptableStateForInboundInit()
         {
             bool ret = false;
             if (doBidirectionalInit())
@@ -399,7 +399,7 @@ namespace SIPSorcery.Net.Sctp
 		 * @throws IOException
 		 * @throws SctpPacketFormatException
 		 */
-        private bool deal(Chunk c, List<Chunk> replies)
+        public bool deal(Chunk c, List<Chunk> replies)
         {
             ChunkType ty = c.getType();
             bool ret = true;
@@ -542,7 +542,7 @@ namespace SIPSorcery.Net.Sctp
 		 The only downside is that if the far end spams us with a pile of inits at speed, we may erase one that we've
 		 replied to and that was about to be a happy camper. Shrug.
 		 */
-        private CookieHolder checkCookieEcho(byte[] cookieData)
+        public CookieHolder checkCookieEcho(byte[] cookieData)
         {
             CookieHolder same = null;
             foreach (CookieHolder cookie in _cookies)
@@ -569,7 +569,7 @@ namespace SIPSorcery.Net.Sctp
             return same;
         }
 
-        private uint howStaleIsMyCookie(CookieHolder cookie)
+        public uint howStaleIsMyCookie(CookieHolder cookie)
         {
             uint ret = 0;
             long now = TimeExtension.CurrentTimeMillis();
@@ -708,7 +708,7 @@ namespace SIPSorcery.Net.Sctp
             return reply;
         }
 
-        private void ingest(DataChunk dc, List<Chunk> rep)
+        public void ingest(DataChunk dc, List<Chunk> rep)
         {
             //logger.LogDebug("SCTP received " + dc.ToString());
             Chunk closer = null;
@@ -731,7 +731,10 @@ namespace SIPSorcery.Net.Sctp
                 try
                 {
                     _al.onDCEPStream(_in, _in.getLabel(), dc.getPpid());
-                    if (_in.OnOpen != null) _in.OnOpen.Invoke();
+                    if (_in.OnOpen != null)
+                    {
+                        _in.OnOpen.Invoke();
+                    }
                 }
                 catch (Exception x)
                 {
@@ -759,7 +762,7 @@ namespace SIPSorcery.Net.Sctp
             _farTSN = tsn;
         }
 
-        private Chunk[] dataDeal(DataChunk dc)
+        public Chunk[] dataDeal(DataChunk dc)
         {
             List<Chunk> rep = new List<Chunk>();
             List<uint> duplicates = new List<uint>();
@@ -811,7 +814,7 @@ namespace SIPSorcery.Net.Sctp
         // todo should be in a behave block
         // then we wouldn't be messing with stream seq numbers.
 
-        private Chunk[] dcepDeal(SCTPStream s, DataChunk dc, DataChannelOpen dcep)
+        public Chunk[] dcepDeal(SCTPStream s, DataChunk dc, DataChannelOpen dcep)
         {
             Chunk[] rep = null;
             //logger.LogDebug("dealing with a decp for stream " + dc.getDataAsString());
@@ -890,7 +893,7 @@ namespace SIPSorcery.Net.Sctp
 		 * MUST appear first in the SCTP packet.
 		 * </code>
 		 */
-        private Chunk[] cookieEchoDeal(CookieEchoChunk echo)
+        public Chunk[] cookieEchoDeal(CookieEchoChunk echo)
         {
             Chunk[] reply = new Chunk[0];
             if (_state == State.CLOSED || _state == State.COOKIEWAIT || _state == State.COOKIEECHOED)
@@ -940,7 +943,7 @@ namespace SIPSorcery.Net.Sctp
             return reply;
         }
 
-        private SackChunk mkSack(List<uint> pen, List<uint> dups)
+        public SackChunk mkSack(List<uint> pen, List<uint> dups)
         {
             SackChunk ret = new SackChunk();
             ret.setCumuTSNAck(_farTSN);
@@ -952,7 +955,7 @@ namespace SIPSorcery.Net.Sctp
             return ret;
         }
 
-        private int calcStashCap()
+        public int calcStashCap()
         {
             int ret = 0;
             foreach (SCTPStream s in this._streams.Values)

@@ -109,9 +109,9 @@ namespace SIPSorcery.Net
         /// candidate could be a hostname or IP address. This field will be set before the candidate
         /// is used.
         /// </summary>
-        public IPEndPoint DestinationEndPoint { get; private set; }
+        public IPEndPoint DestinationEndPoint { get; set; }
 
-        private RTCIceCandidate()
+        public RTCIceCandidate()
         { }
 
         public RTCIceCandidate(RTCIceCandidateInit init)
@@ -262,7 +262,7 @@ namespace SIPSorcery.Net
             DestinationEndPoint = destinationEP;
         }
 
-        private string GetFoundation()
+        public string GetFoundation()
         {
             int addressVal = !String.IsNullOrEmpty(address) ? Crypto.GetSHAHash(address).Sum(x => (byte)x) : 0;
             int svrVal = (type == RTCIceCandidateType.relay || type == RTCIceCandidateType.srflx) ?
@@ -270,7 +270,7 @@ namespace SIPSorcery.Net
             return (type.GetHashCode() + addressVal + svrVal + protocol.GetHashCode()).ToString();
         }
 
-        private uint GetPriority()
+        public uint GetPriority()
         {
             return (uint)((2 ^ 24) * (126 - type.GetHashCode()) +
                       (2 ^ 8) * (65535) + // TODO: Add some kind of priority to different local IP addresses if needed.

@@ -5,8 +5,8 @@ namespace SCTP4CS.Utils
 {
     public class BlockingQueue<T> where T : class
     {
-        private bool closing;
-        private readonly Queue<T> queue = new Queue<T>();
+        public bool closing;
+        public readonly Queue<T> queue = new Queue<T>();
 
         public int Count
         {

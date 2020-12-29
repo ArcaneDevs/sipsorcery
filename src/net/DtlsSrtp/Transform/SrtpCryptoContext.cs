@@ -95,118 +95,118 @@ namespace SIPSorcery.Net
         /**
          * The replay check windows size
          */
-        private readonly long REPLAY_WINDOW_SIZE = 64;
+        public readonly long REPLAY_WINDOW_SIZE = 64;
 
         /**
          * RTP SSRC of this cryptographic context
          */
-        private long ssrcCtx;
+        public long ssrcCtx;
 
         /**
          * Master key identifier
          */
-        private byte[] mki;
+        public byte[] mki;
 
         /**
          * Roll-Over-Counter, see RFC3711 section 3.2.1 for detailed description
          */
-        private int roc;
+        public int roc;
 
         /**
          * Roll-Over-Counter guessed from packet
          */
-        private int guessedROC;
+        public int guessedROC;
 
         /**
          * RTP sequence number of the packet current processing
          */
-        private int seqNum;
+        public int seqNum;
 
         /**
          * Whether we have the sequence number of current packet
          */
-        private bool seqNumSet;
+        public bool seqNumSet;
 
         /**
          * Key Derivation Rate, used to derive session keys from master keys
          */
-        private long keyDerivationRate;
+        public long keyDerivationRate;
 
         /**
          * Bit mask for replay check
          */
-        private long replayWindow;
+        public long replayWindow;
 
         /**
          * Master encryption key
          */
-        private byte[] masterKey;
+        public byte[] masterKey;
 
         /**
          * Master salting key
          */
-        private byte[] masterSalt;
+        public byte[] masterSalt;
 
         /**
          * Derived session encryption key
          */
-        private byte[] encKey;
+        public byte[] encKey;
 
         /**
          * Derived session authentication key
          */
-        private byte[] authKey;
+        public byte[] authKey;
 
         /**
          * Derived session salting key
          */
-        private byte[] saltKey;
+        public byte[] saltKey;
 
         /**
          * Encryption / Authentication policy for this session
          */
-        private SrtpPolicy policy;
+        public SrtpPolicy policy;
 
         /**
          * The HMAC object we used to do packet authentication
          */
-        private IMac mac;
+        public IMac mac;
 
         /**
          * The symmetric cipher engines we need here
          */
-        private IBlockCipher cipher = null;
+        public IBlockCipher cipher = null;
 
         /**
          * Used inside F8 mode only
          */
-        private IBlockCipher cipherF8 = null;
+        public IBlockCipher cipherF8 = null;
 
         /**
          * implements the counter cipher mode for RTP according to RFC 3711
          */
-        private SrtpCipherCTR cipherCtr = new SrtpCipherCTR();
+        public SrtpCipherCTR cipherCtr = new SrtpCipherCTR();
 
         /**
          * Temp store.
          */
-        private byte[] tagStore;
+        public byte[] tagStore;
 
         /**
          * Temp store.
          */
-        private byte[] ivStore = new byte[16];
+        public byte[] ivStore = new byte[16];
 
         /**
          * Temp store.
          */
-        private byte[] rbStore = new byte[4];
+        public byte[] rbStore = new byte[4];
 
         /**
          * this is a working store, used by some methods to avoid new operations the
          * methods must use this only to store results for immediate processing
          */
-        private byte[] tempStore = new byte[100];
+        public byte[] tempStore = new byte[100];
 
         /**
          * Construct an empty SRTPCryptoContext using ssrc. The other parameters are
@@ -604,7 +604,7 @@ namespace SIPSorcery.Net
          * @param rocIn
          *            Roll-Over-Counter
          */
-        private void AuthenticatePacketHMCSHA1(RawPacket pkt, int rocIn)
+        public void AuthenticatePacketHMCSHA1(RawPacket pkt, int rocIn)
         {
             MemoryStream buf = pkt.GetBuffer();
             buf.Position = 0;
@@ -682,7 +682,7 @@ namespace SIPSorcery.Net
          * @param index
          *            48bit RTP packet index
          */
-        private void ComputeIv(long label, long index)
+        public void ComputeIv(long label, long index)
         {
             long key_id;
 
@@ -767,7 +767,7 @@ namespace SIPSorcery.Net
          *            sequence number of the received RTP packet
          * @return the new SRTP packet index
          */
-        private long GuessIndex(int seqNo)
+        public long GuessIndex(int seqNo)
         {
             if (this.seqNum < 32768)
             {
@@ -808,7 +808,7 @@ namespace SIPSorcery.Net
          * @param guessedIndex
          *            guessed roc
          */
-        private void Update(int seqNo, long guessedIndex)
+        public void Update(int seqNo, long guessedIndex)
         {
 #pragma warning disable CS0675 // Bitwise-or operator used on a sign-extended operand
             long delta = guessedIndex - (((long)this.roc) << 16 | this.seqNum);

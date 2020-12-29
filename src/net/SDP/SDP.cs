@@ -132,11 +132,11 @@ namespace SIPSorcery.Net
         public const string END_ICE_CANDIDATES_ATTRIBUTE = "end-of-candidates";
         public const string ICE_OPTIONS = "ice-options";
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public decimal Version = SDP_PROTOCOL_VERSION;
 
-        private string m_rawSdp = null;
+        public string m_rawSdp = null;
 
         // Owner fields.
         public string Username = "-";       // Username of the session originator.

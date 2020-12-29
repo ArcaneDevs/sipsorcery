@@ -36,20 +36,20 @@ namespace SIPSorcery.Net
         public const int DTLS_RETRANSMISSION_CODE = -1;
         public const int DTLS_RECEIVE_ERROR_CODE = -2;
 
-        private static readonly ILogger logger = Log.Logger;
+        public static readonly ILogger logger = Log.Logger;
 
-        private static readonly Random random = new Random();
+        public static readonly Random random = new Random();
 
-        private IPacketTransformer srtpEncoder;
-        private IPacketTransformer srtpDecoder;
-        private IPacketTransformer srtcpEncoder;
-        private IPacketTransformer srtcpDecoder;
+        public IPacketTransformer srtpEncoder;
+        public IPacketTransformer srtpDecoder;
+        public IPacketTransformer srtcpEncoder;
+        public IPacketTransformer srtcpDecoder;
         IDtlsSrtpPeer connection = null;
 
         /// <summary>The collection of chunks to be written.</summary>
-        private BlockingCollection<byte[]> _chunks = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
+        public BlockingCollection<byte[]> _chunks = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
 
-        public DtlsTransport Transport { get; private set; }
+        public DtlsTransport Transport { get; set; }
 
         /// <summary>
         /// Sets the period in milliseconds that the handshake attempt will timeout
@@ -73,18 +73,18 @@ namespace SIPSorcery.Net
         /// </summary>
         public event Action<AlertLevelsEnum, AlertTypesEnum, string> OnAlert;
 
-        private System.DateTime _startTime = System.DateTime.MinValue;
-        private bool _isClosed = false;
+        public System.DateTime _startTime = System.DateTime.MinValue;
+        public bool _isClosed = false;
 
         // Network properties
-        private int _waitMillis = DEFAULT_RETRANSMISSION_WAIT_MILLIS;
-        private int _mtu;
-        private int _receiveLimit;
-        private int _sendLimit;
+        public int _waitMillis = DEFAULT_RETRANSMISSION_WAIT_MILLIS;
+        public int _mtu;
+        public int _receiveLimit;
+        public int _sendLimit;
 
-        private volatile bool _handshakeComplete;
-        private volatile bool _handshakeFailed;
-        private volatile bool _handshaking;
+        public volatile bool _handshakeComplete;
+        public volatile bool _handshakeFailed;
+        public volatile bool _handshaking;
 
         public DtlsSrtpTransport(IDtlsSrtpPeer connection, int mtu = DEFAULT_MTU)
         {
@@ -437,7 +437,7 @@ namespace SIPSorcery.Net
         /// <summary>
         /// Returns the number of milliseconds remaining until a timeout occurs.
         /// </summary>
-        private int GetMillisecondsRemaining()
+        public int GetMillisecondsRemaining()
         {
             return TimeoutMilliseconds - (int)(System.DateTime.Now - this._startTime).TotalMilliseconds;
         }
@@ -500,9 +500,13 @@ namespace SIPSorcery.Net
                     //Handle DTLS 1.3 Retransmission time (100 to 6000 ms)
                     //https://tools.ietf.org/id/draft-ietf-tls-dtls13-31.html#rfc.section.5.7
                     if (receiveLen == DTLS_RETRANSMISSION_CODE)
+                    {
                         _waitMillis = BackOff(_waitMillis);
+                    }
                     else
+                    {
                         _waitMillis = RetransmissionMilliseconds;
+                    }
 
                     return receiveLen;
                 }

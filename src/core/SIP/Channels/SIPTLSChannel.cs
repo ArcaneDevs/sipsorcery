@@ -27,7 +27,7 @@ namespace SIPSorcery.SIP
 {
     public class SIPTLSChannel : SIPTCPChannel
     {
-        private X509Certificate2 m_serverCertificate;
+        public X509Certificate2 m_serverCertificate;
 
         override protected string ProtDescr { get; } = "TLS";
 
@@ -122,7 +122,7 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// Callback for read operations on the SSL stream. 
         /// </summary>
-        private void OnReadCallback(IAsyncResult ar)
+        public void OnReadCallback(IAsyncResult ar)
         {
             SIPStreamConnection sipStreamConnection = (SIPStreamConnection)ar.AsyncState;
 
@@ -206,7 +206,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="subjName">The subject name of the certificate to retrieve.</param>
         /// <returns>If found an X509 certificate or null if not.</returns>
-        private X509Certificate GetServerCert(string subjName)
+        public X509Certificate GetServerCert(string subjName)
         {
             //X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
             X509Store store = new X509Store(StoreName.CertificateAuthority, StoreLocation.LocalMachine);
@@ -218,7 +218,7 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// Hook to do any validation required on the server certificate.
         /// </summary>
-        private bool ValidateServerCertificate(
+        public bool ValidateServerCertificate(
             object sender,
             X509Certificate certificate,
             X509Chain chain,
@@ -238,7 +238,7 @@ namespace SIPSorcery.SIP
 
         #region Certificate verbose logging.
 
-        private void DisplayCertificateChain(X509Certificate2 certificate)
+        public void DisplayCertificateChain(X509Certificate2 certificate)
         {
             X509Chain ch = new X509Chain();
             ch.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
@@ -278,7 +278,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private void DisplaySecurityLevel(SslStream stream)
+        public void DisplaySecurityLevel(SslStream stream)
         {
             logger.LogDebug(String.Format("Cipher: {0} strength {1}", stream.CipherAlgorithm, stream.CipherStrength));
             logger.LogDebug(String.Format("Hash: {0} strength {1}", stream.HashAlgorithm, stream.HashStrength));
@@ -286,20 +286,20 @@ namespace SIPSorcery.SIP
             logger.LogDebug(String.Format("Protocol: {0}", stream.SslProtocol));
         }
 
-        private void DisplaySecurityServices(SslStream stream)
+        public void DisplaySecurityServices(SslStream stream)
         {
             logger.LogDebug(String.Format("Is authenticated: {0} as server? {1}", stream.IsAuthenticated, stream.IsServer));
             logger.LogDebug(String.Format("IsSigned: {0}", stream.IsSigned));
             logger.LogDebug(String.Format("Is Encrypted: {0}", stream.IsEncrypted));
         }
 
-        private void DisplayStreamProperties(SslStream stream)
+        public void DisplayStreamProperties(SslStream stream)
         {
             logger.LogDebug(String.Format("Can read: {0}, write {1}", stream.CanRead, stream.CanWrite));
             logger.LogDebug(String.Format("Can timeout: {0}", stream.CanTimeout));
         }
 
-        private void DisplayCertificateInformation(SslStream stream)
+        public void DisplayCertificateInformation(SslStream stream)
         {
             logger.LogDebug(String.Format("Certificate revocation list checked: {0}", stream.CheckCertRevocationStatus));
 

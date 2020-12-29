@@ -19,7 +19,7 @@ namespace SIPSorcery.Net.Sctp
 {
     class OrderedMessageHandler
     {
-        private ConcurrentDictionary<int, OrderedMessage> queue = new ConcurrentDictionary<int, OrderedMessage>();
+        public ConcurrentDictionary<int, OrderedMessage> queue = new ConcurrentDictionary<int, OrderedMessage>();
 
         public OrderedMessage GetMessage(int num)
         {

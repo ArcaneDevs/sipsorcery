@@ -68,8 +68,8 @@ namespace SIPSorcery.Net
         public const int MIN_PACKET_SIZE = RTCPHeader.HEADER_BYTES_LENGTH + PACKET_SIZE_WITHOUT_CNAME;
 
         public RTCPHeader Header;
-        public uint SSRC { get; private set; }
-        public string CNAME { get; private set; }
+        public uint SSRC { get; set; }
+        public string CNAME { get; set; }
 
         /// <summary>
         /// Creates a new RTCP SDES payload that can be included in an RTCP packet.
@@ -163,7 +163,7 @@ namespace SIPSorcery.Net
         /// <param name="cnameLength">The length of the cname string.</param>
         /// <returns>The minimum length for the full packet to be able to fit within a 4 byte
         /// boundary.</returns>
-        private int GetPaddedLength(int cnameLength)
+        public int GetPaddedLength(int cnameLength)
         {
             // Plus one is for the 0x00 items termination byte.
             int nonPaddedSize = cnameLength + PACKET_SIZE_WITHOUT_CNAME + 1;

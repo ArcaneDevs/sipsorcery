@@ -24,8 +24,8 @@ namespace SIPSorcery.SIP
 {
     public class SIPEventDialogParticipant
     {
-        private static readonly string m_dialogXMLNS = SIPEventConsts.DIALOG_XML_NAMESPACE_URN;
-        private static readonly string m_sipsorceryXMLNS = SIPEventConsts.SIPSORCERY_DIALOG_XML_NAMESPACE_URN;
+        public static readonly string m_dialogXMLNS = SIPEventConsts.DIALOG_XML_NAMESPACE_URN;
+        public static readonly string m_sipsorceryXMLNS = SIPEventConsts.SIPSORCERY_DIALOG_XML_NAMESPACE_URN;
 
         public string DisplayName;
         public SIPURI URI;
@@ -36,7 +36,7 @@ namespace SIPSorcery.SIP
         public string CRMCompanyName;
         public string CRMPictureURL;
 
-        private SIPEventDialogParticipant()
+        public SIPEventDialogParticipant()
         { }
 
         public SIPEventDialogParticipant(string displayName, SIPURI uri, SIPURI targetURI, int cseq)

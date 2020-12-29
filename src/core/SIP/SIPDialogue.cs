@@ -50,7 +50,7 @@ namespace SIPSorcery.SIP
 
         protected static string m_CRLF = SIPConstants.CRLF;
         protected static string m_sipVersion = SIPConstants.SIP_VERSION_STRING;
-        private static readonly int m_defaultSIPPort = SIPConstants.DEFAULT_SIP_PORT;
+        public static readonly int m_defaultSIPPort = SIPConstants.DEFAULT_SIP_PORT;
 
         public Guid Id { get; set; }                                // Id for persistence, NOT used for SIP call purposes.
         public string CallId { get; set; }
@@ -63,7 +63,7 @@ namespace SIPSorcery.SIP
         public int RemoteCSeq { get; set; }                         // Latest CSeq received from the remote UA.
         public SIPURI RemoteTarget { get; set; }                    // This will be the Contact URI in the INVITE request or in the 2xx INVITE response and is where subsequent dialogue requests should be sent.
         public Guid CDRId { get; set; }                             // Call detail record for call the dialogue belongs to.
-        public string ContentType { get; private set; }             // The content type on the request or response that created this dialogue. This is not part of or required for the dialogue and is kept for info and consumer app. purposes only.
+        public string ContentType { get; set; }             // The content type on the request or response that created this dialogue. This is not part of or required for the dialogue and is kept for info and consumer app. purposes only.
         public string SDP { get; set; }                             // The sessions description protocol payload. This is not part of or required for the dialogue and is kept for info and consumer app. purposes only.
         public string RemoteSDP { get; set; }                       // The sessions description protocol payload from the remote end. This is not part of or required for the dialogue and is kept for info and consumer app. purposes only.
         public Guid BridgeId { get; set; }                          // If this dialogue gets bridged by a higher level application server the id for the bridge can be stored here.                   
@@ -111,7 +111,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private DateTimeOffset m_inserted;
+        public DateTimeOffset m_inserted;
         public DateTimeOffset Inserted
         {
             get { return m_inserted; }
@@ -192,7 +192,7 @@ namespace SIPSorcery.SIP
                 if (!uasInviteTransaction.TransactionRequest.Header.ProxyReceivedFrom.IsNullOrBlank())
                 {
                     // Setting the Proxy-ReceivedOn header is how an upstream proxy will let an agent know it should mangle the contact. 
-                    // Don't mangle private contacts if there is a Record-Route header. If a proxy is putting private IP's in a Record-Route header that's its problem.
+                    // Don't mangle public contacts if there is a Record-Route header. If a proxy is putting public IP's in a Record-Route header that's its problem.
                     if (RouteSet == null && IPSocket.IsPrivateAddress(RemoteTarget.Host))
                     {
                         SIPEndPoint remoteUASSIPEndPoint = SIPEndPoint.ParseSIPEndPoint(uasInviteTransaction.TransactionRequest.Header.ProxyReceivedFrom);
@@ -246,7 +246,7 @@ namespace SIPSorcery.SIP
                 if (!uacInviteTransaction.TransactionFinalResponse.Header.ProxyReceivedFrom.IsNullOrBlank())
                 {
                     // Setting the Proxy-ReceivedOn header is how an upstream proxy will let an agent know it should mangle the contact. 
-                    // Don't mangle private contacts if there is a Record-Route header. If a proxy is putting private IP's in a Record-Route header that's its problem.
+                    // Don't mangle public contacts if there is a Record-Route header. If a proxy is putting public IP's in a Record-Route header that's its problem.
                     if (RouteSet == null && IPSocket.IsPrivateAddress(RemoteTarget.Host))
                     {
                         SIPEndPoint remoteUASSIPEndPoint = SIPEndPoint.ParseSIPEndPoint(uacInviteTransaction.TransactionFinalResponse.Header.ProxyReceivedFrom);
@@ -284,7 +284,7 @@ namespace SIPSorcery.SIP
             if (!nonInviteRequest.Header.ProxyReceivedFrom.IsNullOrBlank())
             {
                 // Setting the Proxy-ReceivedOn header is how an upstream proxy will let an agent know it should mangle the contact.
-                // Don't mangle private contacts if there is a Record-Route header. If a proxy is putting private IP's in a Record-Route header that's its problem.
+                // Don't mangle public contacts if there is a Record-Route header. If a proxy is putting public IP's in a Record-Route header that's its problem.
                 if (RouteSet == null && IPSocket.IsPrivateAddress(RemoteTarget.Host))
                 {
                     SIPEndPoint remoteUASIPEndPoint = SIPEndPoint.ParseSIPEndPoint(nonInviteRequest.Header.ProxyReceivedFrom);

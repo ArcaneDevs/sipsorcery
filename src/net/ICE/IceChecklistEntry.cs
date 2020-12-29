@@ -93,7 +93,7 @@ namespace SIPSorcery.Net
     /// </summary>
     public class ChecklistEntry : IComparable
     {
-        private static readonly ILogger logger = Log.Logger;
+        public static readonly ILogger logger = Log.Logger;
 
         public RTCIceCandidate LocalCandidate;
         public RTCIceCandidate RemoteCandidate;
@@ -130,9 +130,9 @@ namespace SIPSorcery.Net
         /// </summary>
         public bool Nominated;
 
-        public uint LocalPriority { get; private set; }
+        public uint LocalPriority { get; set; }
 
-        public uint RemotePriority { get; private set; }
+        public uint RemotePriority { get; set; }
 
         /// <summary>
         /// The priority for the candidate pair:
@@ -188,7 +188,7 @@ namespace SIPSorcery.Net
         /// </summary>
         public DateTime LastConnectedResponseAt { get; set; }
 
-        public bool IsLocalController { get; private set; }
+        public bool IsLocalController { get; set; }
 
         /// <summary>
         /// Timestamp for the most recent binding request received from the remote peer.

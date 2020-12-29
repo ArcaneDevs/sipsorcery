@@ -26,13 +26,13 @@ namespace SIPSorcery.Net
 
     public class STUNListener
     {
-        private const string STUN_LISTENER_THREAD_NAME = "stunlistener-";
+        public const string STUN_LISTENER_THREAD_NAME = "stunlistener-";
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private IPEndPoint m_localEndPoint = null;
-        private UdpClient m_stunConn = null;
-        private bool m_closed = false;
+        public IPEndPoint m_localEndPoint = null;
+        public UdpClient m_stunConn = null;
+        public bool m_closed = false;
 
         public event STUNMessageReceived MessageReceived;
 
@@ -67,7 +67,7 @@ namespace SIPSorcery.Net
             }
         }
 
-        private IPEndPoint InitialiseSockets(IPAddress localIPAddress, int localPort)
+        public IPEndPoint InitialiseSockets(IPAddress localIPAddress, int localPort)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace SIPSorcery.Net
             }
         }
 
-        private void Listen()
+        public void Listen()
         {
             try
             {

@@ -57,9 +57,9 @@ namespace SIPSorcery.SIP
 {
     public class SIPTCPChannel : SIPChannel
     {
-        private const int MAX_TCP_CONNECTIONS = 1000;          // Maximum number of connections for the TCP listener.
-        private const int PRUNE_CONNECTIONS_INTERVAL = 60000;  // The period at which to prune the connections.
-        private const int PRUNE_NOTRANSMISSION_MINUTES = 70;   // The number of minutes after which if no transmissions are sent or received a connection will be pruned.
+        public const int MAX_TCP_CONNECTIONS = 1000;          // Maximum number of connections for the TCP listener.
+        public const int PRUNE_CONNECTIONS_INTERVAL = 60000;  // The period at which to prune the connections.
+        public const int PRUNE_NOTRANSMISSION_MINUTES = 70;   // The number of minutes after which if no transmissions are sent or received a connection will be pruned.
 
         /// <summary>
         /// This is the main object managed by this class. It is the socket listening for incoming connections.
@@ -87,15 +87,15 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// Keeps a list of TCP sockets this process is listening on to prevent it establishing TCP connections to itself.
         /// </summary>
-        private static List<string> m_localTCPSockets = new List<string>();
+        public static List<string> m_localTCPSockets = new List<string>();
 
         /// <summary>
         /// Maintains a list of all current TCP connections currently connected to/from this channel. This allows the SIP transport
         /// layer to quickly find a channel where the same connection must be re-used.
         /// </summary>
-        private ConcurrentDictionary<string, SIPStreamConnection> m_connections = new ConcurrentDictionary<string, SIPStreamConnection>();
+        public ConcurrentDictionary<string, SIPStreamConnection> m_connections = new ConcurrentDictionary<string, SIPStreamConnection>();
 
-        private CancellationTokenSource m_cts = new CancellationTokenSource();
+        public CancellationTokenSource m_cts = new CancellationTokenSource();
 
         /// <summary>
         /// Creates a SIP channel to listen for and send SIP messages over TCP.
@@ -133,7 +133,7 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// Initialises the SIP channel's socket listener.
         /// </summary>
-        private void StartListening(IPEndPoint listenEndPoint)
+        public void StartListening(IPEndPoint listenEndPoint)
         {
             try
             {
@@ -169,7 +169,7 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// Processes the socket accepts from the channel's socket listener.
         /// </summary>
-        private void AcceptConnections()
+        public void AcceptConnections()
         {
             logger.LogDebug($"SIP {ProtDescr} Channel socket on {m_tcpServerListener.Server.LocalEndPoint} accept connections thread started.");
 
@@ -239,7 +239,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="sender">The socket that the IO event occurred on.</param>
         /// <param name="e">The socket args for the completed IO operation.</param>
-        private void IO_Completed(object sender, SocketAsyncEventArgs e)
+        public void IO_Completed(object sender, SocketAsyncEventArgs e)
         {
             switch (e.LastOperation)
             {
@@ -262,7 +262,7 @@ namespace SIPSorcery.SIP
         /// Receive event handler for the newer ReceiveAsync socket call.
         /// </summary>
         /// <param name="e">The socket args for the completed receive operation.</param>
-        private void ProcessReceive(SocketAsyncEventArgs e)
+        public void ProcessReceive(SocketAsyncEventArgs e)
         {
             SIPStreamConnection streamConn = (SIPStreamConnection)e.UserToken;
 
@@ -302,7 +302,7 @@ namespace SIPSorcery.SIP
         /// Send event handler for the newer SendAsync socket call.
         /// </summary>
         /// <param name="e">The socket args for the completed send operation.</param>
-        private void ProcessSend(SocketAsyncEventArgs e)
+        public void ProcessSend(SocketAsyncEventArgs e)
         {
             SIPStreamConnection streamConn = (SIPStreamConnection)e.UserToken;
 
@@ -694,7 +694,7 @@ namespace SIPSorcery.SIP
         /// Periodically checks the established connections and closes any that have not had a transmission for a specified 
         /// period or where the number of connections allowed per IP address has been exceeded.
         /// </summary>
-        private void PruneConnections()
+        public void PruneConnections()
         {
             try
             {

@@ -98,7 +98,7 @@ namespace SIPSorcery.Net
     {
         public const short STUNATTRIBUTE_HEADER_LENGTH = 4;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public STUNAttributeTypesEnum AttributeType = STUNAttributeTypesEnum.Unknown;
         public byte[] Value;

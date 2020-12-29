@@ -27,7 +27,7 @@ namespace SIPSorcery.Net
         /// <summary>
         /// The ID for the event. For a DTMF tone this is the digit/letter to represent.
         /// </summary>
-        public byte EventID { get; private set; }
+        public byte EventID { get; set; }
 
         /// <summary>
         /// If true the end of event flag will be set.
@@ -37,12 +37,12 @@ namespace SIPSorcery.Net
         /// <summary>
         /// The volume level to set.
         /// </summary>
-        public ushort Volume { get; private set; }
+        public ushort Volume { get; set; }
 
         /// <summary>
         /// The duration for the full event.
         /// </summary>
-        public ushort TotalDuration { get; private set; }
+        public ushort TotalDuration { get; set; }
 
         /// <summary>
         /// The duration of the current event payload. This value is set in the RTP event data payload.
@@ -52,7 +52,7 @@ namespace SIPSorcery.Net
         /// <summary>
         /// The ID of the event payload type. This gets set in the RTP header.
         /// </summary>
-        public int PayloadTypeID { get; private set; }
+        public int PayloadTypeID { get; set; }
 
         /// <summary>
         /// Create a new RTP event object.

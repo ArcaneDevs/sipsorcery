@@ -105,7 +105,7 @@ namespace SIPSorcery.Net.Sctp
             }
         }
 
-        private string resultToName()
+        public string resultToName()
         {
             return ((result >= 0) && (result < valuenames.Length))
                     ? valuenames[(int)result] : "invalid value";

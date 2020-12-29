@@ -12,7 +12,7 @@ namespace SIPSorcery.Media
     /// </summary>
     public class MusicMediaSession : VoIPMediaSession
     {
-        private readonly MediaStreamTrack _mediaStream;
+        public readonly MediaStreamTrack _mediaStream;
 
         public MusicMediaSession(AudioFormat sourceAudioFormat, IPEndPoint destination) : base(new MediaEndPoints { AudioSource = new EmptyAudioSource() })
         {

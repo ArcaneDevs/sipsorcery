@@ -59,7 +59,7 @@ namespace SIPSorcery.SIP
             get { return Header?.CSeqMethod + " " + StatusCode + " " + ReasonPhrase; }
         }
 
-        private SIPResponse()
+        public SIPResponse()
         { }
 
         /// <summary>

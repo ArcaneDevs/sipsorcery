@@ -40,9 +40,9 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// Holds the state for a current web socket client connection.
         /// </summary>
-        private class ClientWebSocketConnection
+        public class ClientWebSocketConnection
         {
-            private static int MaxSIPTCPMessageSize = SIPConstants.SIP_MAXIMUM_RECEIVE_LENGTH;
+            public static int MaxSIPTCPMessageSize = SIPConstants.SIP_MAXIMUM_RECEIVE_LENGTH;
 
             public SIPEndPoint LocalEndPoint;
             public Uri ServerUri;
@@ -80,17 +80,17 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// Maintains a list of current egress web socket connections (one's that have been initiated by us).
         /// </summary>
-        private ConcurrentDictionary<string, ClientWebSocketConnection> m_egressConnections = new ConcurrentDictionary<string, ClientWebSocketConnection>();
+        public ConcurrentDictionary<string, ClientWebSocketConnection> m_egressConnections = new ConcurrentDictionary<string, ClientWebSocketConnection>();
 
         /// <summary>
         /// Cancellation source passed to all async operations in this class.
         /// </summary>
-        private CancellationTokenSource m_cts = new CancellationTokenSource();
+        public CancellationTokenSource m_cts = new CancellationTokenSource();
 
         /// <summary>
         /// Indicates whether the receive thread that monitors the receive tasks for each web socket client is running.
         /// </summary>
-        private bool m_isReceiveTaskRunning = false;
+        public bool m_isReceiveTaskRunning = false;
 
         /// <summary>
         /// Creates a SIP channel to establish outbound connections and send SIP messages 
@@ -154,7 +154,7 @@ namespace SIPSorcery.SIP
         /// <param name="serverEndPoint">The remote web socket server URI to send to.</param>
         /// <param name="buffer">The data buffer to send.</param>
         /// <returns>A success value or an error for failure.</returns>
-        private async Task<SocketError> SendAsync(SIPEndPoint serverEndPoint, byte[] buffer)
+        public async Task<SocketError> SendAsync(SIPEndPoint serverEndPoint, byte[] buffer)
         {
             try
             {
@@ -330,7 +330,7 @@ namespace SIPSorcery.SIP
         /// Closes a single web socket client connection.
         /// </summary>
         /// <param name="client">The client to close.</param>
-        private Task Close(string connectionID, ClientWebSocket client)
+        public Task Close(string connectionID, ClientWebSocket client)
         {
             if (!Closed)
             {
@@ -347,7 +347,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="serverUri">The web socket server URI for the connection.</param>
         /// <returns>A string connection ID.</returns>
-        private string GetConnectionID(Uri serverUri)
+        public string GetConnectionID(Uri serverUri)
         {
             return Crypto.GetSHAHashAsString(serverUri.ToString());
         }
@@ -355,7 +355,7 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// Monitors the client web socket tasks for new receives.
         /// </summary>
-        private void MonitorReceiveTasks()
+        public void MonitorReceiveTasks()
         {
             try
             {
@@ -407,7 +407,7 @@ namespace SIPSorcery.SIP
         /// <param name="buffer">The buffer holding the current data from the stream. Note that the buffer can 
         /// stretch over multiple receives.</param>
         /// <param name="bytesRead">The bytes that were read by the latest receive operation (the new bytes available).</param>
-        private void ExtractSIPMessages(SIPChannel recvChannel, ClientWebSocketConnection clientConn, ArraySegment<byte> buffer, int bytesRead)
+        public void ExtractSIPMessages(SIPChannel recvChannel, ClientWebSocketConnection clientConn, ArraySegment<byte> buffer, int bytesRead)
         {
             if (bytesRead + clientConn.RecvEndPosn > clientConn.PendingReceiveBuffer.Length)
             {

@@ -37,18 +37,18 @@ namespace SIPSorcery.Net
     /// </remarks>
     public class WebRTCNodeDssPeer
     {
-        private const int NODE_SERVER_POLL_PERIOD = 500;    // Period in milliseconds to poll the node server to check for new messages.
-        private const int CONNECTION_RETRY_PERIOD = 5000;   // Period in milliseconds to retry if the initial node-dss connection attempt fails.
+        public const int NODE_SERVER_POLL_PERIOD = 500;    // Period in milliseconds to poll the node server to check for new messages.
+        public const int CONNECTION_RETRY_PERIOD = 5000;   // Period in milliseconds to retry if the initial node-dss connection attempt fails.
 
-        private ILogger logger = SIPSorcery.Sys.Log.Logger;
+        public ILogger logger = SIPSorcery.Sys.Log.Logger;
 
-        private Uri _nodeDssServerUri;
-        private string _ourID;
-        private string _theirID;
-        private bool _isReceiving;
-        private Func<Task<RTCPeerConnection>> _createPeerConnection;
+        public Uri _nodeDssServerUri;
+        public string _ourID;
+        public string _theirID;
+        public bool _isReceiving;
+        public Func<Task<RTCPeerConnection>> _createPeerConnection;
 
-        private RTCPeerConnection _pc;
+        public RTCPeerConnection _pc;
         public RTCPeerConnection RTCPeerConnection => _pc;
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace SIPSorcery.Net
         /// <summary>
         /// Creates a new WebRTC peer connection and send an SDP offer to the node DSS server.
         /// </summary>
-        private async Task SendOffer(HttpClient httpClient)
+        public async Task SendOffer(HttpClient httpClient)
         {
             logger.LogDebug("node-dss sending initial SDP offer to server.");
 
@@ -126,7 +126,7 @@ namespace SIPSorcery.Net
             await SendToNSS(httpClient, offerSdp.toJSON());
         }
 
-        private async Task SendToNSS(HttpClient httpClient, string jsonStr)
+        public async Task SendToNSS(HttpClient httpClient, string jsonStr)
         {
             var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
             var res = await httpClient.PostAsync($"{_nodeDssServerUri}data/{_theirID}", content);
@@ -134,7 +134,7 @@ namespace SIPSorcery.Net
             logger.LogDebug($"node-dss POST result for {_nodeDssServerUri}data/{_theirID} {res.StatusCode}.");
         }
 
-        private async Task ReceiveFromNSS(HttpClient httpClient, RTCPeerConnection pc, CancellationToken ct)
+        public async Task ReceiveFromNSS(HttpClient httpClient, RTCPeerConnection pc, CancellationToken ct)
         {
             _isReceiving = true;
 
@@ -206,7 +206,7 @@ namespace SIPSorcery.Net
             }
         }
 
-        private async Task<string> OnMessage(string jsonStr, RTCPeerConnection pc)
+        public async Task<string> OnMessage(string jsonStr, RTCPeerConnection pc)
         {
             if (RTCIceCandidateInit.TryParse(jsonStr, out var iceCandidateInit))
             {

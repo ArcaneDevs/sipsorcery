@@ -43,8 +43,8 @@ namespace SIPSorcery.Net
         public const int MIN_PACKET_SIZE = RTCPHeader.HEADER_BYTES_LENGTH + SSRC_SIZE;
 
         public RTCPHeader Header;
-        public uint SSRC { get; private set; }
-        public string Reason { get; private set; }
+        public uint SSRC { get; set; }
+        public string Reason { get; set; }
 
         /// <summary>
         /// Creates a new RTCP Bye payload.
@@ -141,7 +141,7 @@ namespace SIPSorcery.Net
         /// <param name="reasonLength">The length of the optional reason string, can be 0.</param>
         /// <returns>The minimum length for the full packet to be able to fit within a 4 byte
         /// boundary.</returns>
-        private int GetPaddedLength(int reasonLength)
+        public int GetPaddedLength(int reasonLength)
         {
             // Plus one is for the reason length field.
             if (reasonLength > 0)

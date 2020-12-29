@@ -28,41 +28,41 @@ namespace SIPSorcery.SIP.App
 {
     public class SIPRegistrationUserAgent
     {
-        private const int MAX_EXPIRY = 7200;
-        private const int REGISTRATION_HEAD_TIME = 5;                // Time in seconds to go to next registration to initiate.
+        public const int MAX_EXPIRY = 7200;
+        public const int REGISTRATION_HEAD_TIME = 5;                // Time in seconds to go to next registration to initiate.
         //rj2: there are PBX which send new Expires header in SIP OK with value lesser than 60 -> set hardcoded minimum to 10, so registration on PBX does not timeout
-        private const int REGISTER_MINIMUM_EXPIRY = 10;              // The minimum interval a registration will be accepted for. Anything less than this interval will use this minimum value.
-        private const int DEFAULT_REGISTER_EXPIRY = 600;
-        private const int DEFAULT_MAX_REGISTRATION_ATTEMPT_TIMEOUT = 60;
-        private const int DEFAULT_REGISTER_FAILURE_RETRY_INTERVAL = 300;
-        private const int DEFAULT_MAX_REGISTER_ATTEMPTS = 3;
+        public const int REGISTER_MINIMUM_EXPIRY = 10;              // The minimum interval a registration will be accepted for. Anything less than this interval will use this minimum value.
+        public const int DEFAULT_REGISTER_EXPIRY = 600;
+        public const int DEFAULT_MAX_REGISTRATION_ATTEMPT_TIMEOUT = 60;
+        public const int DEFAULT_REGISTER_FAILURE_RETRY_INTERVAL = 300;
+        public const int DEFAULT_MAX_REGISTER_ATTEMPTS = 3;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private static readonly string m_userAgent = SIPConstants.SIP_USERAGENT_STRING;
+        public static readonly string m_userAgent = SIPConstants.SIP_USERAGENT_STRING;
 
-        private SIPTransport m_sipTransport;
-        private SIPEndPoint m_outboundProxy;
-        private SIPURI m_sipAccountAOR;
-        private string m_authUsername;
-        private string m_password;
-        private string m_realm;
-        private string m_registrarHost;
-        private SIPURI m_contactURI;
-        private int m_expiry;
-        private int m_originalExpiry;
-        private int m_registerFailureRetryInterval;      // Number of seconds between consecutive register requests in the event of failures or timeouts.
-        private int m_maxRegistrationAttemptTimeout;
-        private int m_maxRegisterAttempts;                 // The maximum number of registration attempts that will be made without a failure condition before incurring a temporary failure.
+        public SIPTransport m_sipTransport;
+        public SIPEndPoint m_outboundProxy;
+        public SIPURI m_sipAccountAOR;
+        public string m_authUsername;
+        public string m_password;
+        public string m_realm;
+        public string m_registrarHost;
+        public SIPURI m_contactURI;
+        public int m_expiry;
+        public int m_originalExpiry;
+        public int m_registerFailureRetryInterval;      // Number of seconds between consecutive register requests in the event of failures or timeouts.
+        public int m_maxRegistrationAttemptTimeout;
+        public int m_maxRegisterAttempts;                 // The maximum number of registration attempts that will be made without a failure condition before incurring a temporary failure.
 
-        private bool m_isRegistered;
-        private int m_cseq;
-        private string m_callID;
-        private string[] m_customHeaders;
-        private bool m_exit;
-        private int m_attempts;
-        private ManualResetEvent m_waitForRegistrationMRE = new ManualResetEvent(false);
-        private Timer m_registrationTimer;
+        public bool m_isRegistered;
+        public int m_cseq;
+        public string m_callID;
+        public string[] m_customHeaders;
+        public bool m_exit;
+        public int m_attempts;
+        public ManualResetEvent m_waitForRegistrationMRE = new ManualResetEvent(false);
+        public Timer m_registrationTimer;
 
         public string UserAgent;                // If not null this value will replace the default user agent value in the REGISTER request.
         public string UserDisplayName;			//rj2: if not null, used in fromheader and contactheader
@@ -78,7 +78,7 @@ namespace SIPSorcery.SIP.App
         /// <summary>
         /// The last time at which an attempt was made to register this account.
         /// </summary>
-        public DateTime LastRegisterAttemptAt { get; private set; }
+        public DateTime LastRegisterAttemptAt { get; set; }
 
         public event Action<SIPURI, string> RegistrationFailed;
         public event Action<SIPURI, string> RegistrationTemporaryFailure;
@@ -190,7 +190,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private void DoRegistration(object state)
+        public void DoRegistration(object state)
         {
             if (Monitor.TryEnter(m_waitForRegistrationMRE))
             {
@@ -286,7 +286,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private void SendInitialRegister()
+        public void SendInitialRegister()
         {
             try
             {
@@ -344,7 +344,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private void RegistrationTimedOut(SIPTransaction sipTransaction)
+        public void RegistrationTimedOut(SIPTransaction sipTransaction)
         {
             m_isRegistered = false;
             RegistrationTemporaryFailure?.Invoke(m_sipAccountAOR, "Registration transaction to " + m_registrarHost + " for " + m_sipAccountAOR.ToString() + " timed out.");
@@ -354,7 +354,7 @@ namespace SIPSorcery.SIP.App
         /// <summary>
         /// The event handler for responses to the initial register request.
         /// </summary>
-        private void ServerResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
+        public void ServerResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
         {
             try
             {
@@ -464,7 +464,7 @@ namespace SIPSorcery.SIP.App
         /// <summary>
         /// The event handler for responses to the authenticated register request.
         /// </summary>
-        private void AuthResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
+        public void AuthResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
         {
             try
             {
@@ -524,7 +524,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private int GetUpdatedExpiryForIntervalTooBrief(SIPResponse sipResponse)
+        public int GetUpdatedExpiryForIntervalTooBrief(SIPResponse sipResponse)
         {
             int newExpiry = sipResponse.Header.MinExpires;
 
@@ -547,7 +547,7 @@ namespace SIPSorcery.SIP.App
             return m_expiry;
         }
 
-        private int GetUpdatedExpiry(SIPResponse sipResponse)
+        public int GetUpdatedExpiry(SIPResponse sipResponse)
         {
             // Find the contact in the list that matches the one being maintained by this agent in order to determine the expiry value.
             int serverExpiry = m_expiry;
@@ -596,7 +596,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private SIPRequest GetRegistrationRequest()
+        public SIPRequest GetRegistrationRequest()
         {
             try
             {
@@ -637,7 +637,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private SIPRequest GetAuthenticatedRegistrationRequest(SIPRequest registerRequest, SIPResponse sipResponse)
+        public SIPRequest GetAuthenticatedRegistrationRequest(SIPRequest registerRequest, SIPResponse sipResponse)
         {
             try
             {

@@ -21,9 +21,9 @@ namespace SCTP4CS.Utils
     /// </summary>
     public static class FastBit
     {
-        private static int optSum = BitConverter.IsLittleEndian ? 0 : 1;
+        public static int optSum = BitConverter.IsLittleEndian ? 0 : 1;
 
-        private static bool Option(Endianness endianness)
+        public static bool Option(Endianness endianness)
         {
             return ((optSum + (int)endianness) % 2) == 0;
         }

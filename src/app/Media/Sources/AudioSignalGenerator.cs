@@ -38,21 +38,21 @@ namespace SIPSorcery.Media
     public class SignalGenerator //: ISampleProvider
     {
         // Wave format
-        //private readonly WaveFormat waveFormat;
+        //public readonly WaveFormat waveFormat;
 
         // Random Number for the White Noise & Pink Noise Generator
-        private readonly Random random = new Random();
+        public readonly Random random = new Random();
 
-        private readonly double[] pinkNoiseBuffer = new double[7];
+        public readonly double[] pinkNoiseBuffer = new double[7];
 
         // Const Math
-        private const double TwoPi = 2 * Math.PI;
+        public const double TwoPi = 2 * Math.PI;
 
         // Generator variable
-        private int nSample;
+        public int nSample;
 
         // Sweep Generator variable
-        private double phi;
+        public double phi;
 
         /// <summary>
         /// Initializes a new instance for the Generator (Default :: 44.1Khz, 2 channels, Sinus, Frequency = 440, Gain = 1)
@@ -260,10 +260,10 @@ namespace SIPSorcery.Media
         }
 
         /// <summary>
-        /// Private :: Random for WhiteNoise &amp; Pink Noise (Value form -1 to 1)
+        /// public :: Random for WhiteNoise &amp; Pink Noise (Value form -1 to 1)
         /// </summary>
         /// <returns>Random value from -1 to +1</returns>
-        private double NextRandomTwo()
+        public double NextRandomTwo()
         {
             return 2 * random.NextDouble() - 1;
         }

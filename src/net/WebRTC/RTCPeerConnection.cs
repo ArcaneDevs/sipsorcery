@@ -126,12 +126,12 @@ namespace SIPSorcery.Net
     //    /// <summary>
     //    /// The media ID of the SDP m-line associated with this transceiver.
     //    /// </summary>
-    //    public string MID { get; private set; }
+    //    public string MID { get; set; }
 
     //    /// <summary>
     //    /// The current state of the RTP flow between us and the remote party.
     //    /// </summary>
-    //    public MediaStreamStatusEnum Direction { get; private set; } = MediaStreamStatusEnum.SendRecv;
+    //    public MediaStreamStatusEnum Direction { get; set; } = MediaStreamStatusEnum.SendRecv;
 
     //    public RTCRtpTransceiver(string mid)
     //    {
@@ -156,35 +156,35 @@ namespace SIPSorcery.Net
     public class RTCPeerConnection : RTPSession, IRTCPeerConnection
     {
         // SDP constants.
-        //private new const string RTP_MEDIA_PROFILE = "RTP/SAVP";
-        private const string RTP_MEDIA_NON_FEEDBACK_PROFILE = "UDP/TLS/RTP/SAVP";
-        private const string RTP_MEDIA_FEEDBACK_PROFILE = "UDP/TLS/RTP/SAVPF";
-        private const string RTP_MEDIA_DATACHANNEL_DTLS_PROFILE = "DTLS/SCTP"; // Legacy.
-        private const string RTP_MEDIA_DATACHANNEL_UDPDTLS_PROFILE = "UDP/DTLS/SCTP";
-        private const string SDP_DATACHANNEL_FORMAT_ID = "webrtc-datachannel";
-        private const string RTCP_MUX_ATTRIBUTE = "a=rtcp-mux";    // Indicates the media announcement is using multiplexed RTCP.
-        private const string ICE_SETUP_ATTRIBUTE = "a=setup:";     // Indicates ICE agent can act as either the "controlling" or "controlled" peer.
-        private const string BUNDLE_ATTRIBUTE = "BUNDLE";
-        private const string ICE_OPTIONS = "ice2,trickle";          // Supported ICE options.
-        private const string NORMAL_CLOSE_REASON = "normal";
-        private const int SCTP_DEFAULT_PORT = 5000;
-        private const long SCTP_DEFAULT_MAX_MESSAGE_SIZE = 262144;
-        private const string UNKNOWN_DATACHANNEL_ERROR = "unknown";
+        //public new const string RTP_MEDIA_PROFILE = "RTP/SAVP";
+        public const string RTP_MEDIA_NON_FEEDBACK_PROFILE = "UDP/TLS/RTP/SAVP";
+        public const string RTP_MEDIA_FEEDBACK_PROFILE = "UDP/TLS/RTP/SAVPF";
+        public const string RTP_MEDIA_DATACHANNEL_DTLS_PROFILE = "DTLS/SCTP"; // Legacy.
+        public const string RTP_MEDIA_DATACHANNEL_UDPDTLS_PROFILE = "UDP/DTLS/SCTP";
+        public const string SDP_DATACHANNEL_FORMAT_ID = "webrtc-datachannel";
+        public const string RTCP_MUX_ATTRIBUTE = "a=rtcp-mux";    // Indicates the media announcement is using multiplexed RTCP.
+        public const string ICE_SETUP_ATTRIBUTE = "a=setup:";     // Indicates ICE agent can act as either the "controlling" or "controlled" peer.
+        public const string BUNDLE_ATTRIBUTE = "BUNDLE";
+        public const string ICE_OPTIONS = "ice2,trickle";          // Supported ICE options.
+        public const string NORMAL_CLOSE_REASON = "normal";
+        public const int SCTP_DEFAULT_PORT = 5000;
+        public const long SCTP_DEFAULT_MAX_MESSAGE_SIZE = 262144;
+        public const string UNKNOWN_DATACHANNEL_ERROR = "unknown";
 
-        private new readonly string RTP_MEDIA_PROFILE = RTP_MEDIA_NON_FEEDBACK_PROFILE;
-        private readonly string RTCP_ATTRIBUTE = $"a=rtcp:{SDP.IGNORE_RTP_PORT_NUMBER} IN IP4 0.0.0.0";
+        public new readonly string RTP_MEDIA_PROFILE = RTP_MEDIA_NON_FEEDBACK_PROFILE;
+        public readonly string RTCP_ATTRIBUTE = $"a=rtcp:{SDP.IGNORE_RTP_PORT_NUMBER} IN IP4 0.0.0.0";
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        public string SessionID { get; private set; }
-        public string SdpSessionID { get; private set; }
-        public string LocalSdpSessionID { get; private set; }
+        public string SessionID { get; set; }
+        public string SdpSessionID { get; set; }
+        public string LocalSdpSessionID { get; set; }
 
-        private RtpIceChannel _rtpIceChannel;
+        public RtpIceChannel _rtpIceChannel;
 
-        public List<RTCDataChannel> DataChannels { get; private set; } = new List<RTCDataChannel>();
+        public List<RTCDataChannel> DataChannels { get; set; } = new List<RTCDataChannel>();
 
-        private DtlsSrtpTransport _dtlsHandle;
+        public DtlsSrtpTransport _dtlsHandle;
         public RTCPeerSctpAssociation _peerSctpAssociation;
 
         /// <summary>
@@ -196,16 +196,16 @@ namespace SIPSorcery.Net
         /// The DTLS fingerprint supplied by the remote peer in their SDP. Needs to be checked
         /// that the certificate supplied during the DTLS handshake matches.
         /// </summary>
-        public RTCDtlsFingerprint RemotePeerDtlsFingerprint { get; private set; }
+        public RTCDtlsFingerprint RemotePeerDtlsFingerprint { get; set; }
 
         public bool IsDtlsNegotiationComplete
         {
             get { return base.IsSecureContextReady; }
         }
 
-        public RTCSessionDescription localDescription { get; private set; }
+        public RTCSessionDescription localDescription { get; set; }
 
-        public RTCSessionDescription remoteDescription { get; private set; }
+        public RTCSessionDescription remoteDescription { get; set; }
 
         public RTCSessionDescription currentLocalDescription => localDescription;
 
@@ -215,23 +215,23 @@ namespace SIPSorcery.Net
 
         public RTCSessionDescription pendingRemoteDescription => null;
 
-        public RTCSignalingState signalingState { get; private set; } = RTCSignalingState.stable;
+        public RTCSignalingState signalingState { get; set; } = RTCSignalingState.stable;
 
-        public RTCIceGatheringState iceGatheringState { get; private set; } = RTCIceGatheringState.@new;
+        public RTCIceGatheringState iceGatheringState { get; set; } = RTCIceGatheringState.@new;
 
-        public RTCIceConnectionState iceConnectionState { get; private set; } = RTCIceConnectionState.@new;
+        public RTCIceConnectionState iceConnectionState { get; set; } = RTCIceConnectionState.@new;
 
-        public RTCPeerConnectionState connectionState { get; private set; } = RTCPeerConnectionState.@new;
+        public RTCPeerConnectionState connectionState { get; set; } = RTCPeerConnectionState.@new;
 
         public bool canTrickleIceCandidates { get => true; }
 
-        private RTCConfiguration _configuration;
+        public RTCConfiguration _configuration;
 
         /// <summary>
         /// The certificate being used to negotiate the DTLS handshake with the 
         /// remote peer.
         /// </summary>
-        //private RTCCertificate _currentCertificate;
+        //public RTCCertificate _currentCertificate;
         //public RTCCertificate CurrentCertificate
         //{
         //    get
@@ -244,7 +244,7 @@ namespace SIPSorcery.Net
         /// The fingerprint of the certificate being used to negotiate the DTLS handshake with the 
         /// remote peer.
         /// </summary>
-        public RTCDtlsFingerprint DtlsCertificateFingerprint { get; private set; }
+        public RTCDtlsFingerprint DtlsCertificateFingerprint { get; set; }
 
         /// <summary>
         /// Informs the application that session negotiation needs to be done (i.e. a createOffer call 
@@ -252,7 +252,7 @@ namespace SIPSorcery.Net
         /// </summary>
         public event Action onnegotiationneeded;
 
-        private event Action<RTCIceCandidate> _onIceCandidate;
+        public event Action<RTCIceCandidate> _onIceCandidate;
         /// <summary>
         /// A new ICE candidate is available for the Peer Connection.
         /// </summary>
@@ -331,12 +331,12 @@ namespace SIPSorcery.Net
                 _configuration = configuration;
                 if (_configuration.certificates?.Count > 0)
                 {
-                    // Find the first certificate that has a usable private key.
+                    // Find the first certificate that has a usable public key.
                     RTCCertificate usableCert = null;
                     foreach (var cert in _configuration.certificates)
                     {
-                        // Attempting to check that a certificate has an exportable private key.
-                        // TODO: Does not seem to be a particularly reliable way of checking private key exportability.
+                        // Attempting to check that a certificate has an exportable public key.
+                        // TODO: Does not seem to be a particularly reliable way of checking public key exportability.
                         if (cert.Certificate.HasPrivateKey)
                         {
                             //if (cert.Certificate.PrivateKey is RSACryptoServiceProvider)
@@ -344,7 +344,7 @@ namespace SIPSorcery.Net
                             //    var rsa = cert.Certificate.PrivateKey as RSACryptoServiceProvider;
                             //    if (!rsa.CspKeyContainerInfo.Exportable)
                             //    {
-                            //        logger.LogWarning($"RTCPeerConnection was passed a certificate for {cert.Certificate.FriendlyName} with a non-exportable RSA private key.");
+                            //        logger.LogWarning($"RTCPeerConnection was passed a certificate for {cert.Certificate.FriendlyName} with a non-exportable RSA public key.");
                             //    }
                             //    else
                             //    {
@@ -362,7 +362,7 @@ namespace SIPSorcery.Net
 
                     if (usableCert == null)
                     {
-                        throw new ApplicationException("RTCPeerConnection was not able to find a certificate from the input configuration list with a usable private key.");
+                        throw new ApplicationException("RTCPeerConnection was not able to find a certificate from the input configuration list with a usable public key.");
                     }
                     else
                     {
@@ -509,7 +509,7 @@ namespace SIPSorcery.Net
         /// <summary>
         /// Initialises the SCTP association and will attempt to create any pending data channel requests.
         /// </summary>
-        private void InitialiseSctpAssociation()
+        public void InitialiseSctpAssociation()
         {
             // If a data channel was requested by the application then create the SCTP association.
             var sctpAnn = RemoteDescription.Media.Where(x => x.Media == SDPMediaTypesEnum.application).FirstOrDefault();
@@ -948,7 +948,7 @@ namespace SIPSorcery.Net
         ///   of "9".  This MUST NOT be considered as a ICE failure by the peer
         ///   agent and the ICE processing MUST continue as usual."
         /// </remarks>
-        private SDP createBaseSdp(List<MediaStreamTrack> tracks,
+        public SDP createBaseSdp(List<MediaStreamTrack> tracks,
             List<SDPAudioVideoMediaFormat> audioCapabilities,
             List<SDPAudioVideoMediaFormat> videoCapabilities,
             bool excludeIceCandidates = false)
@@ -1083,7 +1083,7 @@ namespace SIPSorcery.Net
         /// <paramref name="localPort">The local port on the RTP socket that received the packet.</paramref>
         /// <param name="remoteEP">The remote end point the packet was received from.</param>
         /// <param name="buffer">The data received.</param>
-        private void OnRTPDataReceived(int localPort, IPEndPoint remoteEP, byte[] buffer)
+        public void OnRTPDataReceived(int localPort, IPEndPoint remoteEP, byte[] buffer)
         {
             //logger.LogDebug($"RTP channel received a packet from {remoteEP}, {buffer?.Length} bytes.");
 
@@ -1197,7 +1197,7 @@ namespace SIPSorcery.Net
         /// </summary>
         /// <param name="dataChannel">The data channel to create the SCTP stream for.</param>
         /// <returns>The Task being used to create the SCTP stream.</returns>
-        private void CreateSctpStreamForDataChannel(RTCDataChannel dataChannel)
+        public void CreateSctpStreamForDataChannel(RTCDataChannel dataChannel)
         {
             logger.LogDebug($"Attempting to create SCTP stream for data channel with label {dataChannel.label}.");
 
@@ -1238,7 +1238,7 @@ namespace SIPSorcery.Net
         /// </summary>
         /// <param name="dtlsHandle">The DTLS transport handle to perform the handshake with.</param>
         /// <returns></returns>
-        private bool DoDtlsHandshake(DtlsSrtpTransport dtlsHandle)
+        public bool DoDtlsHandshake(DtlsSrtpTransport dtlsHandle)
         {
             logger.LogDebug("RTCPeerConnection DoDtlsHandshake started.");
 
@@ -1290,7 +1290,7 @@ namespace SIPSorcery.Net
         /// <param name="alertLevel">The level of the alert: warning or critical.</param>
         /// <param name="alertType">The type of the alert.</param>
         /// <param name="alertDescription">An optional description for the alert.</param>
-        private void OnDtlsAlert(AlertLevelsEnum alertLevel, AlertTypesEnum alertType, string alertDescription)
+        public void OnDtlsAlert(AlertLevelsEnum alertLevel, AlertTypesEnum alertType, string alertDescription)
         {
             if (alertType == AlertTypesEnum.close_notify)
             {

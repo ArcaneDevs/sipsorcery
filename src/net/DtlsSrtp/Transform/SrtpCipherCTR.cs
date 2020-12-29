@@ -95,11 +95,11 @@ namespace SIPSorcery.Net
      */
     public class SrtpCipherCTR
     {
-        private const int BLKLEN = 16;
-        private const int MAX_BUFFER_LENGTH = 10 * 1024;
-        private byte[] cipherInBlock = new byte[BLKLEN];
-        private byte[] tmpCipherBlock = new byte[BLKLEN];
-        private byte[] streamBuf = new byte[1024];
+        public const int BLKLEN = 16;
+        public const int MAX_BUFFER_LENGTH = 10 * 1024;
+        public byte[] cipherInBlock = new byte[BLKLEN];
+        public byte[] tmpCipherBlock = new byte[BLKLEN];
+        public byte[] streamBuf = new byte[1024];
 
         public void Process(IBlockCipher cipher, MemoryStream data, int off, int len, byte[] iv)
         {

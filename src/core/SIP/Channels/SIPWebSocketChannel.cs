@@ -53,29 +53,29 @@ namespace SIPSorcery.SIP
     /// </summary>
     public class SIPWebSocketChannel : SIPChannel
     {
-        private const int CLOSE_TIMEOUT = 5000;
+        public const int CLOSE_TIMEOUT = 5000;
         public const string SIP_Sec_WebSocket_Protocol = "sip"; // Web socket protocol string for SIP as defined in RFC7118.
 
         /// <summary>
         /// The web socket server instantiates an instance of this class for each web socket client that connects. The methods 
         /// in this class are responsible for translating the SIP transport send and receives to and from the web socket server.
         /// </summary>
-        private class SIPMessagWebSocketBehavior : WebSocketBehavior
+        public class SIPMessagWebSocketBehavior : WebSocketBehavior
         {
             internal SIPWebSocketChannel Channel;
             internal ILogger Logger;
-            private SIPProtocolsEnum _sipProtocol;
+            public SIPProtocolsEnum _sipProtocol;
 
             /// <summary>
             /// This is the remote end point for the web socket connection.
             /// </summary>
-            private IPEndPoint _remoteEndPoint;
+            public IPEndPoint _remoteEndPoint;
 
             /// <summary>
             /// This is the local end point for the web socket connection. It can be different from the listening end point if
             /// the IPAddress.Any is being used.
             /// </summary>
-            private IPEndPoint _localEndPoint;
+            public IPEndPoint _localEndPoint;
 
             public Action<string> OnClientClose;
 
@@ -129,15 +129,15 @@ namespace SIPSorcery.SIP
         /// This object is responsible for all the web sockets magic including accepting HTTP requests, matching URLs, handling the
         /// keep alives etc. etc. Any data messages received by the server will be handed over to the SIP transport layer for processing.
         /// </summary>
-        private WebSocketServer m_webSocketServer;
+        public WebSocketServer m_webSocketServer;
 
         /// <summary>
         /// Maintains a list of current ingress web socket connections across for this web socket server. This allows the SIP transport
         /// layer to quickly match a channel where the same connection must be re-used.
         /// </summary>
-        private ConcurrentDictionary<string, SIPMessagWebSocketBehavior> m_ingressConnections = new ConcurrentDictionary<string, SIPMessagWebSocketBehavior>();
+        public ConcurrentDictionary<string, SIPMessagWebSocketBehavior> m_ingressConnections = new ConcurrentDictionary<string, SIPMessagWebSocketBehavior>();
 
-        private CancellationTokenSource m_cts = new CancellationTokenSource();
+        public CancellationTokenSource m_cts = new CancellationTokenSource();
 
         /// <summary>
         /// Creates a SIP channel to listen for and send SIP messages over a web socket communications layer.
@@ -206,7 +206,7 @@ namespace SIPSorcery.SIP
         /// </summary>
         /// <param name="id">The unique ID of the client connection.</param>
         /// <param name="client">The web socket client.</param>
-        private void AddClientConnection(string id, SIPMessagWebSocketBehavior client)
+        public void AddClientConnection(string id, SIPMessagWebSocketBehavior client)
         {
             m_ingressConnections.TryAdd(id, client);
         }
@@ -350,7 +350,7 @@ namespace SIPSorcery.SIP
         /// <param name="destinationEndPoint">The remote end point of the connection.</param>
         /// <param name="connectionIDHint">Optional. A connection ID hint for the ingress connection.</param>
         /// <returns>Returns the client connection or null if not found.</returns>
-        private SIPMessagWebSocketBehavior GetIngressConnection(IPEndPoint destinationEndPoint, string connectionIDHint)
+        public SIPMessagWebSocketBehavior GetIngressConnection(IPEndPoint destinationEndPoint, string connectionIDHint)
         {
             SIPMessagWebSocketBehavior client = null;
 

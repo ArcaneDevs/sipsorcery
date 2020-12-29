@@ -36,19 +36,19 @@ namespace SIPSorcery.SIP
 {
     public class SIPUDPChannel : SIPChannel
     {
-        private const string UDP_EXPIRE_THREAD_NAME = "sip-udpexpire";
-        private const int FAILED_DESTINATION_PERIOD_SECONDS = 30;       // How long a failed send should prevent subsequent sends for.
-        private const int EXPIRED_FAILED_PERIOD_SECONDS = 5;            // Period at which to check the failed send list and remove expired items.
+        public const string UDP_EXPIRE_THREAD_NAME = "sip-udpexpire";
+        public const int FAILED_DESTINATION_PERIOD_SECONDS = 30;       // How long a failed send should prevent subsequent sends for.
+        public const int EXPIRED_FAILED_PERIOD_SECONDS = 5;            // Period at which to check the failed send list and remove expired items.
 
-        private readonly Socket m_udpSocket;
-        private byte[] m_recvBuffer;
-        private CancellationTokenSource m_cts;
+        public readonly Socket m_udpSocket;
+        public byte[] m_recvBuffer;
+        public CancellationTokenSource m_cts;
 
         /// <summary>
         /// Keep a list of transient send failures to remote end points. With UDP a failure is detected if an ICMP packet is received 
         /// on a receive.
         /// </summary>
-        private static ConcurrentDictionary<IPEndPoint, DateTime> m_sendFailures = new ConcurrentDictionary<IPEndPoint, DateTime>();
+        public static ConcurrentDictionary<IPEndPoint, DateTime> m_sendFailures = new ConcurrentDictionary<IPEndPoint, DateTime>();
 
         /// <summary>
         /// Creates a SIP channel to listen for and send SIP messages over UDP.
@@ -86,7 +86,7 @@ namespace SIPSorcery.SIP
         public SIPUDPChannel(IPAddress listenAddress, int listenPort) : this(new IPEndPoint(listenAddress, listenPort))
         { }
 
-        private void Receive()
+        public void Receive()
         {
             try
             {
@@ -105,7 +105,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private void EndReceiveFrom(IAsyncResult ar)
+        public void EndReceiveFrom(IAsyncResult ar)
         {
             EndPoint remoteEP = (ListeningIPAddress.AddressFamily == AddressFamily.InterNetwork) ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
 
@@ -208,7 +208,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private void EndSendTo(IAsyncResult ar)
+        public void EndSendTo(IAsyncResult ar)
         {
             try
             {
@@ -315,7 +315,7 @@ namespace SIPSorcery.SIP
         /// <summary>
         /// Removed end points from the send failures list after the timeout period.
         /// </summary>
-        private void ExpireFailedSends()
+        public void ExpireFailedSends()
         {
             Thread.CurrentThread.Name = UDP_EXPIRE_THREAD_NAME;
 

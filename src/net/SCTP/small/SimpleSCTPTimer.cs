@@ -30,7 +30,7 @@ namespace SIPSorcery.Net.Sctp
 {
     static class SimpleSCTPTimer
     {
-        private static Timer timer = null;
+        public static Timer timer = null;
         public static void setRunnable(Action r, long at)
         {
             if (timer != null)

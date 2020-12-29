@@ -22,7 +22,7 @@
  */
 namespace SIPSorcery.Net.Sctp
 {
-    internal interface MessageCompleteHandler
+    public interface MessageCompleteHandler
     {
         /**
 		 * 

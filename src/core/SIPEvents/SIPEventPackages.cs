@@ -35,9 +35,9 @@ namespace SIPSorcery.SIP
         public static SIPEventPackage Presence = new SIPEventPackage("presence");               // RFC3856.
         public static SIPEventPackage Refer = new SIPEventPackage("refer");                     // RFC3515 "The Session Initiation Protocol (SIP) Refer Method".
 
-        private string m_value;
+        public string m_value;
 
-        private SIPEventPackage(string value)
+        public SIPEventPackage(string value)
         {
             m_value = value;
         }
@@ -145,9 +145,9 @@ namespace SIPSorcery.SIP
         public static SIPEventDialogStateEvent RemoteBye = new SIPEventDialogStateEvent("remote-bye");
         public static SIPEventDialogStateEvent Timeout = new SIPEventDialogStateEvent("timeout");
 
-        private string m_value;
+        public string m_value;
 
-        private SIPEventDialogStateEvent(string value)
+        public SIPEventDialogStateEvent(string value)
         {
             m_value = value;
         }

@@ -548,29 +548,29 @@ namespace SIPSorcery.Media
         /// <summary>
         /// TRUE if the G.722 data is packed
         /// </summary>
-        public bool Packed { get; private set; }
+        public bool Packed { get; set; }
 
         /// <summary>
         /// 8kHz Sampling
         /// TRUE if encode from 8k samples/second
         /// </summary>
-        public bool EncodeFrom8000Hz { get; private set; }
+        public bool EncodeFrom8000Hz { get; set; }
 
         /// <summary>
         /// Bits Per Sample
         /// 6 for 48000kbps, 7 for 56000kbps, or 8 for 64000kbps.
         /// </summary>
-        public int BitsPerSample { get; private set; }
+        public int BitsPerSample { get; set; }
 
         /// <summary>
         /// Signal history for the QMF (x)
         /// </summary>
-        public int[] QmfSignalHistory { get; private set; }
+        public int[] QmfSignalHistory { get; set; }
 
         /// <summary>
         /// Band
         /// </summary>
-        public Band[] Band { get; private set; }
+        public Band[] Band { get; set; }
 
         /// <summary>
         /// In bit buffer

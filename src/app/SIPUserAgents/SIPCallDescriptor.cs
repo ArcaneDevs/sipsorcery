@@ -56,8 +56,8 @@ namespace SIPSorcery.SIP.App
 
     public class SIPCallDescriptor
     {
-        private const int MAX_REINVITE_DELAY = 5;
-        private const int DEFAULT_REINVITE_DELAY = 2;
+        public const int MAX_REINVITE_DELAY = 5;
+        public const int DEFAULT_REINVITE_DELAY = 2;
 
         public const string DELAY_CALL_OPTION_KEY = "dt";       // Dial string option to delay the start of a call leg.
         public const string REDIRECT_MODE_OPTION_KEY = "rm";    // Dial string option to set the redirect mode of a call leg. Redirect mode refers to how 3xx responses to a call are handled.
@@ -78,10 +78,10 @@ namespace SIPSorcery.SIP.App
         public const string SWITCHBOARD_CALLID_KEY = "swcid";               // Dial string option to set the Switchboard-CallID header on the call leg.
         public const string SWITCHBOARD_OWNER_KEY = "swo";                  // Dial string option to set the Switchboard-Owner header on the call leg.
 
-        private readonly static string m_defaultFromURI = SIPConstants.SIP_DEFAULT_FROMURI;
-        private static char m_customHeadersSeparator = '|';                 // Must match SIPProvider.CUSTOM_HEADERS_SEPARATOR.
+        public readonly static string m_defaultFromURI = SIPConstants.SIP_DEFAULT_FROMURI;
+        public static char m_customHeadersSeparator = '|';                 // Must match SIPProvider.CUSTOM_HEADERS_SEPARATOR.
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public string Username;                 // The username that will be used in the From header and to authenticate the call unless overridden by AuthUsername.
         public string AuthUsername;             // The username that will be used from authentication. Optional setting only needed if the From header user needs to be different from the digest username.
@@ -98,7 +98,7 @@ namespace SIPSorcery.SIP.App
         public int DelaySeconds;                        // An amount in seconds to delay the initiation of this call when used as part of a dial string.
         public SIPCallRedirectModesEnum RedirectMode;   // Determines how the call will handle 3xx redirect responses.
         public int CallDurationLimit;                   // If non-zero sets a limit on the duration of any call created with this descriptor.
-        public bool MangleResponseSDP = true;           // If false indicates the response SDP should be left alone if it contains a private IP address.
+        public bool MangleResponseSDP = true;           // If false indicates the response SDP should be left alone if it contains a public IP address.
         public IPAddress MangleIPAddress;               // If mangling is required on this call this address needs to be set as the one to mangle to.
         public string FromDisplayName;
         public string FromURIUsername;

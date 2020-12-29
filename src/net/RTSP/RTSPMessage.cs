@@ -23,13 +23,13 @@ namespace SIPSorcery.Net
 {
     public class RTSPMessage
     {
-        private const string RTSP_RESPONSE_PREFIX = "RTSP";
-        private const string RTSP_MESSAGE_IDENTIFIER = "RTSP";  // String that must be in a message buffer to be recognised as an RTSP message and processed.
+        public const string RTSP_RESPONSE_PREFIX = "RTSP";
+        public const string RTSP_MESSAGE_IDENTIFIER = "RTSP";  // String that must be in a message buffer to be recognised as an RTSP message and processed.
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private static string m_CRLF = RTSPConstants.CRLF;
-        private static int m_minFirstLineLength = 7;
+        public static string m_CRLF = RTSPConstants.CRLF;
+        public static int m_minFirstLineLength = 7;
 
         public string RawMessage;
         public RTSPMessageTypesEnum RTSPMessageType = RTSPMessageTypesEnum.Unknown;

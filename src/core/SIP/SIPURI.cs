@@ -34,17 +34,17 @@ namespace SIPSorcery.SIP
         public const char USER_HOST_SEPARATOR = '@';
         public const char PARAM_TAG_DELIMITER = ';';
         public const char HEADER_START_DELIMITER = '?';
-        private const char HEADER_TAG_DELIMITER = '&';
-        private const char TAG_NAME_VALUE_SEPERATOR = '=';
+        public const char HEADER_TAG_DELIMITER = '&';
+        public const char TAG_NAME_VALUE_SEPERATOR = '=';
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private static char[] m_invalidSIPHostChars = new char[] { ',', '"' };
+        public static char[] m_invalidSIPHostChars = new char[] { ',', '"' };
 
-        private static SIPProtocolsEnum m_defaultSIPTransport = SIPProtocolsEnum.udp;
-        private static SIPSchemesEnum m_defaultSIPScheme = SIPSchemesEnum.sip;
-        private static string m_sipRegisterRemoveAll = SIPConstants.SIP_REGISTER_REMOVEALL;
-        private static string m_uriParamTransportKey = SIPHeaderAncillary.SIP_HEADERANC_TRANSPORT;
+        public static SIPProtocolsEnum m_defaultSIPTransport = SIPProtocolsEnum.udp;
+        public static SIPSchemesEnum m_defaultSIPScheme = SIPSchemesEnum.sip;
+        public static string m_sipRegisterRemoveAll = SIPConstants.SIP_REGISTER_REMOVEALL;
+        public static string m_uriParamTransportKey = SIPHeaderAncillary.SIP_HEADERANC_TRANSPORT;
 
         [DataMember]
         public SIPSchemesEnum Scheme = m_defaultSIPScheme;
@@ -215,7 +215,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private SIPURI()
+        public SIPURI()
         { }
 
         public SIPURI(string user, string host, string paramsAndHeaders)
@@ -513,7 +513,7 @@ namespace SIPSorcery.SIP
             }
         }
 
-        private void ParseParamsAndHeaders(string paramsAndHeaders)
+        public void ParseParamsAndHeaders(string paramsAndHeaders)
         {
             if (paramsAndHeaders != null && paramsAndHeaders.Trim().Length > 0)
             {

@@ -24,9 +24,9 @@ namespace SIPSorcery.SIP
     [DataContract]
     public class SIPParameterlessURI
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private SIPURI m_uri;
+        public SIPURI m_uri;
 
         [DataMember]
         public SIPURI URI
@@ -58,7 +58,7 @@ namespace SIPSorcery.SIP
             set { m_uri.Host = value; }
         }
 
-        private SIPParameterlessURI()
+        public SIPParameterlessURI()
         { }
 
         public SIPParameterlessURI(SIPURI sipURI)

@@ -42,10 +42,10 @@ namespace SIPSorcery.Net
     public class SDPSecurityDescription
     {
         public const string CRYPTO_ATTRIBUE_PREFIX = "a=crypto:";
-        private readonly char[] WHITE_SPACES = new char[] { ' ', '\t' };
-        private const char SEMI_COLON = ';';
-        private const string COLON = ":";
-        private const string WHITE_SPACE = " ";
+        public readonly char[] WHITE_SPACES = new char[] { ' ', '\t' };
+        public const char SEMI_COLON = ';';
+        public const string COLON = ":";
+        public const string WHITE_SPACE = " ";
         public enum CryptoSuites
         {
             unknown,
@@ -66,10 +66,10 @@ namespace SIPSorcery.Net
         }
         public class KeyParameter
         {
-            private const string COLON = ":";
-            private const string PIPE = "|";
+            public const string COLON = ":";
+            public const string PIPE = "|";
             public const string KEY_METHOD = "inline";
-            private byte[] m_key = null;
+            public byte[] m_key = null;
             //128 bit for AES_CM_128_HMAC_SHA1_80, AES_CM_128_HMAC_SHA1_32, F8_128_HMAC_SHA1_80, AEAD_AES_128_GCM
             //192 bit for AES_192_CM_HMAC_SHA1_80, AES_192_CM_HMAC_SHA1_32
             //256 bit for AEAD_AES_256_GCM, AES_256_CM_HMAC_SHA1_80, AES_256_CM_HMAC_SHA1_32 
@@ -95,7 +95,7 @@ namespace SIPSorcery.Net
                     this.m_key = value;
                 }
             }
-            private byte[] m_salt = null;
+            public byte[] m_salt = null;
             //112 bit for AES_CM_128_HMAC_SHA1_80, AES_CM_128_HMAC_SHA1_32, F8_128_HMAC_SHA1_80
             //112 bit for AES_192_CM_HMAC_SHA1_80,AES_192_CM_HMAC_SHA1_32 , AES_256_CM_HMAC_SHA1_80, AES_256_CM_HMAC_SHA1_32 
             //96 bit for AEAD_AES_128_GCM
@@ -135,7 +135,7 @@ namespace SIPSorcery.Net
                     return s64;
                 }
             }
-            private ulong m_lifeTime = 0;
+            public ulong m_lifeTime = 0;
             public ulong LifeTime
             {
                 get
@@ -181,7 +181,7 @@ namespace SIPSorcery.Net
                     }
                 }
             }
-            private string m_sLifeTime = null;
+            public string m_sLifeTime = null;
             public string LifeTimeString
             {
                 get
@@ -215,7 +215,7 @@ namespace SIPSorcery.Net
                 get;
                 set;
             }
-            private uint m_mkiLength = 0;
+            public uint m_mkiLength = 0;
             public uint MkiLength
             {
                 get
@@ -326,7 +326,7 @@ namespace SIPSorcery.Net
                 throw new FormatException($"keyParam '{keyParamString}' is not recognized as a valid KEY_PARAM ");
             }
 
-            private static void parseKeySaltBase64(CryptoSuites cryptoSuite, string base64KeySalt, out byte[] key, out byte[] salt)
+            public static void parseKeySaltBase64(CryptoSuites cryptoSuite, string base64KeySalt, out byte[] key, out byte[] salt)
             {
                 byte[] keysalt = Convert.FromBase64String(base64KeySalt);
                 key = null;
@@ -386,7 +386,7 @@ namespace SIPSorcery.Net
                 }
             }
 
-            private static void checkValidKeyInfoCharacters(string keyParameter, string keyInfo)
+            public static void checkValidKeyInfoCharacters(string keyParameter, string keyInfo)
             {
                 foreach (char c in keyInfo.ToCharArray())
                 {
@@ -453,7 +453,7 @@ namespace SIPSorcery.Net
                 return false;
             }
 
-            private static void parseKeyInfo(string keyParamString, string keyInfo, out string mkiValue, out string mkiLen, out string lifeTimeString, out string base64KeySalt)
+            public static void parseKeyInfo(string keyParamString, string keyInfo, out string mkiValue, out string mkiLen, out string lifeTimeString, out string base64KeySalt)
             {
                 mkiValue = null;
                 mkiLen = null;
@@ -603,7 +603,7 @@ namespace SIPSorcery.Net
             public const string FEC_ORDER_PREFIX = "FEC_ORDER=";
             public const string WSH_PREFIX = "WSH=";
             public const string KDR_PREFIX = "KDR=";
-            private ulong m_kdr = 0;
+            public ulong m_kdr = 0;
             public ulong Kdr
             {
                 get
@@ -645,7 +645,7 @@ namespace SIPSorcery.Net
                     this.m_kdr = value;
                 }
             }
-            private ulong m_wsh = 64;
+            public ulong m_wsh = 64;
             public ulong Wsh
             {
                 get
@@ -775,7 +775,7 @@ namespace SIPSorcery.Net
         }
 
 
-        private uint m_iTag = 1;
+        public uint m_iTag = 1;
         public uint Tag
         {
             get

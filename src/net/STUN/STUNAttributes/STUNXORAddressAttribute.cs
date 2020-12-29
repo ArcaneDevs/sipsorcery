@@ -21,7 +21,7 @@ namespace SIPSorcery.Net
 {
     /// <summary>
     /// This attribute is the same as the mapped address attribute except the address details are XOR'ed with the STUN magic cookie. 
-    /// THe reason for this is to stop NAT application layer gateways from doing string replacements of private IP addresses and ports.
+    /// THe reason for this is to stop NAT application layer gateways from doing string replacements of public IP addresses and ports.
     /// </summary>
     public class STUNXORAddressAttribute : STUNAttribute
     {

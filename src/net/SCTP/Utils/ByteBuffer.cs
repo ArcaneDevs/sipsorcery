@@ -4,7 +4,7 @@ namespace SCTP4CS.Utils
 {
     public class ByteBuffer
     {
-        private byte[] _data;
+        public byte[] _data;
 
         /// <summary>
         /// Absolute
@@ -37,7 +37,10 @@ namespace SCTP4CS.Utils
             set
             {
                 limitAbsolute = value + offset;
-                if (positionAbsolute > limitAbsolute) positionAbsolute = limitAbsolute;
+                if (positionAbsolute > limitAbsolute)
+                {
+                    positionAbsolute = limitAbsolute;
+                }
             }
         }
 
@@ -121,7 +124,10 @@ namespace SCTP4CS.Utils
         #region PutMethods
         void UpdateDataSize(int position)
         {
-            if (position > Limit) Limit = position;
+            if (position > Limit)
+            {
+                Limit = position;
+            }
         }
 
         public void Put(float value)

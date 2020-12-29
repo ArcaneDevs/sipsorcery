@@ -48,7 +48,7 @@ namespace SIPSorcery.Sys
             }
         }
 
-        private static string ToSIByteFormat(double number, int decimalPlaces, string suffix)
+        public static string ToSIByteFormat(double number, int decimalPlaces, string suffix)
         {
             if (number > 1099511627776)
             {

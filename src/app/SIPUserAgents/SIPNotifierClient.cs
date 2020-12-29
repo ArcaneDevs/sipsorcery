@@ -33,37 +33,37 @@ namespace SIPSorcery.SIP.App
     /// </summary>
     public class SIPNotifierClient<T> where T : SIPEvent, new()
     {
-        private const int DEFAULT_SUBSCRIBE_EXPIRY = 300;       // The default value to request on subscription requests.
-                                                                //private const int RETRY_POST_FAILURE_INTERVAL = 300;    // The interval to retry the subscription after a failure response or timeout.
-        private const int RESCHEDULE_SUBSCRIBE_MARGIN = 10;     // Reschedule subsequent subscriptions with a small margin to try and ensure there is no gap.
-        private const int MAX_SUBSCRIBE_ATTEMPTS = 4;           // The maximum number of subscribe attempts that will be made without a failure condition before incurring a temporary failure.
+        public const int DEFAULT_SUBSCRIBE_EXPIRY = 300;       // The default value to request on subscription requests.
+                                                                //public const int RETRY_POST_FAILURE_INTERVAL = 300;    // The interval to retry the subscription after a failure response or timeout.
+        public const int RESCHEDULE_SUBSCRIBE_MARGIN = 10;     // Reschedule subsequent subscriptions with a small margin to try and ensure there is no gap.
+        public const int MAX_SUBSCRIBE_ATTEMPTS = 4;           // The maximum number of subscribe attempts that will be made without a failure condition before incurring a temporary failure.
 
-        private static readonly string m_filterTextType = SIPMIMETypes.MWI_TEXT_TYPE;
+        public static readonly string m_filterTextType = SIPMIMETypes.MWI_TEXT_TYPE;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private SIPTransport m_sipTransport;
-        private SIPEndPoint m_outboundProxy;
-        private SIPEventPackage m_sipEventPackage;
+        public SIPTransport m_sipTransport;
+        public SIPEndPoint m_outboundProxy;
+        public SIPEventPackage m_sipEventPackage;
 
-        private SIPURI m_resourceURI;
-        private string m_authUsername;
-        private string m_authDomain;
-        private string m_authPassword;
-        private string m_filter;
-        private int m_expiry;
-        private int m_localCSeq;
-        private int m_remoteCSeq;
-        private string m_subscribeCallID;
-        private string m_subscriptionFromTag;
-        private string m_subscriptionToTag;
-        private bool m_subscribed;
-        private int m_attempts;
-        private ManualResetEvent m_waitForSubscribeResponse = new ManualResetEvent(false);
-        private ManualResetEvent m_waitForNextSubscribe = new ManualResetEvent(false);
-        private bool m_exit;
+        public SIPURI m_resourceURI;
+        public string m_authUsername;
+        public string m_authDomain;
+        public string m_authPassword;
+        public string m_filter;
+        public int m_expiry;
+        public int m_localCSeq;
+        public int m_remoteCSeq;
+        public string m_subscribeCallID;
+        public string m_subscriptionFromTag;
+        public string m_subscriptionToTag;
+        public bool m_subscribed;
+        public int m_attempts;
+        public ManualResetEvent m_waitForSubscribeResponse = new ManualResetEvent(false);
+        public ManualResetEvent m_waitForNextSubscribe = new ManualResetEvent(false);
+        public bool m_exit;
 
-        public DateTime LastSubscribeAttempt { get; private set; }
+        public DateTime LastSubscribeAttempt { get; set; }
 
         public string CallID
         {
@@ -174,7 +174,7 @@ namespace SIPSorcery.SIP.App
             m_waitForNextSubscribe.Set();
         }
 
-        private void StartSubscription()
+        public void StartSubscription()
         {
             try
             {
@@ -279,7 +279,7 @@ namespace SIPSorcery.SIP.App
             }
         }
 
-        private void SubsribeTransactionTimedOut(SIPTransaction sipTransaction)
+        public void SubsribeTransactionTimedOut(SIPTransaction sipTransaction)
         {
             if (SubscriptionFailed != null)
             {
@@ -289,7 +289,7 @@ namespace SIPSorcery.SIP.App
             m_waitForSubscribeResponse.Set();
         }
 
-        private Task<SocketError> SubscribeTransactionFinalResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
+        public Task<SocketError> SubscribeTransactionFinalResponseReceived(SIPEndPoint localSIPEndPoint, SIPEndPoint remoteEndPoint, SIPTransaction sipTransaction, SIPResponse sipResponse)
         {
             try
             {

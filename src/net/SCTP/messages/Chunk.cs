@@ -136,7 +136,7 @@ namespace SIPSorcery.Net.Sctp
     {
         public const byte TBIT = 1;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public static Chunk mkChunk(ByteBuffer pkt)
         {

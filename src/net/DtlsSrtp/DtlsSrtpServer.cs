@@ -86,33 +86,33 @@ namespace SIPSorcery.Net
 
     public class DtlsSrtpServer : DefaultTlsServer, IDtlsSrtpPeer
     {
-        private static readonly ILogger logger = Log.Logger;
+        public static readonly ILogger logger = Log.Logger;
 
         Certificate mCertificateChain = null;
         AsymmetricKeyParameter mPrivateKey = null;
 
-        private RTCDtlsFingerprint mFingerPrint;
+        public RTCDtlsFingerprint mFingerPrint;
 
-        //private AlgorithmCertificate algorithmCertificate;
+        //public AlgorithmCertificate algorithmCertificate;
 
-        public Certificate ClientCertificate { get; private set; }
+        public Certificate ClientCertificate { get; set; }
 
         // the server response to the client handshake request
         // http://tools.ietf.org/html/rfc5764#section-4.1.1
-        private UseSrtpData serverSrtpData;
+        public UseSrtpData serverSrtpData;
 
         // Asymmetric shared keys derived from the DTLS handshake and used for the SRTP encryption/
-        private byte[] srtpMasterClientKey;
-        private byte[] srtpMasterServerKey;
-        private byte[] srtpMasterClientSalt;
-        private byte[] srtpMasterServerSalt;
+        public byte[] srtpMasterClientKey;
+        public byte[] srtpMasterServerKey;
+        public byte[] srtpMasterClientSalt;
+        public byte[] srtpMasterServerSalt;
         byte[] masterSecret = null;
 
         // Policies
-        private SrtpPolicy srtpPolicy;
-        private SrtpPolicy srtcpPolicy;
+        public SrtpPolicy srtpPolicy;
+        public SrtpPolicy srtcpPolicy;
 
-        private int[] cipherSuites;
+        public int[] cipherSuites;
 
         /// <summary>
         /// Parameters:

@@ -20,10 +20,10 @@ namespace SIPSorcery.Sys
 {
     internal class PipedMemoryStream
     {
-        private readonly MemoryStream _ms = new MemoryStream();
-        private long _writePos = 0;
-        private long _readPos = 0;
-        private bool _isClosed = false;
+        public readonly MemoryStream _ms = new MemoryStream();
+        public long _writePos = 0;
+        public long _readPos = 0;
+        public bool _isClosed = false;
 
         internal PipedMemoryStream()
         { }
@@ -76,7 +76,7 @@ namespace SIPSorcery.Sys
             }
         }
 
-        private bool WaitForData(int timeout)
+        public bool WaitForData(int timeout)
         {
             if (_readPos >= _writePos && !_isClosed)
             {

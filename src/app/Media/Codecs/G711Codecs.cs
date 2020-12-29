@@ -25,10 +25,10 @@ namespace SIPSorcery.Media
     /// </summary>
     public static class MuLawEncoder
     {
-        private const int cBias = 0x84;
-        private const int cClip = 32635;
+        public const int cBias = 0x84;
+        public const int cClip = 32635;
 
-        private static readonly byte[] MuLawCompressTable = new byte[256]
+        public static readonly byte[] MuLawCompressTable = new byte[256]
         {
              0,0,1,1,2,2,2,2,3,3,3,3,3,3,3,3,
              4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
@@ -78,9 +78,9 @@ namespace SIPSorcery.Media
     /// </summary>
     public static class ALawEncoder
     {
-        private const int cBias = 0x84;
-        private const int cClip = 32635;
-        private static readonly byte[] ALawCompressTable = new byte[128]
+        public const int cBias = 0x84;
+        public const int cClip = 32635;
+        public static readonly byte[] ALawCompressTable = new byte[128]
         {
              1,1,2,2,3,3,3,3,
              4,4,4,4,4,4,4,4,
@@ -146,7 +146,7 @@ namespace SIPSorcery.Media
         /// <summary>
         /// only 512 bytes required, so just use a lookup
         /// </summary>
-        private static readonly short[] ALawDecompressTable = new short[256]
+        public static readonly short[] ALawDecompressTable = new short[256]
         {
              -5504, -5248, -6016, -5760, -4480, -4224, -4992, -4736,
              -7552, -7296, -8064, -7808, -6528, -6272, -7040, -6784,
@@ -203,7 +203,7 @@ namespace SIPSorcery.Media
         /// <summary>
         /// only 512 bytes required, so just use a lookup
         /// </summary>
-        private static readonly short[] MuLawDecompressTable = new short[256]
+        public static readonly short[] MuLawDecompressTable = new short[256]
         {
              -32124,-31100,-30076,-29052,-28028,-27004,-25980,-24956,
              -23932,-22908,-21884,-20860,-19836,-18812,-17788,-16764,

@@ -51,12 +51,12 @@ namespace SIPSorcery.Net
         public const int HMACSHA1_AUTHENTICATION = 1;
         public const int SKEIN_AUTHENTICATION = 2;
 
-        private int encType;
-        private int encKeyLength;
-        private int authType;
-        private int authKeyLength;
-        private int authTagLength;
-        private int saltKeyLength;
+        public int encType;
+        public int encKeyLength;
+        public int authType;
+        public int authKeyLength;
+        public int authTagLength;
+        public int saltKeyLength;
 
         public int AuthKeyLength { get => authKeyLength; set => authKeyLength = value; }
         public int AuthTagLength { get => authTagLength; set => authTagLength = value; }

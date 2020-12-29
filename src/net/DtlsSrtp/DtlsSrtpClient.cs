@@ -27,8 +27,8 @@ namespace SIPSorcery.Net
     internal class DtlsSrtpTlsAuthentication
             : TlsAuthentication
     {
-        private readonly DtlsSrtpClient mClient;
-        private readonly TlsContext mContext;
+        public readonly DtlsSrtpClient mClient;
+        public readonly TlsContext mContext;
 
         internal DtlsSrtpTlsAuthentication(DtlsSrtpClient client)
         {
@@ -65,7 +65,7 @@ namespace SIPSorcery.Net
 
     public class DtlsSrtpClient : DefaultTlsClient, IDtlsSrtpPeer
     {
-        private static readonly ILogger logger = Log.Logger;
+        public static readonly ILogger logger = Log.Logger;
 
         internal Certificate mCertificateChain = null;
         internal AsymmetricKeyParameter mPrivateKey = null;
@@ -80,20 +80,20 @@ namespace SIPSorcery.Net
         //Received from server
         public Certificate ServerCertificate { get; internal set; }
 
-        public RTCDtlsFingerprint Fingerprint { get; private set; }
+        public RTCDtlsFingerprint Fingerprint { get; set; }
 
-        private UseSrtpData clientSrtpData;
+        public UseSrtpData clientSrtpData;
 
         // Asymmetric shared keys derived from the DTLS handshake and used for the SRTP encryption/
-        private byte[] srtpMasterClientKey;
-        private byte[] srtpMasterServerKey;
-        private byte[] srtpMasterClientSalt;
-        private byte[] srtpMasterServerSalt;
-        private byte[] masterSecret = null;
+        public byte[] srtpMasterClientKey;
+        public byte[] srtpMasterServerKey;
+        public byte[] srtpMasterClientSalt;
+        public byte[] srtpMasterServerSalt;
+        public byte[] masterSecret = null;
 
         // Policies
-        private SrtpPolicy srtpPolicy;
-        private SrtpPolicy srtcpPolicy;
+        public SrtpPolicy srtpPolicy;
+        public SrtpPolicy srtcpPolicy;
 
         /// <summary>
         /// Parameters:

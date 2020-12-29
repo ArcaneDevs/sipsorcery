@@ -48,7 +48,7 @@ namespace SIPSorcery.Net.Sctp
 		 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 		 */
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         long _initiateTag;
         uint _adRecWinCredit;

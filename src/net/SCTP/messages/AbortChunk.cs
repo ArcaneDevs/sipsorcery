@@ -43,7 +43,7 @@ namespace SIPSorcery.Net.Sctp
     public class AbortChunk : Chunk
     {
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public AbortChunk() : base(ChunkType.ABORT) { }
 

@@ -57,7 +57,7 @@ namespace SIPSorcery.Net.Sctp
 {
     public class ErrorChunk : Chunk
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public ErrorChunk() : base(ChunkType.ERROR) { }
 

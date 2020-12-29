@@ -52,7 +52,7 @@ namespace SIPSorcery.Net
             return packet;
         }
 
-        private byte[] GetNullPayload(int numBytes)
+        public byte[] GetNullPayload(int numBytes)
         {
             byte[] payload = new byte[numBytes];
 

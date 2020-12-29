@@ -98,27 +98,27 @@ namespace SIPSorcery.Media
         public const int AUDIO_SAMPLE_PERIOD_MILLISECONDS_MIN = 20;
         public const int AUDIO_SAMPLE_PERIOD_MILLISECONDS_MAX = 500;
 
-        private const string MUSIC_RESOURCE_PATH = "SIPSorcery.media.Macroform_-_Simplicity.raw";
-        private static float LINEAR_MAXIMUM = 32767f;
+        public const string MUSIC_RESOURCE_PATH = "SIPSorcery.media.Macroform_-_Simplicity.raw";
+        public static float LINEAR_MAXIMUM = 32767f;
 
-        private static ILogger Log = SIPSorcery.Sys.Log.Logger;
+        public static ILogger Log = SIPSorcery.Sys.Log.Logger;
 
-        private MediaFormatManager<AudioFormat> _audioFormatManager;
-        private BinaryReader _musicStreamReader;
-        private SignalGenerator _signalGenerator;
-        private Timer _sendSampleTimer;
-        private AudioSourceOptions _audioOpts;
-        private bool _isStarted;
-        private bool _isPaused;
-        private bool _isClosed;
-        private AudioEncoder _audioEncoder;
+        public MediaFormatManager<AudioFormat> _audioFormatManager;
+        public BinaryReader _musicStreamReader;
+        public SignalGenerator _signalGenerator;
+        public Timer _sendSampleTimer;
+        public AudioSourceOptions _audioOpts;
+        public bool _isStarted;
+        public bool _isPaused;
+        public bool _isClosed;
+        public AudioEncoder _audioEncoder;
 
         // Fields for interrupting the main audio source with a different stream. For example playing
         // an announcement over music etc.
-        private Timer _streamSourceTimer;
-        private BinaryReader _streamSourceReader;
-        private bool _streamSendInProgress;             // When a send for stream is in progress it takes precedence over the existing audio source.
-        private AudioSamplingRatesEnum _streamSourceRate = AudioSamplingRatesEnum.Rate8KHz;
+        public Timer _streamSourceTimer;
+        public BinaryReader _streamSourceReader;
+        public bool _streamSendInProgress;             // When a send for stream is in progress it takes precedence over the existing audio source.
+        public AudioSamplingRatesEnum _streamSourceRate = AudioSamplingRatesEnum.Rate8KHz;
 
         /// <summary>
         /// Fires when the current send audio from stream operation completes. Send from
@@ -374,7 +374,7 @@ namespace SIPSorcery.Media
         /// to send to the remote party.</param>
         /// <param name="streamSampleRate">The sample rate of the supplied PCM samples. Supported rates are
         /// 8 or 16 KHz.</param>
-        private void InitialiseSendAudioFromStreamTimer(Stream audioStream, AudioSamplingRatesEnum streamSampleRate)
+        public void InitialiseSendAudioFromStreamTimer(Stream audioStream, AudioSamplingRatesEnum streamSampleRate)
         {
             if (!_isClosed && audioStream != null && audioStream.Length > 0)
             {
@@ -391,7 +391,7 @@ namespace SIPSorcery.Media
         /// <summary>
         /// Sends audio samples read from a file.
         /// </summary>
-        private void SendMusicSample(object state)
+        public void SendMusicSample(object state)
         {
             if (!_isClosed && !_streamSendInProgress)
             {
@@ -415,7 +415,7 @@ namespace SIPSorcery.Media
         /// <summary>
         /// Sends the sounds of silence.
         /// </summary>
-        private void SendSilenceSample(object state)
+        public void SendSilenceSample(object state)
         {
             if (!_isClosed && !_streamSendInProgress)
             {
@@ -430,7 +430,7 @@ namespace SIPSorcery.Media
         /// <summary>
         /// Sends a sample from a signal generator generated waveform.
         /// </summary>
-        private void SendSignalGeneratorSample(object state)
+        public void SendSignalGeneratorSample(object state)
         {
             if (!_isClosed && !_streamSendInProgress)
             {
@@ -449,7 +449,7 @@ namespace SIPSorcery.Media
         /// <summary>
         /// Sends audio samples read from a file containing 16 bit PCM samples.
         /// </summary>
-        private void SendStreamSample(object state)
+        public void SendStreamSample(object state)
         {
             if (!_isClosed)
             {
@@ -484,7 +484,7 @@ namespace SIPSorcery.Media
             }
         }
 
-        private short[] GetPcmSampleFromReader(BinaryReader binaryReader, AudioSamplingRatesEnum inputSampleRate, out int samplesRead)
+        public short[] GetPcmSampleFromReader(BinaryReader binaryReader, AudioSamplingRatesEnum inputSampleRate, out int samplesRead)
         {
             samplesRead = 0;
 
@@ -505,7 +505,7 @@ namespace SIPSorcery.Media
             return null;
         }
 
-        private void EncodeAndSend(short[] pcm, int pcmSampleRate)
+        public void EncodeAndSend(short[] pcm, int pcmSampleRate)
         {
             if (pcm.Length > 0)
             {
@@ -525,7 +525,7 @@ namespace SIPSorcery.Media
         /// <summary>
         /// Stops a send from audio stream job.
         /// </summary>
-        private void StopSendFromAudioStream()
+        public void StopSendFromAudioStream()
         {
             _streamSourceReader?.Close();
             _streamSourceTimer?.Dispose();

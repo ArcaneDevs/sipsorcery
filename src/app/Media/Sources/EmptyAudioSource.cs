@@ -13,7 +13,7 @@ namespace SIPSorcery.Media
     public class EmptyAudioSource : IAudioSource
     {
 
-        private readonly List<AudioFormat> _audioFormats = new List<AudioFormat>();
+        public readonly List<AudioFormat> _audioFormats = new List<AudioFormat>();
 #pragma warning disable CS0067
         public event EncodedSampleDelegate OnAudioSourceEncodedSample;
         public event RawAudioSampleDelegate OnAudioSourceRawSample;

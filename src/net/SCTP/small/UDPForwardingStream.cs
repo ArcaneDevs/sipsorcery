@@ -31,10 +31,10 @@ namespace SIPSorcery.Net.Sctp
     public class UDPForwardingStream : BlockingSCTPStream
     {
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         Socket _udpSock;
-        private Thread _rcv;
+        public Thread _rcv;
 
         public UDPForwardingStream(Association a, int id, int toPort) : base(a, id)
         {
@@ -81,7 +81,7 @@ namespace SIPSorcery.Net.Sctp
         }
 
 
-        private SCTPStreamBehaviour mkBehave()
+        public SCTPStreamBehaviour mkBehave()
         {
             return new UnorderedStreamBehaviour();
         }

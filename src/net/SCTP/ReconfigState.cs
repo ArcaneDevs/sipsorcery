@@ -26,10 +26,10 @@ using SIPSorcery.Sys;
 
 namespace SIPSorcery.Net.Sctp
 {
-    class ReconfigState
+    public class ReconfigState
     {
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         ReConfigChunk recentInbound = null;
         //ReConfigChunk recentOutboundRequest = null;
@@ -48,32 +48,32 @@ namespace SIPSorcery.Net.Sctp
             listOfStreamsToReset = new Queue<SCTPStream>();
         }
 
-        private bool haveSeen(ReConfigChunk rconf)
+        public bool haveSeen(ReConfigChunk rconf)
         {
             return rconf.sameAs(recentInbound);
         }
 
-        private ReConfigChunk getPrevious(ReConfigChunk rconf)
+        public ReConfigChunk getPrevious(ReConfigChunk rconf)
         {
             return rconf.sameAs(recentInbound) ? sentReply : null;
         }
 
-        private bool timerIsRunning()
+        public bool timerIsRunning()
         {
             return timerRunning;
         }
 
-        private void markAsAcked(ReConfigChunk rconf)
+        public void markAsAcked(ReConfigChunk rconf)
         {
             // ooh, what does this button do ??? To Do
         }
 
-        private uint nextNearNo()
+        public uint nextNearNo()
         {
             return (uint)nearSeqno++;
         }
 
-        private uint nextFarNo()
+        public uint nextFarNo()
         {
             return (uint)farSeqno++;
         }
@@ -215,14 +215,20 @@ namespace SIPSorcery.Net.Sctp
             return ret;
         }
 
-        private ReConfigChunk makeSSNResets()
+        public ReConfigChunk makeSSNResets()
         {
             ReConfigChunk reply = new ReConfigChunk(); // create a new thing
             //logger.LogDebug($"SCTP closing {listOfStreamsToReset.Count} stream.");
             List<int> streamsL = new List<int>();
             lock (listOfStreamsToReset)
             {
-                foreach (var s in listOfStreamsToReset) if (s.InboundIsOpen()) streamsL.Add(s.getNum());
+                foreach (var s in listOfStreamsToReset)
+                {
+                    if (s.InboundIsOpen())
+                    {
+                        streamsL.Add(s.getNum());
+                    }
+                }
             }
             int[] streams = streamsL.ToArray();
             if (streams.Length > 0)
@@ -234,7 +240,13 @@ namespace SIPSorcery.Net.Sctp
             streamsL.Clear();
             lock (listOfStreamsToReset)
             {
-                foreach (var s in listOfStreamsToReset) if (s.OutboundIsOpen()) streamsL.Add(s.getNum());
+                foreach (var s in listOfStreamsToReset)
+                {
+                    if (s.OutboundIsOpen())
+                    {
+                        streamsL.Add(s.getNum());
+                    }
+                }
             }
             streams = streamsL.ToArray();
             if (streams.Length > 0)

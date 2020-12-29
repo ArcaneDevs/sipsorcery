@@ -29,7 +29,7 @@ namespace SIPSorcery.Net
             get { return CHANGEREQUEST_ATTRIBUTE_LENGTH; }
         }
 
-        private byte m_changeRequestByte;
+        public byte m_changeRequestByte;
 
         public STUNChangeRequestAttribute(byte[] attributeValue)
             : base(STUNAttributeTypesEnum.ChangeRequest, attributeValue)

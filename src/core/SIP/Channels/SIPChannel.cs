@@ -29,7 +29,7 @@ namespace SIPSorcery.SIP
     /// Represents a message received on a SIP channel prior to any attempt to identify
     /// whether it represents a SIP request, response or something else.
     /// </summary>
-    internal class IncomingMessage
+    public class IncomingMessage
     {
         /// <summary>
         /// The SIP channel we received the message on.
@@ -74,7 +74,7 @@ namespace SIPSorcery.SIP
     /// </summary>
     public abstract class SIPChannel : IDisposable
     {
-        private static int _lastUsedChannelID = 0;
+        public static int _lastUsedChannelID = 0;
 
         protected ILogger logger = Log.Logger;
 
@@ -89,12 +89,12 @@ namespace SIPSorcery.SIP
         /// for a channel to have multiple addresses is if it's socket address is set to 
         /// IPAddress.Any.
         /// </summary>
-        public static List<IPAddress> LocalIPAddresses { get; private set; }
+        public static List<IPAddress> LocalIPAddresses { get; set; }
 
         /// <summary>
         /// The local IP address this machine uses to communicate with the Internet.
         /// </summary>
-        public static IPAddress InternetDefaultAddress { get; private set; }
+        public static IPAddress InternetDefaultAddress { get; set; }
 
         /// <summary>
         /// The IP address the channel is listening on. Can be IPAddress.Any so cannot

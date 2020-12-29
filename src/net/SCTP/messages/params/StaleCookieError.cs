@@ -28,7 +28,7 @@ namespace SIPSorcery.Net.Sctp
 {
     public class StaleCookieError : KnownError
     {
-        private uint _measure;
+        public uint _measure;
         /*
 		 <code>
 		 Stale Cookie Error (3)

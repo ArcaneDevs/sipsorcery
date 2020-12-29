@@ -27,18 +27,18 @@ namespace SIPSorcery.Net
 {
     public class RTCPeerSctpAssociation : AssociationListener
     {
-        private static readonly ILogger logger = Log.Logger;
+        public static readonly ILogger logger = Log.Logger;
 
         /// <summary>
         /// The underlying SCTP association.
         /// </summary>
-        private ThreadedAssociation _sctpAssociation;
-        private bool _isClient;
+        public ThreadedAssociation _sctpAssociation;
+        public bool _isClient;
 
         /// <summary>
         /// Indicates whether the SCTP association is ready for communications.
         /// </summary>
-        public bool IsAssociated { get; private set; } = false;
+        public bool IsAssociated { get; set; } = false;
 
         /// <summary>
         /// Event to indicate the SCTP association is ready.

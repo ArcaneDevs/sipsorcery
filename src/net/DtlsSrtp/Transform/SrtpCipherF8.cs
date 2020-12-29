@@ -73,7 +73,7 @@ namespace SIPSorcery.Net
         /**
          * AES block size, just a short name.
          */
-        private const int BLKLEN = 16;
+        public const int BLKLEN = 16;
 
         /**
          * F8 mode encryption context, see RFC3711 section 4.1.2 for detailed

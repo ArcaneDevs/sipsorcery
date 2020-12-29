@@ -44,19 +44,19 @@ namespace SIPSorcery.Net
         public const char HOST_ADDR_DELIMITER = '/';
         public const char PARAM_TAG_DELIMITER = ';';
         public const char HEADER_START_DELIMITER = '?';
-        private const char HEADER_TAG_DELIMITER = '&';
-        private const char TAG_NAME_VALUE_SEPERATOR = '=';
+        public const char HEADER_TAG_DELIMITER = '&';
+        public const char TAG_NAME_VALUE_SEPERATOR = '=';
 
-        //private static int m_defaultRTSPPort = RTSPConstants.DEFAULT_RTSP_PORT;
-        private static string m_rtspTransport = RTSPConstants.RTSP_RELIABLE_TRANSPORTID;
+        //public static int m_defaultRTSPPort = RTSPConstants.DEFAULT_RTSP_PORT;
+        public static string m_rtspTransport = RTSPConstants.RTSP_RELIABLE_TRANSPORTID;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public string URLTransport = m_rtspTransport;
         public string Host;
         public string Path;
 
-        private RTSPURL()
+        public RTSPURL()
         { }
 
         public static RTSPURL ParseRTSPURL(string url)

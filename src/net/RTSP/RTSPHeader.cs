@@ -49,10 +49,10 @@ namespace SIPSorcery.Net
         public const string SERVER_RTP_PORT_FIELD_NAME = "server_port";
         public const string MODE_FIELD_NAME = "mode";
 
-        private const string DEFAULT_TRANSPORT_SPECIFIER = "RTP/AVP/UDP";
-        private const string DEFAULT_BROADCAST_TYPE = "unicast";
+        public const string DEFAULT_TRANSPORT_SPECIFIER = "RTP/AVP/UDP";
+        public const string DEFAULT_BROADCAST_TYPE = "unicast";
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
         public string RawHeader;
 
@@ -237,11 +237,11 @@ namespace SIPSorcery.Net
 
     public class RTSPHeader
     {
-        private static string m_CRLF = RTSPConstants.CRLF;
+        public static string m_CRLF = RTSPConstants.CRLF;
 
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private static char[] delimiterChars = new char[] { ':' };
+        public static char[] delimiterChars = new char[] { ':' };
 
         public string Accept;
         public string ContentType;
@@ -256,7 +256,7 @@ namespace SIPSorcery.Net
 
         public RTSPHeaderParserError CSeqParserError = RTSPHeaderParserError.None;
 
-        private RTSPHeader()
+        public RTSPHeader()
         { }
 
         public RTSPHeader(int cseq, string session)

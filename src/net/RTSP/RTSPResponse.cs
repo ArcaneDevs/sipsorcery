@@ -31,12 +31,12 @@ namespace SIPSorcery.Net
     /// </summary>
     public class RTSPResponse
     {
-        private static ILogger logger = Log.Logger;
+        public static ILogger logger = Log.Logger;
 
-        private static string m_CRLF = RTSPConstants.CRLF;
-        private static string m_rtspVersion = RTSPConstants.RTSP_VERSION_STRING;
-        private static int m_rtspMajorVersion = RTSPConstants.RTSP_MAJOR_VERSION;
-        private static int m_rtspMinorVersion = RTSPConstants.RTSP_MINOR_VERSION;
+        public static string m_CRLF = RTSPConstants.CRLF;
+        public static string m_rtspVersion = RTSPConstants.RTSP_VERSION_STRING;
+        public static int m_rtspMajorVersion = RTSPConstants.RTSP_MAJOR_VERSION;
+        public static int m_rtspMinorVersion = RTSPConstants.RTSP_MINOR_VERSION;
 
         public bool Valid = true;
         public RTSPHeaderError ValidationError = RTSPHeaderError.None;
@@ -53,7 +53,7 @@ namespace SIPSorcery.Net
         public DateTime ReceivedAt = DateTime.MinValue;
         public IPEndPoint ReceivedFrom;
 
-        private RTSPResponse()
+        public RTSPResponse()
         { }
 
         public RTSPResponse(RTSPResponseStatusCodesEnum responseType, string reasonPhrase)
