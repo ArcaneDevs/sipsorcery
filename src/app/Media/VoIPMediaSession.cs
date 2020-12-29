@@ -234,7 +234,7 @@ namespace SIPSorcery.Media
             OnVideoSinkSample?.Invoke(buffer, width, height, stride, pixelFormat);
         }
 
-        protected void RtpMediaPacketReceived(IPEndPoint remoteEndPoint, SDPMediaTypesEnum mediaType, RTPPacket rtpPacket)
+        public void RtpMediaPacketReceived(IPEndPoint remoteEndPoint, SDPMediaTypesEnum mediaType, RTPPacket rtpPacket)
         {
             var hdr = rtpPacket.Header;
             bool marker = rtpPacket.Header.MarkerBit > 0;
